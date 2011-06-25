@@ -1,0 +1,318 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* CSS RESET */
+html, body, ul, li, form, fieldset, legend { margin:0; padding:0; }
+html, textarea { overflow:auto; }
+h1, h2, h3, h4, h5, h6, p { margin:0; font-weight:normal;}
+img { border:0; }
+table { border-collapse:collapse; border-spacing:0; }
+tr, th, td { text-align:inherit; vertical-align:inherit; }
+input, textarea, select { font-size:110%; line-height:1.1; }
+li { list-style:none; vertical-align:baseline; }
+span, a, i, u, b, strong { font-size:inherit; color:inherit; }
+span { display:inline-block; }
+a, a:hover, a:active, a:visited { text-decoration:none; display:inline-block; cursor:pointer; }
+
+.body { 
+    background:#C4C4C4;
+    /*background:#585860;*/
+    font-family : "Trebuchet MS";
+    font-size   : 11px;
+}
+fieldset {
+    border: 1px solid #CCCCCC;
+    margin-bottom: 10px;
+    padding: 5px;
+    margin: 5px;
+}
+.topo{
+    height:80px;
+}
+.topo-linha {
+    width:100%;
+    height:15px;
+    background:#FFFFFF;
+    -webkit-border-radius: 0 0 12px 12px;
+    -moz-border-radius: 0 0 12px 12px;
+} 
+.logo {
+    background: #FFFFFF;
+    height:55px;
+    width: 200px;
+    margin: 0 0 0 70px;
+    float:left;
+    position: absolute;
+    top: 15px;
+    -moz-border-radius: 0 0 12px 12px;
+    -webkit-border-radius: 0 0 12px 12px;
+
+}
+.informacoes-box {
+    height: 55px;
+    width: auto;
+    float: right;
+    margin: 0 25px 0 0;
+    -moz-border-radius: 0 0 12px 12px;
+    -webkit-border-radius: 0 0 12px 12px;
+}
+.label{
+    float: left;
+    width: 90px;
+    padding: 4px 0 0 10px;
+    clear: both;
+}
+.checkbox {
+    background: none repeat scroll 0 0 transparent !important;
+    border: medium none !important;
+    float: left;
+    height: 23px !important;
+    margin: 0 0 0 5px;
+    padding: 0 !important;
+    width: auto !important;
+}
+.informacoes-info{
+    color: #FFFFFF;
+    padding: 20px 20px 0 0;
+}
+.conteudo{
+    width: 100%;
+}
+.menu{
+    text-align: center;
+    background: #FFFFFF;
+    width: 6%;
+    height: 500px;
+    float: left;
+    min-width: 60px;
+    max-width: 60px;
+    /*margin: 0 0 0 1%;*/
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+.menu-img{
+    margin: 50% 5px 0 5px;
+}
+.rodape {
+    width:100%;
+    height:45px;
+    background:#FFFFFF;
+    margin-top: 10px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px 15px 0 0;
+}
+.center-img {
+    display: block;
+    margin: 0 auto;
+}
+
+.principal {
+    overflow-y:scroll;
+    overflow-x:hidden;
+    background: #FFFFFF;
+    width: 73%;
+    height: 500px;
+    margin: 0 0 0 1%;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    float: left; }
+
+.erro {
+    float:left;
+    color: red;
+    width: 100%;
+    display: block;
+}
+.botaoadd{
+    width: 100%;
+    float: left;
+    /*margin: 10px 0;*/
+}
+.taskbar{
+    background: #FFFFFF;
+    width: 18%;
+    height: 500px;
+    float: right;
+    margin: 0 0 0 1%;
+    -moz-border-radius: 10px;
+    -webkit-border-radius:10px;
+}
+.taskbar-action-close{
+    background: url(../img/seta_fechar.png) no-repeat left center;
+    width: 15px;
+    height: 100%;
+    cursor: pointer;
+}
+.taskbar-action-open{
+    background: url(../img/seta_abrir.png) no-repeat left center #FFFFFF;
+    cursor: pointer;
+    position: absolute;
+    right: 0px;
+    display: none;
+    width: 1%;
+    height: 500px;
+    -moz-border-radius: 5px 0 0 5px;
+    -webkit-border-radius: 5px 0 0 5px;
+}
+.linha{
+    width:100%;
+    height:auto;
+    float:left;
+    margin:5px 0px 10px 0px;
+}
+.submenu_interno{
+    width:100%;
+    height:auto;
+    float:left;
+    margin:10px 0px 10px 0px;
+    margin:3px 0px;
+}
+p.subtitulo_menu{
+    text-align:left;
+    font-size:12px;
+    color:#000000;
+    float:left;
+    padding-left:5px;
+    font-weight:normal;
+    padding-top:6px;
+}
+.bt_adicionar{
+    background: url("../img/bt_adicionar.jpg") no-repeat scroll left top transparent;
+    border: medium none;
+    cursor: pointer;
+    height: 25px;
+    padding-left: 20px;
+    width: 130px;
+    float: right;
+    margin: 5px 10px 0 5px;
+}
+.bt_salvar{
+    background: url("../img/bt_salvar.jpg") no-repeat scroll left top transparent;
+    border: medium none;
+    clear: both;
+    cursor: pointer;
+    float: right;
+    height: 25px;
+    margin: 0 10px 5px 5px;
+    width: 130px;
+}
+.bt_voltar{
+    background: url("../img/bt_voltar.jpg") no-repeat scroll left top transparent;
+    border: medium none;
+    cursor: pointer;
+    float: right;
+    height: 25px;
+    margin: 0 10px 5px 5px;
+    width: 130px;
+}
+.pesquisa{
+    float: left;
+}
+.buscar{
+    background: none repeat scroll 0 0 #F9F9F9;
+    border: 1px solid #CCCCCC;
+    color: #333333;
+    float: left;
+    height: 21px;
+    line-height: 23px;
+    margin-left: 5px;
+    margin-right: 8px;
+    padding-left: 3px;
+    width: 170px;
+}
+.bt_buscar{
+    background: url("../img/bt_buscar.jpg") no-repeat scroll left top transparent;
+    border: medium none;
+    cursor: pointer;
+    height: 25px;
+    padding-left: 15px;
+    width: 130px;
+    float: left;
+    margin: 0 10px 0 5px;
+}
+.listagem_interno{
+    width:99%;
+    height:auto;
+    float:left;
+    margin:2px 0px 10px 0px;
+}
+
+/* tables */
+table.tablesorter {
+    font-family:arial;
+    background-color: #F2F2F2;
+    margin:0px;
+    font-size: 8pt;
+    width: 100%;
+    text-align: left;
+    margin-left:5px;
+    margin-bottom:10px;
+}
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+    background:#000000;
+    /*border: 1px solid #FFF;*/
+    font-size: 8pt;
+    padding: 4px;
+    color: white;
+}
+table.tablesorter tfoot tr td {
+    background:#F1F1F1;
+    border: 1px solid #FFF;
+    font-size: 8pt;
+    padding: 4px;
+}
+table.tablesorter thead tr .header {
+    background-image: url(../img/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+}
+table.tablesorter tbody td {
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
+}
+table.tablesorter tbody tr.odd td {
+    background-color:#F0F0F6;
+}
+table.tablesorter thead tr .headerSortUp {
+    background-image: url(../img/asc.gif);
+}
+table.tablesorter thead tr .headerSortDown {
+    background-image: url(../img/desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+    background-color: #F1F1F1;
+}
+
+
+.float-left {
+    float: left;
+    margin: 0 25px 0 0; }
+.float-right {
+    float: right;
+    margin: 0 15px 0 0; }
+
+.clientes .float-left {
+    margin-left:10px;
+    width:290px; }
+
+.campo-input {
+    margin: 0 0 5px 0;
+
+}
+.campo-select select {
+    width:136px;
+}
+
+h1 {
+    font-size:16px;
+    font-weight:normal;
+    margin:10px 0 15px 10px;
+    float: left;
+}
+
+span.error {
+    font-size:10px;
+    color:red;
+    margin:2px 0 4px 5px; }
