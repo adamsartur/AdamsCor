@@ -4,40 +4,15 @@
  */
 
 require_once '_config.php';
+require_once 'inc/classes/cliente.class.php';
+
+
 ConectarBanco();
 
 
 $acao = request('acao', 'listar');
-$cliente = new stdClass();
-$cliente->valorAcao = null;
-$cliente->listar = true;
-$cliente->editar = false;
+$cliente = new Cliente();
 
-$cliente->ID = null;
-$cliente->ESTADO_ID = 23;
-$cliente->CIDADE_ID = 7707;
-$cliente->TIPO_CLIENTE = null;
-$cliente->CPF = null;
-$cliente->CNPJ = null;
-$cliente->NOME = null;
-$cliente->DATA_NASC = null;
-$cliente->RG = null;
-$cliente->ORG_EXPEDIDOR = null;
-$cliente->ORG_DATA_EXPEDICAO = null;
-$cliente->ENDERECO = null;
-$cliente->NUMERO = null;
-$cliente->COMPLEMENTO = null;
-$cliente->BAIRRO = null;
-$cliente->CEP = null;
-$cliente->CNH = null;
-$cliente->CNH_DATA_EXPEDICAO = null;
-$cliente->SEXO = null;
-$cliente->ESTADO_CIVIL = null;
-$cliente->FONE = null;
-$cliente->FONE2 = null;
-$cliente->EMAIL = null;
-$cliente->SITUACAO = null;
-$cliente->OBS = null;
 
 
 /**
@@ -97,40 +72,10 @@ if( $acao == "inserir" ) {
  * Editando cliente
  */
 if( $acao == "editar" ){
-    $idCliente = get("id");
-    $consultaClientes = mysql_query("
-        SELECT * FROM CLIENTES
-        WHERE ID = '".$idCliente."'
-    ");
-   $arrayCliente = mysql_fetch_array($consultaClientes);
-    //
-    //RELACIONAR AQUI OS CAMPOS DO BANCO COMO NOME
-    //
-    $cliente->ID = $idCliente;
-    $cliente->ESTADO_ID = $arrayCliente['ESTADO_ID'];
-    $cliente->CIDADE_ID = $arrayCliente['CIDADE_ID'];
-    $cliente->TIPO_CLIENTE = $arrayCliente['TIPO_CLIENTE'];
-    $cliente->CPF = $arrayCliente['CPF'];
-    $cliente->CNPJ = $arrayCliente['CNPJ'];
-    $cliente->NOME = $arrayCliente['NOME'];
-    $cliente->DATA_NASC = $arrayCliente['DATA_NASC'];
-    $cliente->RG = $arrayCliente['RG'];
-    $cliente->ORG_EXPEDIDOR = $arrayCliente['ORG_EXPEDIDOR'];
-    $cliente->ORG_DATA_EXPEDICAO = $arrayCliente['ORG_DATA_EXPEDICAO'];
-    $cliente->ENDERECO = $arrayCliente['ENDERECO'];
-    $cliente->NUMERO = $arrayCliente['NUMERO'];
-    $cliente->COMPLEMENTO = $arrayCliente['COMPLEMENTO'];
-    $cliente->BAIRRO = $arrayCliente['BAIRRO'];
-    $cliente->CEP = $arrayCliente['CEP'];
-    $cliente->CNH = $arrayCliente['CNH'];
-    $cliente->CNH_DATA_EXPEDICAO = $arrayCliente['CNH_DATA_EXPEDICAO'];
-    $cliente->SEXO = $arrayCliente['SEXO'];
-    $cliente->ESTADO_CIVIL = $arrayCliente['ESTADO_CIVIL'];
-    $cliente->FONE = $arrayCliente['FONE'];
-    $cliente->FONE2 = $arrayCliente['FONE2'];
-    $cliente->EMAIL = $arrayCliente['EMAIL'];
-    $cliente->SITUACAO = $arrayCliente['SITUACAO'];
-    $cliente->OBS = $arrayCliente['OBS'];
+    $cliente->ID = get('id');
+    if( !$cliente->informacoes() )
+        header('Location: clientes.php');
+
 
     $cliente->valorAcao = 'editarCliente';
     $cliente->listar   = false;
@@ -227,10 +172,7 @@ if ( $acao == "editarCliente" ) {
 /**
  * Inserindo cliente
  */
-    $idCliente = get("id");
 if ($acao == "inserirCliente") {
-
-
     if( post('tipoCliente') == 'F' ) {
         $valida = bancoCpf(post('cpf'), post('id'));
         $msgErro = "O CPF já está cadastrado para outro cliente, insira outro cpf";
@@ -238,7 +180,8 @@ if ($acao == "inserirCliente") {
         $valida = bancoCnpj(post('cnpj'), post('id'));
         $msgErro = "O CNPJ já está cadastrado para outro cliente, insira outro cpf";
     }
-
+    
+    $idCliente = get("id");
     $cliente->ID = $idCliente;
     $cliente->ESTADO_ID = post('estado');
     $cliente->CIDADE_ID = post('cidade');
@@ -265,42 +208,11 @@ if ($acao == "inserirCliente") {
     $cliente->SITUACAO = post('situacao');
     $cliente->OBS = post('obs');
 
-    if( $valida ){
-        $sql = "
-        INSERT INTO clientes (
-            TIPO_CLIENTE, CPF, CNPJ, NOME, DATA_NASC, RG, ORG_EXPEDIDOR, ORG_DATA_EXPEDICAO, ENDERECO, NUMERO, COMPLEMENTO, BAIRRO, CEP, CNH, CNH_DATA_EXPEDICAO, SEXO, ESTADO_CIVIL, FONE, FONE2, EMAIL, SITUACAO, OBS, CIDADE_ID, ESTADO_ID
-        ) VALUES (
-                '".addslashes(post('tipoCliente'))."',
-                '".addslashes(post('cpf'))."',
-                '".addslashes(post('cnpj'))."',
-                '".addslashes(post('nome'))."',
-                ".$cliente->DATA_NASC.",
-                '".addslashes($cliente->RG)."',
-                '".addslashes(post('orgao'))."',
-                ".$cliente->ORG_DATA_EXPEDICAO.",
-                '".addslashes(post('endereco'))."',
-                '".addslashes(post('numero'))."',
-                '".addslashes(post('complemento'))."',
-                '".addslashes(post('bairro'))."',
-                '".addslashes(post('cep'))."',
-                '".addslashes(post('cnh'))."',
-                ".$cliente->CNH_DATA_EXPEDICAO.",
-                '".addslashes(post('sexo'))."',
-                '".addslashes(post('estadoCivil'))."',
-                '".addslashes(post('fone'))."',
-                '".addslashes(post('fone2'))."',
-                '".addslashes(post('email'))."',
-                '".addslashes(post('situacao'))."',
-                '".addslashes(post('obs'))."',
-                '".addslashes(post('cidade'))."',
-                '".addslashes(post('estado'))."'
-        );
-        ";
-
-        if( mysql_query($sql) ) {
+    if( $valida ) {
+        if( $cliente->inserir() ) {
             header('Location: clientes.php?msg=inserido');
         } else {
-            header('Location: clientes.php&acao=inserir');
+            header('Location: clientes.php?acao=inserir');
         }
     }
 
@@ -388,7 +300,7 @@ switch (request('msg')) {
                             
                         <!--           rotina para criar array com clientes                 -->
                             <?php
-                            $sql = mysql_query("SELECT * FROM clientes");
+                            $sql = mysql_query("SELECT * FROM clientes ORDER BY nome");
                             while( $clientes = mysql_fetch_array($sql) ) :
                                 ?>
                                 <tr nome="<?php echo strtolower($clientes['NOME']); ?>" class="clienteLinha">
@@ -397,7 +309,7 @@ switch (request('msg')) {
                                     <td><?php echo $clientes['NUMERO']; ?></td>
                                     <td><?php echo $clientes['FONE']; ?></td>
                                     <td><?php echo $clientes['EMAIL']; ?></td>
-                                    <td><img alt="Documentos" class="center-img" onclick="javascript:window.location='documentos.php?id=<?php echo $clientes['ID']; ?>'" style="cursor: pointer;" src="img/icons/folder_open_icon&16.png" /></td>
+                                    <td><img alt="Documentos" class="center-img" onclick="javascript:window.location='documentos.php?idCliente=<?php echo $clientes['ID']; ?>'" style="cursor: pointer;" src="img/icons/folder_open_icon&16.png" /></td>
                                     <td><img alt="Editar" class="center-img" onclick="javascript:window.location='clientes.php?acao=editar&id=<?php echo $clientes['ID']; ?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" /></td>
                                     <td>
                                         <a href="clientes.php?acao=excluir&id=<?php echo $clientes['ID']; ?>" id="cliente-<?php echo $clientes['ID']; ?>" class="excluir">

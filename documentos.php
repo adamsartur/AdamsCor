@@ -4,77 +4,23 @@
  */
 
 require_once '_config.php';
+require_once 'inc/classes/cliente.class.php';
+require_once 'inc/classes/auto.class.php';
+require_once 'inc/classes/re.class.php';
 
 $acao = request('acao', 'listar');
-$auto = new stdClass();
-$auto->valorAcao = null;
-$auto->listar = true;
 
-$auto->ID = null;
-$auto->TIPO_CADASTRO = null;
-$auto->CLIENTE_ID = null;
-$auto->CIA_ID = null;
-$auto->MARCA_ID = null;
-$auto->DESCRICAO = null;
-$auto->ANO = null;
-$auto->KM_ANUAL = null;
-$auto->ZERO = null;
-$auto->PLACA = null;
-$auto->CHASSI = null;
-$auto->RENAVAM = null;
-$auto->FILHOS = null;
-$auto->COMBUSTIVEL = null;
-$auto->GARAGEM_CASA = null;
-$auto->GARAGEM_TRABALHO = null;
-$auto->GARAGEM_FACULDADE = null;
-$auto->BONUS = null;
-$auto->APOLICE = null;
-$auto->VIGENCIA_INICIO = null;
-$auto->VIGENCIA_FINAL = null;
-$auto->CI = null;
-$auto->PREMIO = null;
-$auto->PARCELAMENTO = null;
-$auto->FORMA_PAGAMENTO = null;
-$auto->DATA_VENCIMENTO = null;
-$auto->DANOS_MORAIS = null;
-$auto->FIPE = null;
-$auto->PFRANQUIAREMIO = null;
-$auto->DM = null;
-$auto->DC = null;
-$auto->APP = null;
-$auto->VIDROS = null;
-$auto->ASSISTENCIA = null;
-$auto->CARRO_RESERVA = null;
-$auto->OBS = null;
+/**
+ * Configurando o cliente
+ */
+$cliente = new Cliente();
+$cliente->ID = request('idCliente');
+if( !$cliente->informacoes() )
+     header('Location: clientes.php');
 
-$re = new stdClass();
-$re->valorAcao = null;
-$re->listar = true;
 
-$re->ID = null;
-$re->TIPO_CADASTRO = null;
-$re->CLIENTE_ID = null;
-$re->CIA_ID = null;
-$re->CEP = null;
-$re->ENDERECO = null;
-$re->NUMERO = null;
-$re->COMPLEMENTO = null;
-$re->CIDADE_ID = null;
-$re->PLOCUPACAOACA = null;
-$re->CONSTRUCAO = null;
-$re->APOLICE = null;
-$re->PREMIO = null;
-$re->PARCELAMENTO = null;
-$re->DATA_VENCIMENTO = null;
-$re->DATA_CADASTRO = null;
-$re->OBS = null;
-$re->VIGENCIA_INICIO = null;
-$re->VIGENCIA_FIM = null;
-$re->FORMA_PAGAMENTO = null;
-$re->FIPE = null;
-$re->FORMA_PAGAMENTO = null;
-$re->OBS = null;
-
+$auto = new Auto();
+$re = new Re();
 ?>
 
 
@@ -133,7 +79,7 @@ $re->OBS = null;
                             while( $autoArray = mysql_fetch_array($autoSql) ) :
                                 ?>
                                 <tr class="autoLinha">
-                                    <td><?php echo $autoArray['VIGENCIA_FIM']; ?></td>
+                                    <td><?php echo formatarDataEN($autoArray['VIGENCIA_FIM']); ?></td>
                                     <td><?php echo $autoArray['DESCRICAO']; ?></td>
                                     <td><?php echo $autoArray['PLACA']; ?></td>
                                     <td><?php echo $autoArray['CIA_ID']; ?></td>
@@ -196,15 +142,9 @@ $re->OBS = null;
                 endif;?>
 
 
-
-
-
-                <!-- form para inserir / editar clientes -->
-
-
-
-
-
+            <?php
+            include_once('form_documentos.php');
+            ?>
         </div><!-- .linha -->
     </div><!-- .principal -->
 

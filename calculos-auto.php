@@ -8,46 +8,46 @@ ConectarBanco();
 
 
 $acao = request('acao', 'listar');
-$calculo = new stdClass();
-$calculo->valorAcao = null;
-$calculo->listar = true;
+$auto = new stdClass();
+$auto->valorAcao = null;
+$auto->listar = true;
 
-$calculo->ID = null;
-$calculo->TIPO_CADASTRO = null;
-$calculo->CLIENTE_ID = null;
-$calculo->CIA_ID = null;
-$calculo->MARCA_ID = null;
-$calculo->DESCRICAO = null;
-$calculo->ANO = null;
-$calculo->KM_ANUAL = null;
-$calculo->ZERO = null;
-$calculo->PLACA = null;
-$calculo->CHASSI = null;
-$calculo->RENAVAM = null;
-$calculo->FILHOS = null;
-$calculo->COMBUSTIVEL = null;
-$calculo->GARAGEM_CASA = null;
-$calculo->GARAGEM_TRABALHO = null;
-$calculo->GARAGEM_FACULDADE = null;
-$calculo->BONUS = null;
-$calculo->APOLICE = null;
-$calculo->VIGENCIA_INICIO = null;
-$calculo->VIGENCIA_FINAL = null;
-$calculo->CI = null;
-$calculo->PREMIO = null;
-$calculo->PARCELAMENTO = null;
-$calculo->FORMA_PAGAMENTO = null;
-$calculo->DATA_VENCIMENTO = null;
-$calculo->DANOS_MORAIS = null;
-$calculo->FIPE = null;
-$calculo->PFRANQUIAREMIO = null;
-$calculo->DM = null;
-$calculo->DC = null;
-$calculo->APP = null;
-$calculo->VIDROS = null;
-$calculo->ASSISTENCIA = null;
-$calculo->CARRO_RESERVA = null;
-$calculo->OBS = null;
+$auto->ID = null;
+$auto->TIPO_CADASTRO = null;
+$auto->CLIENTE_ID = null;
+$auto->CIA_ID = null;
+$auto->MARCA_ID = null;
+$auto->DESCRICAO = null;
+$auto->ANO = null;
+$auto->KM_ANUAL = null;
+$auto->ZERO = null;
+$auto->PLACA = null;
+$auto->CHASSI = null;
+$auto->RENAVAM = null;
+$auto->FILHOS = null;
+$auto->COMBUSTIVEL = null;
+$auto->GARAGEM_CASA = null;
+$auto->GARAGEM_TRABALHO = null;
+$auto->GARAGEM_FACULDADE = null;
+$auto->BONUS = null;
+$auto->APOLICE = null;
+$auto->VIGENCIA_INICIO = null;
+$auto->VIGENCIA_FINAL = null;
+$auto->CI = null;
+$auto->PREMIO = null;
+$auto->PARCELAMENTO = null;
+$auto->FORMA_PAGAMENTO = null;
+$auto->DATA_VENCIMENTO = null;
+$auto->DANOS_MORAIS = null;
+$auto->FIPE = null;
+$auto->PFRANQUIAREMIO = null;
+$auto->DM = null;
+$auto->DC = null;
+$auto->APP = null;
+$auto->VIDROS = null;
+$auto->ASSISTENCIA = null;
+$auto->CARRO_RESERVA = null;
+$auto->OBS = null;
 
 
 
@@ -70,7 +70,7 @@ if( $acao == "excluir" ){
  * Inserir
  */
 if( $acao == "inserir" ) {
-    $calculo->valorAcao = 'inserirCalculo';
+    $auto->valorAcao = 'inserirCalculo';
 }
 
 
@@ -87,46 +87,46 @@ if( $acao == "editar" ){
     //
     //RELACIONAR AQUI OS CAMPOS DO BANCO COMO NOME
     //
-    $calculo->ID = $arrayCliente['ID'];
-    $calculo->TIPO_CADASTRO = null;
-    $calculo->CLIENTE_ID = null;
-    $calculo->CIA_ID = null;
-    $calculo->MARCA_ID = null;
-    $calculo->DESCRICAO = null;
-    $calculo->ANO = null;
-    $calculo->KM_ANUAL = null;
-    $calculo->ZERO = null;
-    $calculo->PLACA = null;
-    $calculo->CHASSI = null;
-    $calculo->RENAVAM = null;
-    $calculo->FILHOS = null;
-    $calculo->COMBUSTIVEL = null;
-    $calculo->GARAGEM_CASA = null;
-    $calculo->GARAGEM_TRABALHO = null;
-    $calculo->GARAGEM_FACULDADE = null;
-    $calculo->BONUS = null;
-    $calculo->APOLICE = null;
-    $calculo->VIGENCIA_INICIO = null;
-    $calculo->VIGENCIA_FINAL = null;
-    $calculo->CI = null;
-    $calculo->PREMIO = null;
-    $calculo->PARCELAMENTO = null;
-    $calculo->FORMA_PAGAMENTO = null;
-    $calculo->DATA_VENCIMENTO = null;
-    $calculo->DANOS_MORAIS = null;
-    $calculo->FIPE = null;
-    $calculo->PFRANQUIAREMIO = null;
-    $calculo->DM = null;
-    $calculo->DC = null;
-    $calculo->APP = null;
-    $calculo->VIDROS = null;
-    $calculo->ASSISTENCIA = null;
-    $calculo->CARRO_RESERVA = null;
-    $calculo->OBS = null;
+    $auto->ID = $arrayCliente['ID'];
+    $auto->TIPO_CADASTRO = null;
+    $auto->CLIENTE_ID = null;
+    $auto->CIA_ID = null;
+    $auto->MARCA_ID = null;
+    $auto->DESCRICAO = null;
+    $auto->ANO = null;
+    $auto->KM_ANUAL = null;
+    $auto->ZERO = null;
+    $auto->PLACA = null;
+    $auto->CHASSI = null;
+    $auto->RENAVAM = null;
+    $auto->FILHOS = null;
+    $auto->COMBUSTIVEL = null;
+    $auto->GARAGEM_CASA = null;
+    $auto->GARAGEM_TRABALHO = null;
+    $auto->GARAGEM_FACULDADE = null;
+    $auto->BONUS = null;
+    $auto->APOLICE = null;
+    $auto->VIGENCIA_INICIO = null;
+    $auto->VIGENCIA_FINAL = null;
+    $auto->CI = null;
+    $auto->PREMIO = null;
+    $auto->PARCELAMENTO = null;
+    $auto->FORMA_PAGAMENTO = null;
+    $auto->DATA_VENCIMENTO = null;
+    $auto->DANOS_MORAIS = null;
+    $auto->FIPE = null;
+    $auto->PFRANQUIAREMIO = null;
+    $auto->DM = null;
+    $auto->DC = null;
+    $auto->APP = null;
+    $auto->VIDROS = null;
+    $auto->ASSISTENCIA = null;
+    $auto->CARRO_RESERVA = null;
+    $auto->OBS = null;
 
 
-    $calculo->valorAcao = 'editarCalculo';
-    $calculo->listar   = false;
+    $auto->valorAcao = 'editarCalculo';
+    $auto->listar   = false;
 
 
 }
@@ -242,7 +242,7 @@ if ($acao == "inserirCliente"){
             /**
              * Listando os clientes
              */
-            if( $calculo->listar ) :
+            if( $auto->listar ) :
                 ?>
                 <div class="listagem_interno">
                     <table class="tablesorter">
@@ -290,8 +290,8 @@ if ($acao == "inserirCliente"){
              */
             if( $acao == 'inserir' || $acao == 'editar' ) :
                 ?>
-                <form action="clientes.php?acao=<?=$calculo->valorAcao?>" method="post" id="clientes">
-                    <input type="hidden" value="<?=$calculo->ID?>" name="id" id="id" />
+                <form action="clientes.php?acao=<?=$auto->valorAcao?>" method="post" id="clientes">
+                    <input type="hidden" value="<?=$auto->ID?>" name="id" id="id" />
                     <div style="margin-left: 10px">
                         <label for="tipo-cliente-fisica">Física</label>
                         <input type="radio" value="F" id="tipo-cliente-fisica" name="tipoCliente" checked="checked" class="bt-tipo-pessoa" />
@@ -303,58 +303,58 @@ if ($acao == "inserirCliente"){
                     <div class="float-left">
                         <div>
                             <label for="nome" class="label" >Nome</label>
-                            <input type="text" id="nome" name="nome" style="width: 150px" value="<?=$calculo->NOME?>" />
+                            <input type="text" id="nome" name="nome" style="width: 150px" value="<?=$auto->NOME?>" />
                         </div>
 
                         <div class="campo-pessoa-fisica">
                            <label for="DATA_NASC" class="label" >Nascimento</label>
-                           <input type="text" id="DATA_NASC" name="DATA_NASC" value="<?=$calculo->DATA_NASC?>" />
+                           <input type="text" id="DATA_NASC" name="DATA_NASC" value="<?=$auto->DATA_NASC?>" />
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div class="campo-pessoa-fisica">
                             <label for="orgao" class="label" >Org&atilde;o Expedidor</label>
                             <select type="text" id="orgao" name="orgao" style="width: 150px">
-                                <option value="ssp" <?=$calculo->ORG_EXPEDIDOR == 'ssp' ? 'selected="selected"' : null;?>>SSP RS</option>
-                                <option value="sjs" <?=$calculo->ORG_EXPEDIDOR == 'sjs' ? 'selected="selected"' : null;?>>SJS RS</option>
+                                <option value="ssp" <?=$auto->ORG_EXPEDIDOR == 'ssp' ? 'selected="selected"' : null;?>>SSP RS</option>
+                                <option value="sjs" <?=$auto->ORG_EXPEDIDOR == 'sjs' ? 'selected="selected"' : null;?>>SJS RS</option>
                             </select>
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div class="campo-pessoa-fisica">
                             <label for="cnh" class="label" >CNH</label>
-                            <input type="text" id="cnh" name="cnh" style="width: 150px" value="<?=$calculo->CNH?>" />
+                            <input type="text" id="cnh" name="cnh" style="width: 150px" value="<?=$auto->CNH?>" />
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div class="campo-pessoa-fisica">
                             Sexo:
                             <label for="sexoF" >F</label>
-                            <input type="radio" id="sexoF" name="sexo" value="F"<?=$calculo->SEXO == 'sexoF' ? 'selected="checked"' : null;?> />
+                            <input type="radio" id="sexoF" name="sexo" value="F"<?=$auto->SEXO == 'sexoF' ? 'selected="checked"' : null;?> />
                             <label for="sexoM" >M</label>
-                            <input type="radio" id="sexoM" name="sexo" value="M"<?=$calculo->SEXO == 'sexoM' ? 'selected="checked"' : null;?> />
+                            <input type="radio" id="sexoM" name="sexo" value="M"<?=$auto->SEXO == 'sexoM' ? 'selected="checked"' : null;?> />
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div>
                             <label for="endereco" class="label">Endere&ccedil;o</label>
-                            <input type="text" id="endereco" name="endereco" value="<?=$calculo->ENDERECO?>"/>
+                            <input type="text" id="endereco" name="endereco" value="<?=$auto->ENDERECO?>"/>
                         </div>
 
                         <div>
                             <label for="complemento" class="label">Complemento</label>
-                            <input type="text" id="complemento" name="complemento" value="<?=$calculo->COMPLEMENTO?>" />
+                            <input type="text" id="complemento" name="complemento" value="<?=$auto->COMPLEMENTO?>" />
                         </div>
 
                         <div>
                             <label for="cep" class="label">CEP</label>
-                            <input type="text" id="cep" name="cep" value="<?=$calculo->CEP?>" />
+                            <input type="text" id="cep" name="cep" value="<?=$auto->CEP?>" />
                         </div>
 
                         <div>
                             <label for="fone" class="label">Fone</label>
-                            <input type="text" id="fone" name="fone" value="<?=$calculo->FONE?>" />
+                            <input type="text" id="fone" name="fone" value="<?=$auto->FONE?>" />
                         </div>
 
                         <div>
                             <label for="obs" class="label">Observacao</label>
-                            <textarea id="obs" name="obs" style="resize:none" rows="10" cols="30" ><?=$calculo->OBS?></textarea>
+                            <textarea id="obs" name="obs" style="resize:none" rows="10" cols="30" ><?=$auto->OBS?></textarea>
                         </div>
 
                     </div><!-- .float-left -->
@@ -363,12 +363,12 @@ if ($acao == "inserirCliente"){
                     <div class="float-right">
                         <div class="campo-pessoa-fisica">
                             <label for="cpf" class="label" >CPF</label>
-                            <input type="text" id="cpf" name="cpf" value="<?=$calculo->CPF?> "/>
+                            <input type="text" id="cpf" name="cpf" value="<?=$auto->CPF?> "/>
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div class="campo-pessoa-juridica">
                             <label for="cnpj" class="label" >CNPJ</label>
-                            <input type="text" id="cnpj" name="cnpj" value="<?=$calculo->CNPJ?>" />
+                            <input type="text" id="cnpj" name="cnpj" value="<?=$auto->CNPJ?>" />
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div id="select-cidades">
@@ -377,25 +377,25 @@ if ($acao == "inserirCliente"){
 
                         <div class="campo-pessoa-fisica">
                             <label for="rg" class="label" >RG</label>
-                            <input type="text" id="rg" name="rg" value="<?=$calculo->RG?>" />
+                            <input type="text" id="rg" name="rg" value="<?=$auto->RG?>" />
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div class="campo-pessoa-fisica">
                             <label for="dataExpedicao" class="label" >Data Expedi&ccedil;&atilde;o</label>
-                            <input type="text" id="dataExpedicao" name="dataExpedicao" style="width: 150px" value="<?=$calculo->ORG_DATA_EXPEDICAO?>" />
+                            <input type="text" id="dataExpedicao" name="dataExpedicao" style="width: 150px" value="<?=$auto->ORG_DATA_EXPEDICAO?>" />
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div class="campo-pessoa-fisica">
                             <label for="data_cnh" class="label" >Data Primeira CNH</label>
-                            <input type="text" id="data_cnh" name="data_cnh" style="width: 150px" value="<?=$calculo->CNH_DATA_EXPEDICAO?>" />
+                            <input type="text" id="data_cnh" name="data_cnh" style="width: 150px" value="<?=$auto->CNH_DATA_EXPEDICAO?>" />
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div class="campo-pessoa-fisica">
                             <label for="estadoCivil" class="label">Estado Civil</label>
                             <select id="estadoCivil" name="estadoCivil">
-                                <option value="casado" <?=$calculo->ESTADO_CIVIL == 'casado' ? 'selected="selected"' : null;?>>Casado</option>
-                                <option value="solteiro" <?=$calculo->ESTADO_CIVIL == 'solteiro' ? 'selected="selected"' : null;?>>Solteiro</option>
-                                <option value="outro" <?=$calculo->ESTADO_CIVIL == 'outro' ? 'selected="selected"' : null;?>>Outro</option>
+                                <option value="casado" <?=$auto->ESTADO_CIVIL == 'casado' ? 'selected="selected"' : null;?>>Casado</option>
+                                <option value="solteiro" <?=$auto->ESTADO_CIVIL == 'solteiro' ? 'selected="selected"' : null;?>>Solteiro</option>
+                                <option value="outro" <?=$auto->ESTADO_CIVIL == 'outro' ? 'selected="selected"' : null;?>>Outro</option>
                             </select>
                         </div><!-- .campo-pessoa-fisica -->
 
@@ -403,22 +403,22 @@ if ($acao == "inserirCliente"){
 
                         <div>
                             <label for="numero" class="label">Numero</label>
-                            <input type="text" id="numero" name="numero" value="<?=$calculo->NUMERO?>"/>
+                            <input type="text" id="numero" name="numero" value="<?=$auto->NUMERO?>"/>
                         </div>
 
                         <div>
                             <label for="bairro" class="label">Bairro</label>
-                            <input type="text" id="bairro" name="bairro" value="<?=$calculo->BAIRRO?>" />
+                            <input type="text" id="bairro" name="bairro" value="<?=$auto->BAIRRO?>" />
                         </div>
 
                         <div>
                             <label for="email" class="label">Email</label>
-                            <input type="text" id="email" name="email" value="<?=$calculo->EMAIL?>" />
+                            <input type="text" id="email" name="email" value="<?=$auto->EMAIL?>" />
                         </div>
 
                         <div>
                             <label for="fone2" class="label">Fone 2</label>
-                            <input type="text" id="fone2" name="fone2" value="<?=$calculo->FONE2?>" />
+                            <input type="text" id="fone2" name="fone2" value="<?=$auto->FONE2?>" />
                         </div>
                     </div>
                 </form>
