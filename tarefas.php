@@ -16,29 +16,18 @@
     }
 
     //inserir usuario
-    $ativo = 0; $admin = 0; 
-    if (get("acao") && post('usuario') && (get("acao") == "inserir")) {
+    if ((get("acao") && post('usuario')) && (get("acao") == "inserir")) {
         $msgErro = null;
-        if (post('Ativo') && post('Ativo')){
-            $ativo = 1;
-        }
-        if (post('Admin') && post('Admin')){
-            $admin = 1;
-        }
 
-        //verifica se ja existe este usuario cadastrado no sistema.
-        $sqlusuario = mysql_query("SELECT USUARIO FROM users WHERE USUARIO = '".addslashes(post('usuario'))."'");
-        if (mysql_num_rows($sqlusuario) > 0){
-            $msgErro = "*O usuario ".post('usuario')." já está cadastrado no sistema";
-        } else {
-            $sql = "INSERT INTO users (USUARIO, SENHA, ADMIN, ATIVO) VALUES ('".addslashes(strtolower(post('usuario')))."', ".addslashes(post('senha')).", $admin, $ativo)";
-            $query = mysql_query($sql) or die(mysql_error());
-            $msgErro = 'Usuario inserido com sucesso!';
-            echo "<script>
-                alert('Usuario inserido com sucesso!')
-                window.location='usuarios.php';
-             </script>";
-        }
+        $sql = "INSERT INTO tarefas (DESCRICAO, DATA_VENCIMENTO, DATA_CADASTRO) VALUES ('".addslashes(strtolower(post('descricao')))."', ".addslashes(post(formatarDataEN('data'))).")";
+        echo $sql; die;
+        $query = mysql_query($sql) or die(mysql_error());
+        $msgErro = 'Tarefa inserida com sucesso!';
+        echo "<script>
+            alert('Usuario inserido com sucesso!')
+            window.location='usuarios.php';
+         </script>";
+
     }
 
     //verifica se o usuario está selecionado ($_GET[ID]) e busca os dados no banco
@@ -88,6 +77,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <?php include('_head.php') ?>
+        <script type="text/javascript">
+            $(function() {
+                $( "#datepicker" ).datepicker({
+                    altFormat: 'dd/mm/yy',
+                    dateFormat: 'dd/mm/yy',
+                    dayNamesMin: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
+                });
+            });
+        </script>
         <title><?php echo $tittle; ?></title>
     </head>
     <body class="body">
@@ -117,24 +115,28 @@
               <div style="clear:both"></div>
 
               <?php if (get('acao') && get('acao') != 'excluir') { ?>
-              <form action="tarefas.php?acao=<?php echo get('acao'); if (editar()){ echo '&id='.get('id');} ?>" method="post">
+              <form action="tarefas.php?acao=<?php echo get('acao'); if (editar(get('id'))){ echo '&id='.get('id');} ?>" method="post">
                 <fieldset>
                     <legend>Informa&ccedil;&otilde;es</legend>
 
                         <div class="item-form">
                             <label class="label">Descrição</label>
-                            <textarea cols="5" rows="5" style=""  class="buscar" id="descricao"><?php ?></textarea>
+                            <textarea cols="59" rows="5" class="buscar" name="descricao" id="descricao"></textarea>
                             <div class="clear"></div>
                         </div><!-- .item-form -->
 
                         <div class="item-form">
                             <label class="label">Data</label>
-                            <input class="buscar" id="senha" style="margin-bottom: 10px;" type="password" name="senha" />
+                            <input id="datepicker" class="buscar" name="data" type="text"/>
                             <div class="clear"></div>
                         </div><!-- .item-form -->
-
+                        <?php
+                            if (editar(get('id'))){
+                                echo '<input type="hidden" name="alteraUsuario" value="alteraUsuario"/>';
+                            }
+                        ?>
                         <input class="bt_salvar" id="botaoEnviar" type="submit" value="Salvar"/>
-                        <input class="bt_voltar" type="button" onclick="javascript:window.location='usuarios.php'" value="Voltar"/>
+                        <input class="bt_voltar" type="button" onclick="javascript:window.location='tarefas.php'" value="Voltar"/>
                 </fieldset>
                 </form>
                 <?php } else { ?>

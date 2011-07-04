@@ -42,8 +42,8 @@ function admin($var, $valor = null){
     return !is_null(get('id')) ? $var == 1 ? true : false : $valor;
 }
 
-function editar($var, $valor = null){
-    return !is_null(get('id')) ? true : false;
+function editar($var){
+    return !is_null($var) ? true : false;
 }
 //$acao = get('acao', 'teste');
 

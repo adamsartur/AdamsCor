@@ -129,7 +129,7 @@ ConectarBanco();
               <div style="clear:both"></div>
               
               <?php if (get('acao') && get('acao') != 'excluir') { ?>
-              <form action="usuarios.php?acao=<?php echo get('acao'); if (editar()){ echo '&id='.get('id');} ?>" method="post" id="usuarios">
+              <form action="usuarios.php?acao=<?php echo get('acao'); if (editar(get('id'))){ echo '&id='.get('id');} ?>" method="post" id="usuarios">
                 <fieldset>
                     <legend>Informa&ccedil;&otilde;es</legend>
                         
@@ -140,7 +140,7 @@ ConectarBanco();
                         </div><!-- .item-form -->
 
                         <div class="item-form">
-                            <?php if (editar()) { ?>
+                            <?php if (editar(get('id'))) { ?>
                             <label class="label">Senha Atual</label>
                             <input class="buscar" id="senhaatual" style="margin-bottom: 10px;" type="password" name="senhaAtual" />
 
