@@ -13,5 +13,6 @@ define("BASE_DB","adamscor");
 
 require_once("login/seguranca.php");
 require_once("inc/funcoes.php");
+require_once("inc/classes/base.class.php");
 
 ini_set('display_errors', 'on');
