@@ -11,65 +11,32 @@
         $id = addslashes(get("id"));
         $situacao = mysql_fetch_array(mysql_query("SELECT SITUACAO FROM tarefas WHERE ID =". set($id)." LIMIT 1"));
         $situacao = $situacao['SITUACAO'] == 0 ? 1 : 0;
-        mysql_query("UPDATE tarefas SET SITUACAO = ". $situacao ." WHERE ID = ". set($id));
+        mysql_query("UPDATE tarefas SET SITUACAO = ". $situacao .",
+                                        DATA_FINALIZACAO = '".date("Y-m-d")."'
+                                  WHERE ID = ". set($id));
         $msgErro = "Status atualizado com sucesso";
     }
 
-    //inserir usuario
-    if ((get("acao") && post('usuario')) && (get("acao") == "inserir")) {
+    //inserir tarefa
+    if (post('tarefa')) {
         $msgErro = null;
-
-        $sql = "INSERT INTO tarefas (DESCRICAO, DATA_VENCIMENTO, DATA_CADASTRO) VALUES ('".addslashes(strtolower(post('descricao')))."', ".addslashes(post(formatarDataEN('data'))).")";
-        echo $sql; die;
+        $sql = "INSERT INTO tarefas (DESCRICAO, DATA_VENCIMENTO, DATA_CADASTRO) VALUES ('".addslashes(post('descricao'))."', '".formatarDataBR(addslashes(post('data')))."', '".date("Y-m-d")."')";
         $query = mysql_query($sql) or die(mysql_error());
         $msgErro = 'Tarefa inserida com sucesso!';
-        echo "<script>
-            alert('Usuario inserido com sucesso!')
-            window.location='usuarios.php';
-         </script>";
-
     }
 
-    //verifica se o usuario está selecionado ($_GET[ID]) e busca os dados no banco
+    //verifica se o tarefa está selecionado ($_GET[ID]) e busca os dados no banco
     if (get('id')){
-        $editar = mysql_fetch_array(mysql_query("SELECT * FROM users WHERE ID = '".addslashes(get('id'))."'"));
+        $editar = mysql_fetch_array(mysql_query("SELECT * FROM tarefas WHERE ID = '".addslashes(get('id'))."'"));
     }
 
-    //alteração do usuário
-    if (post('alteraUsuario')) {
-        if (post('Ativo')){
-            $ativo = 1;
-        }
-        if (post('Admin')){
-            $admin = 1;
-        }
-        //verifica se esta tentando alterar a senha
-        if (post('senhaAtual')){
-            $sqlSenha = mysql_fetch_array(mysql_query('SELECT SENHA FROM USERS WHERE ID ='.post('usuarioID')));
-            //verifica se a senha digitada é igual a do banco
-            if (post('senhaAtual') != $sqlSenha['SENHA'] ){
-                $msgErro = "A senha atual digitada não confere";
-            } else {
-                $sql = "UPDATE users SET SENHA = ".addslashes(post('senha')).",
-                                         ADMIN = $admin,
-                                         ATIVO = $ativo WHERE ID =".post('usuarioID');
-                $query = mysql_query($sql) or die(mysql_error());
-                $msgErro = 'Usuario alterado com sucesso!';
-                echo "<script>
-                    alert('Usuario alterado com sucesso!')
-                    window.location='usuarios.php';
-                 </script>";
-            }
-        } else {
-            $sql = "UPDATE users SET ADMIN = $admin,
-                                     ATIVO = $ativo WHERE ID =".post('usuarioID');
+    //alteração do tarefa
+    if (post('alteraTarefa')) {
+            $sql = "UPDATE tarefas SET DESCRICAO = '".addslashes(post('descricao'))."',
+                                       DATA_VENCIMENTO = '".formatarDataBR(addslashes(post('data')))."'
+                                 WHERE ID =".post('tarefaID');
             $query = mysql_query($sql) or die(mysql_error());
-            $msgErro = 'Usuario alterado com sucesso!';
-            echo "<script>
-                alert('Usuario alterado com sucesso!')
-                window.location='usuarios.php';
-             </script>";
-        }
+            $msgErro = 'Tarefa alterada com sucesso!';
     }
 
 ?>
@@ -115,24 +82,27 @@
               <div style="clear:both"></div>
 
               <?php if (get('acao') && get('acao') != 'excluir') { ?>
-              <form action="tarefas.php?acao=<?php echo get('acao'); if (editar(get('id'))){ echo '&id='.get('id');} ?>" method="post">
+              <form action="tarefas.php" method="post">
                 <fieldset>
                     <legend>Informa&ccedil;&otilde;es</legend>
 
                         <div class="item-form">
                             <label class="label">Descrição</label>
-                            <textarea cols="59" rows="5" class="buscar" name="descricao" id="descricao"></textarea>
+                            <textarea cols="59" rows="5" class="buscar" name="descricao" id="descricao"><?php echo $editar['DESCRICAO'] ?></textarea>
                             <div class="clear"></div>
                         </div><!-- .item-form -->
 
                         <div class="item-form">
                             <label class="label">Data</label>
-                            <input id="datepicker" class="buscar" name="data" type="text"/>
+                            <input id="datepicker" class="buscar" value="<?php echo formatarDataEN($editar['DATA_VENCIMENTO'])?>" name="data" type="text"/>
                             <div class="clear"></div>
                         </div><!-- .item-form -->
                         <?php
                             if (editar(get('id'))){
-                                echo '<input type="hidden" name="alteraUsuario" value="alteraUsuario"/>';
+                                echo '<input type="hidden" name="alteraTarefa" value="alteraTarefa"/>';
+                                echo '<input type="hidden" name="tarefaID" value="'.get('id').'"/>';
+                            } else {
+                                echo '<input type="hidden" name="tarefa" value="tarefa"/>';
                             }
                         ?>
                         <input class="bt_salvar" id="botaoEnviar" type="submit" value="Salvar"/>
