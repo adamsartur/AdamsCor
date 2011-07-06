@@ -231,15 +231,6 @@ ConectarBanco();
               <?php } ?>
             </div>
         </div>
-        <div class="taskbar">
-            <div class="taskbar-action-close">
-            </div>
-        </div>
-        <div class="taskbar-action-open">
-        </div>
-        <div style="clear:both"></div>
-	<div class="rodape">
-            <?php include('_rodape.php') ?>
-        </div>
+	<?php include('_rodape.php') ?>
     </body>
 </html>

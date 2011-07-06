@@ -1,4 +1,22 @@
-<address class="">Adams Seg</address>
+<div class="taskbar">
+    <div class="taskbar-action-close">
+    </div>
+    <div class="task-tarefa">
+        <?php
+            $sql = mysql_query('SELECT * FROM tarefas WHERE SITUACAO <> 1 OR SITUACAO IS NULL ORDER BY DATA_VENCIMENTO');
+            while($linhaTarefa = mysql_fetch_array($sql)): ?>
+                <div><?php echo $linhaTarefa['DESCRICAO']; ?></div>
+                <td width="100px" align="center"><img alt="Status" class="center-img" onclick="javascript:window.location='tarefas.php?update=status&id=<?php echo $linhaTarefa['ID']; ?>'" style="cursor: pointer;" src="img/icons/checkbox_unchecked_icon&16.png" /></td>
+            <?php endwhile;
+        ?>
+    </div>
+</div>
+<div class="taskbar-action-open">
+</div>
+<div style="clear:both"></div>
+<div class="rodape">
+    <address class="">Adams Seg</address>
+</div>
 <script type="text/javascript" >
     $(document).ready(function() {
 
@@ -18,11 +36,11 @@
             });
         });
 
-<?php if (isset($msgErro) && $msgErro != '') : ?>
+        <?php if (isset($msgErro) && $msgErro != '') : ?>
             window.setTimeout(function() {
                 $('.erro').slideUp(250);
-            }, 2000);
-<?php endif; ?>
+            }, 2000);        
+        <?php endif; ?>
 
 
         $('.taskbar-action-close').click(function(){

@@ -44,15 +44,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <?php include('_head.php') ?>
-        <script type="text/javascript">
-            $(function() {
-                $( "#datepicker" ).datepicker({
-                    altFormat: 'dd/mm/yy',
-                    dateFormat: 'dd/mm/yy',
-                    dayNamesMin: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
-                });
-            });
-        </script>
         <title><?php echo $tittle; ?></title>
     </head>
     <body class="body">
@@ -173,15 +164,15 @@
               <?php } ?>
             </div>
         </div>
-        <div class="taskbar">
-            <div class="taskbar-action-close">
-            </div>
-        </div>
-        <div class="taskbar-action-open">
-        </div>
-        <div style="clear:both"></div>
-	<div class="rodape">
-            <?php include('_rodape.php') ?>
-        </div>
+        <script type="text/javascript">
+            $(function() {
+                $( "#datepicker" ).datepicker({
+                    altFormat: 'dd/mm/yy',
+                    dateFormat: 'dd/mm/yy',
+                    dayNamesMin: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
+                });
+            });
+        </script>
+        <?php include('_rodape.php') ?>
     </body>
 </html>

@@ -139,7 +139,7 @@ fieldset {
 }
 .taskbar-action-close{
     background: url(../img/seta_fechar.png) no-repeat left center;
-    width: 15px;
+    width: 9%; /* 15px; */
     height: 100%;
     cursor: pointer;
 }
@@ -288,19 +288,18 @@ table.tablesorter thead tr .headerSortDown {
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
     background-color: #F1F1F1;
 }
-
-
 .float-left {
     float: left;
-    margin: 0 25px 0 0; }
+    margin: 0 25px 0 0;
+}
 .float-right {
     float: right;
-    margin: 0 15px 0 0; }
-
+    margin: 0 15px 0 0;
+}
 .clientes .float-left {
     margin-left:10px;
-    width:290px; }
-
+    width:290px;
+}
 .campo-input {
     margin: 0 0 5px 0;
 
@@ -308,15 +307,18 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 .campo-select select {
     width:136px;
 }
-
 h1 {
     font-size:16px;
     font-weight:normal;
     margin:10px 0 15px 10px;
     float: left;
 }
-
 span.error {
     font-size:10px;
     color:red;
-    margin:2px 0 4px 5px; }
+    margin:2px 0 4px 5px;
+}
+.task-tarefa{
+    width: 90%;
+    height: 100%;
+}
