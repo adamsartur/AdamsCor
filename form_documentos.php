@@ -11,6 +11,14 @@
     </div>
 
     <div>
+        <label class="label">Tipo</label>
+        <input type="radio" value="1" id="tipo-risco-residencia" name="tipoDocumento" checked="checked" class="bt-tipo-documento" />
+        <label for="tipo-documento-auto">Residencia</label>
+        <input type="radio" value="2" id="tipo-risco-empresa" name="tipoDocumento" class="bt-tipo-documento" />
+        <label for="tipo-cliente-re">Empresa</label>
+    </div>    
+    
+    <div>
         <label for="vigencia_inicio" class="label" >Vigencia:</label>
         <input type="text" id="vigencia_inicio" name="vigencia_inico" value="<?=$auto->VIGENCIA_INICIO?>" />
         <input type="text" id="vigencia_fim" name="vigencia_fim" value="<?=$auto->VIGENCIA_FIM?>" />
@@ -106,7 +114,7 @@
 
     </div><!-- perfil -->
 
-    <div class="garantias">
+    <div class="garantias-auto">
         <div>
             <label for="fipe" class="label" >Fipe</label>
             <input type="text" id="fipe" name="fipe" value="<?=$auto->FIPE?>" />
@@ -150,11 +158,109 @@
         <div>
             <label for="carro_reserva">Carro Reserva</label>
             <input type="checkbox" id="carro_reserva" name="carro_reserva" value="<?=$auto->CARRO_RESERVA?>" />
+        </div>              
+        
+    </div><!-- garantias-auto-->
+
+    </div><!-- garantias-auto-->
+    
+        <div class="garantias-re">
+        <div>
+            <label for="incendio" class="label" >Incendio</label>
+            <input type="text" id="fipe" name="incendio" value="<?=$re->INCENDIO?>" />
+        </div>
+
+        <div>
+            <label for="vendaval" class="label" >Vendaval</label>
+            <input type="text" id="vendaval" name="vendaval" value="<?=$re->VENDAVAL?>" />
+        </div>
+
+        <div>
+            <label for="dano_eletrico" class="label" >Danos Eletricos</label>
+            <input type="text" id="dano_eletrico" name="dano_eletrico" value="<?=$re->DANO_ELETRICO?>" />
+        </div>
+
+        <div>
+            <label for="roubo" class="label" >Roubo</label>
+            <input type="text" id="roubo" name="roubo" value="<?=$re->ROUBO?>" />
+        </div>
+
+        <div>
+            <label for="rcf" class="label" >RC FAMILIAR</label>
+            <input type="text" id="rcf" name="rcf" value="<?=$re->RCF?>" />
+        </div>
+
+        <div>
+            <label for="vidros" class="label" >Quebra de Vidros</label>
+            <input type="text" id="vidros" name="vidros" value="<?=$re->VIDROS?>" />
+        </div>
+
+        <div>
+            <label for="perda_aluguel">Perda Pagamento de Aluguel</label>
+            <input type="checkbox" id="perda_aluguel" name="perda_aluguel" value="<?=$re->PERDA_ALUGUEL?>" />
+        </div>
+
+        <div>
+            <label for="periodo_indenitario">PI</label>
+            <input type="checkbox" id="periodo_indenitario" name="periodo_indenitario" value="<?=$re->PERIODO_INDENITARIO?>" />
+        </div>
+
+        <div>
+            <label for="equipamentos_eletronicos">Equipamentos Eletronicos</label>
+            <input type="checkbox" id="equipamentos_eletronicos" name="equipamentos_eletronicos" value="<?=$re->EQUIPAMENTOS_ELETRONICOS?>" />
         </div>      
 
-    </div><!-- garantias-->
+    </div><!-- garantias-re-->    
+    
+        <div class="endereco-re">
+        <div>
+            <label for="cep" class="label" >Cep</label>
+            <input type="text" id="cep" name="cep" value="<?=$re->CEP?>" />
+        </div>
 
-    <div class="renovacao">
+        <div>
+            <!-- estado -->
+        </div>
+
+        <div>
+            <!-- cidade -->
+        </div>
+             
+        <div>
+            <label for="endereco" class="label" >Rua</label>
+            <input type="text" id="endereco" name="endereco" value="<?=$re->ENDERECO?>" />
+        </div>
+
+        <div>
+            <label for="numero" class="label" >Nº</label>
+            <input type="text" id="numero" name="numero" value="<?=$re->NUMERO?>" />
+        </div>
+
+        <div>
+            <label for="complemento" class="label" >Complemento</label>
+            <input type="text" id="complemento" name="complemento" value="<?=$re->COMPLEMENTO?>" />
+        </div>            
+     </div><!-- endereco-re-->
+
+     <div class="risco-re">
+         
+         <div>
+            <label for="ocupacao" class="label" >Ocupacao</label>
+            <input type="text" id="ocupacao" name="ocupacao" value="<?=$re->OCUPACAO?>" />
+        </div> 
+         
+        <div>
+            <label for="construcao" class="label" >Construcao</label>
+            <select id="construcao" value="construcao">
+                <option value="superior" <?=$re->CONSTRUCAO == 'superior' ? 'selected="selected"' : ''?>>Superior</option>
+                <option value="solida" <?=$re->CONSTRUCAO == 'solida' ? 'selected="selected"' : ''?>>Solida</option>
+                <option value="inferior" <?=$re->CONSTRUCAO == 'inferior' ? 'selected="selected"' : ''?>>Inferior</option>
+            </select>
+        </div> 
+         
+     </div>     
+     
+    <div class="renovacao apolice">
 
         <div>
             <label for="bonus" class="label">Bonus</label>
