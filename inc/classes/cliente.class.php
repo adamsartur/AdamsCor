@@ -99,7 +99,7 @@ class Cliente extends Base {
                     '".addslashes( $this->CNPJ )."',
                     '".addslashes( $this->NOME )."',
                     ".$this->DATA_NASC.",
-                    '".addslashes($cliente->RG )."',
+                    '".addslashes( $this->RG )."',
                     '".addslashes( $this->ORGAO )."',
                     ".$this->ORG_DATA_EXPEDICAO.",
                     '".addslashes( $this->ENDERECO )."',
