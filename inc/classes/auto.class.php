@@ -158,7 +158,7 @@ public function inserir()
                     '".            $this->VIGENCIA_FIM."',
                     '".addslashes( $this->CI )."',
                     '".addslashes( $this->PREMIO )."',
-                    '".addslashes( $this->PARCELAMENTO )."'
+                    '".addslashes( $this->PARCELAMENTO )."', 
                     '".addslashes( $this->FORMA_PAGAMENTO )."',
                     '".            $this->DATA_VENCIMENTO."',
                     '".addslashes( $this->DANOS_MORAIS )."',
@@ -173,8 +173,6 @@ public function inserir()
                     '".addslashes( $this->OBS )."'                        
             );
         ";
-
-        mysql_query($sql) or die(mysql_error());
         
         if( mysql_query($sql) ) {
             return true;
@@ -182,6 +180,7 @@ public function inserir()
             return false;
         }
     }
+    
     
     public function update(){
         $sql = "
@@ -221,7 +220,9 @@ public function inserir()
                 VIDROS             = '".addslashes( $this->VIDROS)."',
                 ASSISTENCIA        = '".addslashes( $this->ASSISTENCIA )."',
                 CARRO_RESERVA      = '".addslashes( $this->CARRO_RESERVA )."',
-                OBS                = '".addslashes( $this->OBS )."'    
+                OBS                = '".addslashes( $this->OBS )."'  
+                    
+             WHERE ID = '".addslashes( $this->ID )."'
           ";
         mysql_query($sql) or die(mysql_error());
     }
