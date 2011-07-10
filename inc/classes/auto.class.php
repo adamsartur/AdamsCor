@@ -38,7 +38,7 @@ class Auto extends Base {
     public $CARRO_RESERVA = null;
     public $OBS = null;
     
-        public function informacoesAuto()
+        public function informacoes()
     {
         $consultaAuto = mysql_query("
             SELECT * FROM AUTO
@@ -94,7 +94,7 @@ class Auto extends Base {
     }
   
     
-public function inserirAuto()
+public function inserir()
     {
         $sql = "
             INSERT INTO auto (
@@ -173,12 +173,57 @@ public function inserirAuto()
                     '".addslashes( $this->OBS )."'                        
             );
         ";
+
+        mysql_query($sql) or die(mysql_error());
         
         if( mysql_query($sql) ) {
             return true;
         } else {
             return false;
         }
+    }
+    
+    public function update(){
+        $sql = "
+            UPDATE auto SET
+                TIPO_CADASTRO      = '".addslashes( $this->TIPO_CADASTRO )."',
+                CLIENTE_ID         = '".addslashes( $this->CLIENTE_ID )."',
+                CIA_ID             = '".addslashes( $this->CIA_ID )."',
+                MARCA_ID           = '".addslashes( $this->MARCA_ID )."',
+                DESCRICAO          = '".addslashes( $this->DESCRICAO )."',
+                ANO                = '".addslashes( $this->ANO )."',
+                KM_ANUAL           = '".addslashes( $this->KM_ANUAL )."',
+                ZERO               = '".addslashes( $this->ZERO )."',
+                PLACA              = '".addslashes( $this->PLACA )."',
+                CHASSI             = '".addslashes( $this->CHASSI )."',
+                RENAVAM            = '".addslashes( $this->RENAVAM )."',
+                CEP                = '".addslashes( $this->CEP )."',
+                FILHOS             = '".addslashes( $this->FILHOS )."',
+                COMBUSTIVEL        = '".addslashes( $this->COMBUSTIVEL )."',
+                GARAGEM_CASA       = '".addslashes( $this->GARAGEM_CASA )."',
+                GARAGEM_TRABALHO   = '".addslashes( $this->GARAGEM_TRABALHO )."',
+                GARAGEM_FACULDADE  = '".addslashes( $this->GARAGEM_FACULDADE )."',
+                BONUS              = '".addslashes( $this->BONUS )."',
+                APOLICE            = '".addslashes( $this->APOLICE )."',
+                VIGENCIA_INICIO    = '".            $this->VIGENCIA_INICIO."',
+                VIGENCIA_FIM       = '".            $this->VIGENCIA_FIM."',
+                CI                 = '".addslashes( $this->CI )."',
+                PREMIO             = '".addslashes( $this->PREMIO )."',
+                PARCELAMENTO       = '".addslashes( $this->PARCELAMENTO )."'
+                FORMA_PAGAMENTO    = '".addslashes( $this->FORMA_PAGAMENTO )."',
+                DATA_VENCIMENTO    = '".            $this->DATA_VENCIMENTO."',
+                DANOS_MORAIS       = '".addslashes( $this->DANOS_MORAIS )."',
+                FIPE               = '".addslashes( $this->FIPE )."',
+                FRANQUIA           = '".addslashes( $this->FRANQUIA )."',
+                DM                 = '".addslashes( $this->DM )."',
+                DC                 = '".addslashes( $this->DC )."',
+                APP                = '".addslashes( $this->APP )."',
+                VIDROS             = '".addslashes( $this->VIDROS)."',
+                ASSISTENCIA        = '".addslashes( $this->ASSISTENCIA )."',
+                CARRO_RESERVA      = '".addslashes( $this->CARRO_RESERVA )."',
+                OBS                = '".addslashes( $this->OBS )."'    
+          ";
+        mysql_query($sql) or die(mysql_error());
     }
     
 }

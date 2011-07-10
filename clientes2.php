@@ -176,12 +176,9 @@ if ($acao == "inserirCliente") {
     if( post('tipoCliente') == 'F' ) {
         $valida = bancoCpf(post('cpf'), post('id'));
         $msgErro = "O CPF já está cadastrado para outro cliente, insira outro cpf";
-        $parametro = "erro-cpf";
-        
     } else {
         $valida = bancoCnpj(post('cnpj'), post('id'));
         $msgErro = "O CNPJ já está cadastrado para outro cliente, insira outro cpf";
-        $parametro = "erro-cnpj";
     }
     
     $idCliente = get("id");
@@ -217,22 +214,7 @@ if ($acao == "inserirCliente") {
         } else {
             header('Location: clientes.php?acao=inserir');
         }
-    }else{
-        //header('Location: clientes.php?msg='.$parametro.'&acao=inserir&id='.$idCliente);
-        
-        $cliente->valorAcao = 'inserirCliente';
-        $cliente->listar   = false;
-        $cliente->inserir   = true;
-        $acao = "inserir";
-        
-        if($parametro == "erro-cpf"){
-            $cliente->CPF = '';
-            $msgErro = 'O cpf já está cadastrado para outro cliente, favor inserir outro cpf!';
-        }else
-            $cliente->CPF = '';
-            $msgErro = 'O cnpj já está cadastrado para outro cliente, favor inserir outro cpnj!';
-        }
-    
+    }
 
 }
 
@@ -249,9 +231,6 @@ switch (request('msg')) {
         break;
     case 'erro-cpf' :
         $msgErro = 'O cpf já está cadastrado para outro cliente, favor inserir outro cpf!';
-        break;
-    case 'erro-cnpj' :
-        $msgErro = 'O cnpj já está cadastrado para outro cliente, favor inserir outro cnpj!';
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
