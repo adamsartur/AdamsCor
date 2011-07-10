@@ -258,7 +258,7 @@ switch (request('msg')) {
     <? }?>
 
         <div class="erro">
-            <p style="text-align: center; margin-top: 10px;"><?php if (isset($msgerro)){  echo $msgErro;  } ?></p>
+            <p style="text-align: center; margin-top: 10px;"><?php if (isset($msgErro)){  echo $msgErro;  } ?></p>
         </div><!-- .erro -->
 
     <? if ( $acao != "inserir" && $acao != "editar" ){ ?>
@@ -479,31 +479,14 @@ switch (request('msg')) {
                         </div>
                     </div><!-- float left -->
                     <div style="clear: both"></div>
-
-
                 </form>
-            
-                
-
                 <?php
             endif;
             ?>
         </div><!-- .linha -->
     </div><!-- .principal -->
-
-    <div class="taskbar">
-        <div class="taskbar-action-close">
-        </div>
-    </div><!-- .taskbar -->
-
-    <div class="taskbar-action-open">
-    </div><!-- .taskbar-action-open -->
-    <div style="clear:both"></div>
-    
-    <div class="rodape">
-        <?php include('_rodape.php') ?>
-    </div><!-- .rodape -->
-    
+    <?php include('_rodape.php') ?>
+ 
     <script type="text/javascript">
         /*esconder fisica/ juridica */
 

@@ -11,16 +11,7 @@
         <!-- div "menu"-->
         <?php include('_menu.php') ?>
         <div class="principal">&nbsp;
-        </div>
-        <div class="taskbar">
-            <div class="taskbar-action-close">
-            </div>
-        </div>
-        <div class="taskbar-action-open">
-        </div>
-        <div style="clear:both"></div>
-	<div class="rodape">	
+        </div>	
             <?php include('_rodape.php') ?>
-        </div>
     </body>
 </html>

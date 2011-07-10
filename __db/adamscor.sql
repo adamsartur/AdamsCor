@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tempo de Geração: Jun 25, 2011 as 06:15 PM
+-- Tempo de Geração: Jul 06, 2011 as 11:14 PM
 -- Versão do Servidor: 5.5.8
--- Versão do PHP: 5.3.5
+-- Versão do PHP: 5.2.11
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -9869,7 +9869,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `ESTADO_ID` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `CIDADEID_FK1` (`CIDADE_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Extraindo dados da tabela `clientes`
@@ -9878,7 +9878,8 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 INSERT INTO `clientes` (`ID`, `CIDADE_ID`, `TIPO_CLIENTE`, `CPF`, `CNPJ`, `NOME`, `DATA_NASC`, `RG`, `ORG_EXPEDIDOR`, `ORG_DATA_EXPEDICAO`, `ENDERECO`, `NUMERO`, `COMPLEMENTO`, `BAIRRO`, `CEP`, `CNH`, `CNH_DATA_EXPEDICAO`, `SEXO`, `ESTADO_CIVIL`, `FONE`, `FONE2`, `EMAIL`, `SITUACAO`, `OBS`, `ESTADO_ID`) VALUES
 (1, NULL, 'F', '123', NULL, 'Derpano', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
 (2, NULL, 'J', NULL, '213123123', 'Manolo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(4, 7707, 'F', '239.264.140-49', '', 'Artur Adams', NULL, '1111111111', 'ssp', NULL, 'Rua SÃ£o Luiz Gonzaga', '1159', '', '', '', '009', NULL, 'M', 0, '', '', '', '', '', 23);
+(6, 0, 'F', '', '', 'sss', NULL, '', '', NULL, '', '', '', '', '', '', NULL, 'M', 0, '', '', '', '', '', 0),
+(7, 0, 'F', '025.992.930-14', '', 'alan', NULL, '', '', NULL, '', '', '', '', '', '', NULL, 'M', 0, '', '', '', '', '', 0);
 
 -- --------------------------------------------------------
 
@@ -10028,16 +10029,20 @@ CREATE TABLE IF NOT EXISTS `tarefas` (
   `DATA_CADASTRO` date DEFAULT NULL,
   `SITUACAO` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Extraindo dados da tabela `tarefas`
 --
 
 INSERT INTO `tarefas` (`ID`, `RE_ID`, `AUTO_ID`, `DESCRICAO`, `DATA_VENCIMENTO`, `DATA_FINALIZACAO`, `DATA_CADASTRO`, `SITUACAO`) VALUES
-(1, NULL, NULL, 'asdasdasdasd', '2011-06-12', '2011-06-12', '2011-06-11', 0),
-(2, NULL, 1, 'aaaaaaaaaaaaaaaaa', '2011-06-18', NULL, '2011-06-15', 0),
-(3, 1, NULL, 'bbbbbbbbbbbbb', '2011-06-18', NULL, '2011-06-15', 0);
+(1, NULL, NULL, 'asdasdasdasd1', '2011-06-12', '2011-07-06', '2011-06-11', 1),
+(2, NULL, 1, 'aaaaaaaaaaaaaaaaa', '2011-06-18', NULL, '2011-06-15', 1),
+(3, 1, NULL, 'bbbbbbbbbbbb', '2011-06-18', NULL, '2011-06-15', 0),
+(4, NULL, NULL, 'sdasdasdas', '2011-07-06', '2011-07-05', '0000-00-00', 1),
+(5, NULL, NULL, 'teste2', '2011-07-30', '2011-07-06', '2011-07-04', 0),
+(6, NULL, NULL, 'deeeeee asdfhausfhua uadfhuashdfuha as dasdasdasdasdhasdjh jhasjhkasdjhkasdjhk ', '2011-07-02', NULL, '2011-07-04', NULL),
+(7, NULL, NULL, 'pppppppppppp', '2011-07-29', '2011-07-05', '2011-07-04', 1);
 
 -- --------------------------------------------------------
 

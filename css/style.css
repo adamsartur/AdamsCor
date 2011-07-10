@@ -137,11 +137,18 @@ fieldset {
     -moz-border-radius: 10px;
     -webkit-border-radius:10px;
 }
+.task-tarefa{
+    width: 90%;
+    height: 100%;
+    float: right;
+    margin-top: 5px;
+}
 .taskbar-action-close{
     background: url(../img/seta_fechar.png) no-repeat left center;
     width: 9%; /* 15px; */
     height: 100%;
     cursor: pointer;
+    float: left;
 }
 .taskbar-action-open{
     background: url(../img/seta_abrir.png) no-repeat left center #FFFFFF;
@@ -317,8 +324,4 @@ span.error {
     font-size:10px;
     color:red;
     margin:2px 0 4px 5px;
-}
-.task-tarefa{
-    width: 90%;
-    height: 100%;
 }

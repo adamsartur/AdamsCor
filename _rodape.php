@@ -1,12 +1,17 @@
 <div class="taskbar">
     <div class="taskbar-action-close">
     </div>
+    <h2 style="text-align: center;">Tarefas</h2>
     <div class="task-tarefa">
         <?php
             $sql = mysql_query('SELECT * FROM tarefas WHERE SITUACAO <> 1 OR SITUACAO IS NULL ORDER BY DATA_VENCIMENTO');
             while($linhaTarefa = mysql_fetch_array($sql)): ?>
-                <div><?php echo $linhaTarefa['DESCRICAO']; ?></div>
-                <td width="100px" align="center"><img alt="Status" class="center-img" onclick="javascript:window.location='tarefas.php?update=status&id=<?php echo $linhaTarefa['ID']; ?>'" style="cursor: pointer;" src="img/icons/checkbox_unchecked_icon&16.png" /></td>
+                <div>
+                    <img alt="Status" onclick="javascript:window.location='tarefas.php?update=status&id=<?php echo $linhaTarefa['ID']; ?>'" style="cursor: pointer;" src="img/icons/checkbox_unchecked_icon&16.png" />
+                    <?php echo $linhaTarefa['DESCRICAO'];
+                          echo '  '.formatarDataEN($linhaTarefa['DATA_VENCIMENTO']);
+                    ?>
+                </div>
             <?php endwhile;
         ?>
     </div>

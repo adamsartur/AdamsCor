@@ -79,13 +79,13 @@
 
                         <div class="item-form">
                             <label class="label">Descrição</label>
-                            <textarea cols="59" rows="5" class="buscar" name="descricao" id="descricao"><?php echo $editar['DESCRICAO'] ?></textarea>
+                            <textarea cols="59" rows="5" class="buscar" name="descricao" id="descricao"><?php echo get('id') ? $editar['DESCRICAO'] : null; ?></textarea>
                             <div class="clear"></div>
                         </div><!-- .item-form -->
 
                         <div class="item-form">
                             <label class="label">Data</label>
-                            <input id="datepicker" class="buscar" value="<?php echo formatarDataEN($editar['DATA_VENCIMENTO'])?>" name="data" type="text"/>
+                            <input id="datepicker" class="buscar" value="<?php echo get('id') ? formatarDataEN($editar['DATA_VENCIMENTO']) : null; ?>" name="data" type="text"/>
                             <div class="clear"></div>
                         </div><!-- .item-form -->
                         <?php
@@ -117,7 +117,7 @@
                         <!-- <th>&nbsp;</th> -->
                         <th>Cliente</th>
                         <th>Descri&ccedil;&atilde;o</th>
-                        <th>Data Vencimento</th>
+                        <th style="width: 95px;">Data Vencimento</th>
                         <th style="text-align: center;">Editar</th>
                         <th style="text-align: center;">Status</th>
                     </tr>
@@ -135,7 +135,7 @@
                             $tarefaRE   = $tarefa['RE_ID'] ? $tarefa['RE_ID'] : 0;
                             $tarefaAUTO = $tarefa['AUTO_ID'] ? $tarefa['AUTO_ID'] : 0;
 
-                            $sqlClietne = mysql_query("SELECT *
+                            $sqlCliente = mysql_query("SELECT *
                                                          FROM clientes
                                                         WHERE ID IN ( SELECT CLIENTE_ID
                                                                         FROM re
@@ -146,7 +146,7 @@
                                                                         WHERE ID = $tarefaAUTO)");
 
                             //Seleciona os dados do cliente de acordo com o cliente_id do RE ou AUTO
-                            $sqlCliente = mysql_fetch_array($sqlClietne);
+                            $sqlCliente = mysql_fetch_array($sqlCliente);
 
                                                                          
                     ?>
