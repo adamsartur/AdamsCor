@@ -5,7 +5,8 @@ abstract class Base {
         $valorAcao = null, 
         $listar = true, 
         $editar = false, 
-        $form   = false;
+        $form   = false, 
+        $acao;
     
     
 }

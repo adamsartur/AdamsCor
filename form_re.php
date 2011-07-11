@@ -1,73 +1,24 @@
 <!--Formulário de inserção / edição-->
 <form id="formRe" action="documentos.php" method="post">
-    <input type="hidden" name="acao" value="inserirRe" />
+    <input type="hidden" name="acao" value="<?=$re->acao?>" />
     <input type="hidden" name="idCliente" value="<?=$cliente->ID?>" />
     <input type="hidden" name="ID" value="<?=$re->ID?>" />
+    <input type="hidden" name="TIPO_DOCUMENTO" value="P" />
    
+
     <div>
         <label for="vigencia_inicio" class="label" >Vigencia:</label>
-        <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=$re->VIGENCIA_INICIO?>" />
-        <input type="text" id="VIGENCIA_FIM" name="VIGENCIA_FIM" value="<?=$re->VIGENCIA_FIM?>" />
+        <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=  formatarDataEN($re->VIGENCIA_INICIO)?>" />
+        <input type="text" id="VIGENCIA_FIM" name="VIGENCIA_FIM" value="<?=  formatarDataEN($re->VIGENCIA_FIM)?>" />
     </div>
 
     <div>
-        <!-- fazer box com autocomplete das CIAS-->
+        <label for="CIA_ID" class="label" >Cia</label>
+        <select id="CIA_ID" name="CIA_ID">
+            <option value="1" select="selected">HDI</option>
+        </select>
     </div>
 
-    <div>
-        <!-- fazer o select de Marcas com os cadastrados  -->
-    </div>
-
-
-    
-        <div class="garantias-re">
-        <div>
-            <label class="label" for="INCENDIO" class="label" >Incendio</label>
-            <input type="text" id="INCENDIO" name="INCENDIO" value="<?=$re->INCENDIO?>" />
-        </div>
-
-        <div>
-            <label for="VENDAVAL" class="label" >Vendaval</label>
-            <input type="text" id="VENDAVAL" name="VENDAVAL" value="<?=$re->VENDAVAL?>" />
-        </div>
-
-        <div>
-            <label for="DANO_ELETRICO" class="label" >Danos Eletricos</label>
-            <input type="text" id="DANO_ELETRICO" name="DANO_ELETRICO" value="<?=$re->DANO_ELETRICO?>" />
-        </div>
-
-        <div>
-            <label for="ROUBO" class="label" >Roubo</label>
-            <input type="text" id="ROUBO" name="ROUBO" value="<?=$re->ROUBO?>" />
-        </div>
-
-        <div>
-            <label for="RCF" class="label" >RC FAMILIAR</label>
-            <input type="text" id="RCF" name="RCF" value="<?=$re->RCF?>" />
-        </div>
-
-        <div>
-            <label for="VIDROS" class="label" >Quebra de Vidros</label>
-            <input type="text" id="VIDROS" name="VIDROS" value="<?=$re->VIDROS?>" />
-        </div>
-
-        <div>
-            <label class="label" for="PERDA_ALUGUEL">Perda Pagamento de Aluguel</label>
-            <input type="text" id="PERDA_ALUGUEL" name="PERDA_ALUGUEL" value="<?=$re->PERDA_ALUGUEL?>" />
-        </div>
-
-        <div>
-            <label class="label" for="PERIODO_INDENITARIO">PI</label>
-            <input type="text" id="PERIODO_INDENITARIO" name="PERIODO_INDENITARIO" value="<?=$re->PERIODO_INDENITARIO?>" />
-        </div>
-
-        <div>
-            <label class="label" for="EQUIPAMENTOS_ELETRONICOS">Equipamentos Eletronicos</label>
-            <input type="text" id="EQUIPAMENTOS_ELETRONICOS" name="EQUIPAMENTOS_ELETRONICOS" value="<?=$re->EQUIPAMENTOS_ELETRONICOS?>" />
-        </div>      
-
-    </div><!-- garantias-re-->    
-    
         <div class="endereco-re">
         <div>
             <label for="CEP" class="label" >Cep</label>
@@ -115,8 +66,58 @@
         </div> 
          
      </div>     
+
+    
+        <div class="garantias-re">
+        <div>
+            <label class="label" for="INCENDIO" class="label" >Incendio</label>
+            <input type="text" id="INCENDIO" name="INCENDIO" value="<?=$re->INCENDIO?>" />
+        </div>
+
+        <div>
+            <label for="VENDAVAL" class="label" >Vendaval</label>
+            <input type="text" id="VENDAVAL" name="VENDAVAL" value="<?=$re->VENDAVAL?>" />
+        </div>
+
+        <div>
+            <label for="DANO_ELETRICO" class="label" >Danos Eletricos</label>
+            <input type="text" id="DANO_ELETRICO" name="DANO_ELETRICO" value="<?=$re->DANO_ELETRICO?>" />
+        </div>
+
+        <div>
+            <label for="ROUBO" class="label" >Roubo</label>
+            <input type="text" id="ROUBO" name="ROUBO" value="<?=$re->ROUBO?>" />
+        </div>
+
+        <div>
+            <label for="RCF" class="label" >RC Familiar</label>
+            <input type="text" id="RCF" name="RCF" value="<?=$re->RCF?>" />
+        </div>
+
+        <div>
+            <label for="VIDROS" class="label" >Quebra de Vidros</label>
+            <input type="text" id="VIDROS" name="VIDROS" value="<?=$re->VIDROS?>" />
+        </div>
+
+        <div>
+            <label class="label" for="PERDA_ALUGUEL">Perda Pagamento de Aluguel</label>
+            <input type="text" id="PERDA_ALUGUEL" name="PERDA_ALUGUEL" value="<?=$re->PERDA_ALUGUEL?>" />
+        </div>
+
+        <div>
+            <label class="label" for="PERIODO_INDENITARIO">PI</label>
+            <input type="text" id="PERIODO_INDENITARIO" name="PERIODO_INDENITARIO" value="<?=$re->PERIODO_INDENITARIO?>" />
+        </div>
+
+        <div>
+            <label class="label" for="EQUIPAMENTOS_ELETRONICOS">Equipamentos Eletronicos</label>
+            <input type="text" id="EQUIPAMENTOS_ELETRONICOS" name="EQUIPAMENTOS_ELETRONICOS" value="<?=$re->EQUIPAMENTOS_ELETRONICOS?>" />
+        </div>      
+
+    </div><!-- garantias-re-->    
+    
      
-    <div class="renovacao apolice">
+    <div class="renovacao apolice" style="display:none">
         <div>
             <label for="APOLICE" class="label">Apolice</label>
             <input type="text" id="APOLICE" name="APOLICE" value="<?=$re->APOLICE?>" />
@@ -168,7 +169,7 @@
         </div>
         <div>
             <label class="label" for="DATA_VENCIMENTO">Data Vencimento</label>
-            <input type="text" id="DATA_VENCIMENTO" id="DATA_VENCIMENTO" value="<?=$re->DATA_VENCIMENTO?>" />
+            <input type="text" id="DATA_VENCIMENTO" id="DATA_VENCIMENTO" value="<?=  formatarDataEN($re->DATA_VENCIMENTO)?>" />
         </div>
     </div><!-- pagamento -->
 

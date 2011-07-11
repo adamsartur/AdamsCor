@@ -1,6 +1,7 @@
 <?php
+
 class Auto extends Base {
-    
+
     public $ID = null;
     public $TIPO_CADASTRO = null;
     public $CLIENTE_ID = null;
@@ -37,15 +38,14 @@ class Auto extends Base {
     public $ASSISTENCIA = null;
     public $CARRO_RESERVA = null;
     public $OBS = null;
-    
-        public function informacoes()
-    {
+
+    public function informacoes() {
         $consultaAuto = mysql_query("
             SELECT * FROM AUTO
-            WHERE ID = '".$this->ID."'
+            WHERE ID = '" . $this->ID . "'
         ");
-        
-        if( mysql_num_rows($consultaAuto) > 0 ) {
+
+        if (mysql_num_rows($consultaAuto) > 0) {
             $arrayAuto = mysql_fetch_array($consultaAuto);
 
             $this->TIPO_CADASTRO = $arrayAuto['TIPO_CADASTRO'];
@@ -65,8 +65,6 @@ class Auto extends Base {
             $this->GARAGEM_CASA = $arrayAuto['GARAGEM_CASA'];
             $this->GARAGEM_TRABALHO = $arrayAuto['GARAGEM_TRABALHO'];
             $this->GARAGEM_FACULDADE = $arrayAuto['GARAGEM_FACULDADE'];
-            $this->SEXO = $arrayAuto['SEXO'];
-            $this->ESTADO_CIVIL = $arrayAuto['ESTADO_CIVIL'];
             $this->BONUS = $arrayAuto['BONUS'];
             $this->APOLICE = $arrayAuto['APOLICE'];
             $this->VIGENCIA_INICIO = $arrayAuto['VIGENCIA_INICIO'];
@@ -84,18 +82,16 @@ class Auto extends Base {
             $this->APP = $arrayAuto['APP'];
             $this->VIDROS = $arrayAuto['VIDROS'];
             $this->ASSISTENCIA = $arrayAuto['ASSISTENCIA'];
-            $this->CARRO_RESERVA = $arrayAuto['CARRO_RESERVA'];            
+            $this->CARRO_RESERVA = $arrayAuto['CARRO_RESERVA'];
             $this->OBS = $arrayAuto['OBS'];
-            
+
             return true;
         } else {
             return false;
         }
     }
-  
-    
-public function inserir()
-    {
+
+    public function inserir() {
         $sql = "
             INSERT INTO auto (
                 TIPO_CADASTRO,
@@ -135,96 +131,104 @@ public function inserir()
                 CARRO_RESERVA,
                 OBS
             ) VALUES (
-                    '".addslashes( $this->TIPO_CADASTRO )."',
-                    '".addslashes( $this->CLIENTE_ID )."',
-                    '".addslashes( $this->CIA_ID )."',
-                    '".addslashes( $this->MARCA_ID )."',
-                    '".addslashes( $this->DESCRICAO )."',
-                    '".addslashes( $this->ANO )."',
-                    '".addslashes( $this->KM_ANUAL )."',
-                    '".addslashes( $this->ZERO )."',
-                    '".addslashes( $this->PLACA )."',
-                    '".addslashes( $this->CHASSI )."',
-                    '".addslashes( $this->RENAVAM )."',
-                    '".addslashes( $this->CEP )."',
-                    '".addslashes( $this->FILHOS )."',
-                    '".addslashes( $this->COMBUSTIVEL )."',
-                    '".addslashes( $this->GARAGEM_CASA )."',
-                    '".addslashes( $this->GARAGEM_TRABALHO )."',
-                    '".addslashes( $this->GARAGEM_FACULDADE )."',
-                    '".addslashes( $this->BONUS )."',
-                    '".addslashes( $this->APOLICE )."',
-                    '".            $this->VIGENCIA_INICIO."',
-                    '".            $this->VIGENCIA_FIM."',
-                    '".addslashes( $this->CI )."',
-                    '".addslashes( $this->PREMIO )."',
-                    '".addslashes( $this->PARCELAMENTO )."', 
-                    '".addslashes( $this->FORMA_PAGAMENTO )."',
-                    '".            $this->DATA_VENCIMENTO."',
-                    '".addslashes( $this->DANOS_MORAIS )."',
-                    '".addslashes( $this->FIPE )."',
-                    '".addslashes( $this->FRANQUIA )."',
-                    '".addslashes( $this->DM )."',
-                    '".addslashes( $this->DC )."',
-                    '".addslashes( $this->APP )."',
-                    '".addslashes( $this->VIDROS)."',
-                    '".addslashes( $this->ASSISTENCIA )."',
-                    '".addslashes( $this->CARRO_RESERVA )."',
-                    '".addslashes( $this->OBS )."'                        
+                    '" . addslashes($this->TIPO_CADASTRO) . "',
+                    '" . addslashes($this->CLIENTE_ID) . "',
+                    '" . addslashes($this->CIA_ID) . "',
+                    '" . addslashes($this->MARCA_ID) . "',
+                    '" . addslashes($this->DESCRICAO) . "',
+                    '" . addslashes($this->ANO) . "',
+                    '" . addslashes($this->KM_ANUAL) . "',
+                    '" . addslashes($this->ZERO) . "',
+                    '" . addslashes($this->PLACA) . "',
+                    '" . addslashes($this->CHASSI) . "',
+                    '" . addslashes($this->RENAVAM) . "',
+                    '" . addslashes($this->CEP) . "',
+                    '" . addslashes($this->FILHOS) . "',
+                    '" . addslashes($this->COMBUSTIVEL) . "',
+                    '" . addslashes($this->GARAGEM_CASA) . "',
+                    '" . addslashes($this->GARAGEM_TRABALHO) . "',
+                    '" . addslashes($this->GARAGEM_FACULDADE) . "',
+                    '" . addslashes($this->BONUS) . "',
+                    '" . addslashes($this->APOLICE) . "',
+                    '" . $this->VIGENCIA_INICIO . "',
+                    '" . $this->VIGENCIA_FIM . "',
+                    '" . addslashes($this->CI) . "',
+                    '" . addslashes($this->PREMIO) . "',
+                    '" . addslashes($this->PARCELAMENTO) . "', 
+                    '" . addslashes($this->FORMA_PAGAMENTO) . "',
+                    '" . $this->DATA_VENCIMENTO . "',
+                    '" . addslashes($this->DANOS_MORAIS) . "',
+                    '" . addslashes($this->FIPE) . "',
+                    '" . addslashes($this->FRANQUIA) . "',
+                    '" . addslashes($this->DM) . "',
+                    '" . addslashes($this->DC) . "',
+                    '" . addslashes($this->APP) . "',
+                    '" . addslashes($this->VIDROS) . "',
+                    '" . addslashes($this->ASSISTENCIA) . "',
+                    '" . addslashes($this->CARRO_RESERVA) . "',
+                    '" . addslashes($this->OBS) . "'                        
             );
         ";
-        
-        if( mysql_query($sql) ) {
+
+        if (mysql_query($sql)) {
             return true;
         } else {
             return false;
         }
     }
-    
-    
-    public function update(){
+
+    public function editar() {
         $sql = "
             UPDATE auto SET
-                TIPO_CADASTRO      = '".addslashes( $this->TIPO_CADASTRO )."',
-                CLIENTE_ID         = '".addslashes( $this->CLIENTE_ID )."',
-                CIA_ID             = '".addslashes( $this->CIA_ID )."',
-                MARCA_ID           = '".addslashes( $this->MARCA_ID )."',
-                DESCRICAO          = '".addslashes( $this->DESCRICAO )."',
-                ANO                = '".addslashes( $this->ANO )."',
-                KM_ANUAL           = '".addslashes( $this->KM_ANUAL )."',
-                ZERO               = '".addslashes( $this->ZERO )."',
-                PLACA              = '".addslashes( $this->PLACA )."',
-                CHASSI             = '".addslashes( $this->CHASSI )."',
-                RENAVAM            = '".addslashes( $this->RENAVAM )."',
-                CEP                = '".addslashes( $this->CEP )."',
-                FILHOS             = '".addslashes( $this->FILHOS )."',
-                COMBUSTIVEL        = '".addslashes( $this->COMBUSTIVEL )."',
-                GARAGEM_CASA       = '".addslashes( $this->GARAGEM_CASA )."',
-                GARAGEM_TRABALHO   = '".addslashes( $this->GARAGEM_TRABALHO )."',
-                GARAGEM_FACULDADE  = '".addslashes( $this->GARAGEM_FACULDADE )."',
-                BONUS              = '".addslashes( $this->BONUS )."',
-                APOLICE            = '".addslashes( $this->APOLICE )."',
-                VIGENCIA_INICIO    = '".            $this->VIGENCIA_INICIO."',
-                VIGENCIA_FIM       = '".            $this->VIGENCIA_FIM."',
-                CI                 = '".addslashes( $this->CI )."',
-                PREMIO             = '".addslashes( $this->PREMIO )."',
-                PARCELAMENTO       = '".addslashes( $this->PARCELAMENTO )."'
-                FORMA_PAGAMENTO    = '".addslashes( $this->FORMA_PAGAMENTO )."',
-                DATA_VENCIMENTO    = '".            $this->DATA_VENCIMENTO."',
-                DANOS_MORAIS       = '".addslashes( $this->DANOS_MORAIS )."',
-                FIPE               = '".addslashes( $this->FIPE )."',
-                FRANQUIA           = '".addslashes( $this->FRANQUIA )."',
-                DM                 = '".addslashes( $this->DM )."',
-                DC                 = '".addslashes( $this->DC )."',
-                APP                = '".addslashes( $this->APP )."',
-                VIDROS             = '".addslashes( $this->VIDROS)."',
-                ASSISTENCIA        = '".addslashes( $this->ASSISTENCIA )."',
-                CARRO_RESERVA      = '".addslashes( $this->CARRO_RESERVA )."',
-                OBS                = '".addslashes( $this->OBS )."'  
+                TIPO_CADASTRO      = '" . addslashes($this->TIPO_CADASTRO) . "',
+                CLIENTE_ID         = '" . addslashes($this->CLIENTE_ID) . "',
+                CIA_ID             = '" . addslashes($this->CIA_ID) . "',
+                MARCA_ID           = '" . addslashes($this->MARCA_ID) . "',
+                DESCRICAO          = '" . addslashes($this->DESCRICAO) . "',
+                ANO                = '" . addslashes($this->ANO) . "',
+                KM_ANUAL           = '" . addslashes($this->KM_ANUAL) . "',
+                ZERO               = '" . addslashes($this->ZERO) . "',
+                PLACA              = '" . addslashes($this->PLACA) . "',
+                CHASSI             = '" . addslashes($this->CHASSI) . "',
+                RENAVAM            = '" . addslashes($this->RENAVAM) . "',
+                CEP                = '" . addslashes($this->CEP) . "',
+                FILHOS             = '" . addslashes($this->FILHOS) . "',
+                COMBUSTIVEL        = '" . addslashes($this->COMBUSTIVEL) . "',
+                GARAGEM_CASA       = '" . addslashes($this->GARAGEM_CASA) . "',
+                GARAGEM_TRABALHO   = '" . addslashes($this->GARAGEM_TRABALHO) . "',
+                GARAGEM_FACULDADE  = '" . addslashes($this->GARAGEM_FACULDADE) . "',
+                BONUS              = '" . addslashes($this->BONUS) . "',
+                APOLICE            = '" . addslashes($this->APOLICE) . "',
+                VIGENCIA_INICIO    = '" . $this->VIGENCIA_INICIO . "',
+                VIGENCIA_FIM       = '" . $this->VIGENCIA_FIM . "',
+                CI                 = '" . addslashes($this->CI) . "',
+                PREMIO             = '" . addslashes($this->PREMIO) . "',
+                PARCELAMENTO       = '" . addslashes($this->PARCELAMENTO) . "', 
+                FORMA_PAGAMENTO    = '" . addslashes($this->FORMA_PAGAMENTO) . "',
+                DATA_VENCIMENTO    = '" . $this->DATA_VENCIMENTO . "',
+                DANOS_MORAIS       = '" . addslashes($this->DANOS_MORAIS) . "',
+                FIPE               = '" . addslashes($this->FIPE) . "',
+                FRANQUIA           = '" . addslashes($this->FRANQUIA) . "',
+                DM                 = '" . addslashes($this->DM) . "',
+                DC                 = '" . addslashes($this->DC) . "',
+                APP                = '" . addslashes($this->APP) . "',
+                VIDROS             = '" . addslashes($this->VIDROS) . "',
+                ASSISTENCIA        = '" . addslashes($this->ASSISTENCIA) . "',
+                CARRO_RESERVA      = '" . addslashes($this->CARRO_RESERVA) . "',
+                OBS                = '" . addslashes($this->OBS) . "'  
                     
-             WHERE ID = '".addslashes( $this->ID )."'
+             WHERE ID = '" . addslashes($this->ID) . "'
           ";
         mysql_query($sql) or die(mysql_error());
     }
     
+    
+    public function excluir()
+    {
+        $sql = mysql_query("
+            DELETE FROM auto  
+            WHERE ID =  '".$this->ID."' 
+        ") or die( mysql_error() );        
+    }
+
 }

@@ -139,7 +139,7 @@ public function informacoes(){
             return false;
         }
     }
-    public function update(){
+    public function editar(){
         $sql = "
             UPDATE re SET
                 TIPO_CADASTRO                ='".addslashes( $this->TIPO_CADASTRO )."',
@@ -170,8 +170,17 @@ public function informacoes(){
                 PERDA_ALUGUEL                ='".addslashes( $this->PERDA_ALUGUEL )."',
                 PERIODO_INDENITARIO          ='".addslashes( $this->PERIODO_INDENITARIO )."',
                 EQUIPAMENTOS_ELETRONICOS     ='".addslashes( $this->EQUIPAMENTOS_ELETRONICOS )."'  
-           WHERE ID ='".addslashes( $this->ID )."',
+           WHERE ID ='".addslashes( $this->ID )."'
           ";
-        mysql_query($sql) or die(mysql_error());
+        
+        mysql_query($sql) or die( '<pre>' . $sql . '</pre>' . mysql_error());
+    }
+     
+    
+    public function excluir() {
+        $sql = mysql_query("
+            DELETE FROM re 
+            WHERE ID =  '".$this->ID."' 
+        ") or die( mysql_error() );        
     }
 }

@@ -1,13 +1,14 @@
 <!--Formulário de inserção / edição-->
 <form id="formAuto" action="documentos.php" method="post">
-    <input type="hidden" name="acao" value="inserirAuto" />
+    <input type="hidden" name="acao" value="<?=$auto->acao?>" />
     <input type="hidden" name="idCliente" value="<?=$cliente->ID?>" />
     <input type="hidden" name="ID" value="<?=$auto->ID?>" />
+    <input type="hidden" name="TIPO_CADASTRO" value="P" />
 
     <div>
         <label for="VIGENCIA_INICIO" class="label" >Vigencia:</label>
-        <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=$auto->VIGENCIA_INICIO?>" />
-        <input type="text" id="VIGENCIA_FIM" name="VIGENCIA_FIM" value="<?=$auto->VIGENCIA_FIM?>" />
+        <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=  formatarDataEN($auto->VIGENCIA_INICIO)?>" />
+        <input type="text" id="VIGENCIA_FIM" name="VIGENCIA_FIM" value="<?=  formatarDataEN($auto->VIGENCIA_FIM)?>" />
     </div>
 
     <div>
@@ -154,7 +155,7 @@
         
     </div><!-- garantias-auto-->
 
-    <div class="renovacao apolice">
+    <div class="renovacao apolice" style="display:none">>
 
         <div>
             <label for="BONUS" class="label">Bonus</label>
@@ -228,7 +229,7 @@
         </div>
         <div>
             <label class="label" for="DATA_VENCIMENTO">Data Vencimento</label>
-            <input type="text" name="DATA_VENCIMENTO" id="DATA_VENCIMENTO" value="<?=$auto->DATA_VENCIMENTO?>" />
+            <input type="text" name="DATA_VENCIMENTO" id="DATA_VENCIMENTO" value="<?=  formatarDataEN($auto->DATA_VENCIMENTO)?>" />
         </div>
     </div><!-- pagamento -->
 
