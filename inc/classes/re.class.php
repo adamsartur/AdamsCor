@@ -31,6 +31,9 @@ class Re extends Base {
     public $PERIODO_INDENITARIO;
     public $EQUIPAMENTOS_ELETRONICOS;
     
+    
+    public $endossar = false;
+    
 public function informacoes(){
     $consulta = mysql_query(" 
         SELECT * FROM re WHERE ID = '".$this->ID."' 
@@ -115,10 +118,10 @@ public function informacoes(){
     '".addslashes( $this->APOLICE )."',
     '".addslashes( $this->PREMIO )."',
     '".addslashes( $this->PARCELAMENTO )."',
-    '".addslashes( $this->DATA_VENCIMENTO )."',
-    '".addslashes( $this->DATA_CADASTRO )."',
-    '".addslashes( $this->VIGENCIA_INICIO )."',
-    '".addslashes( $this->VIGENCIA_FIM )."',
+    '".formatarDataBR( $this->DATA_VENCIMENTO )."',
+    '".formatarDataBR( $this->DATA_CADASTRO )."',
+    '".formatarDataBR( $this->VIGENCIA_INICIO )."',
+    '".formatarDataBR( $this->VIGENCIA_FIM )."',
     '".addslashes( $this->FORMA_PAGAMENTO )."',
     '".addslashes( $this->OBS )."',
     '".addslashes( $this->INCENDIO )."',
@@ -139,6 +142,7 @@ public function informacoes(){
             return false;
         }
     }
+    
     public function editar(){
         $sql = "
             UPDATE re SET
@@ -155,10 +159,10 @@ public function informacoes(){
                 APOLICE                      ='".addslashes( $this->APOLICE )."',
                 PREMIO                       ='".addslashes( $this->PREMIO )."',
                 PARCELAMENTO                 ='".addslashes( $this->PARCELAMENTO )."',
-                DATA_VENCIMENTO              ='".addslashes( $this->DATA_VENCIMENTO )."',
-                DATA_CADASTRO                ='".addslashes( $this->DATA_CADASTRO )."',
-                VIGENCIA_INICIO              ='".addslashes( $this->VIGENCIA_INICIO )."',
-                VIGENCIA_FIM                 ='".addslashes( $this->VIGENCIA_FIM )."',
+                DATA_VENCIMENTO              ='".formatarDataBR( $this->DATA_VENCIMENTO )."',
+                DATA_CADASTRO                ='".formatarDataBR( $this->DATA_CADASTRO )."',
+                VIGENCIA_INICIO              ='".formatarDataBR( $this->VIGENCIA_INICIO )."',
+                VIGENCIA_FIM                 ='".formatarDataBR( $this->VIGENCIA_FIM )."',
                 FORMA_PAGAMENTO              ='".addslashes( $this->FORMA_PAGAMENTO )."',
                 OBS                          ='".addslashes( $this->OBS )."',
                 INCENDIO                     ='".addslashes( $this->INCENDIO )."',
@@ -175,7 +179,17 @@ public function informacoes(){
         
         mysql_query($sql) or die( '<pre>' . $sql . '</pre>' . mysql_error());
     }
-     
+    
+    public function apolice(){
+        $sql = "
+            UPDATE re SET
+                TIPO_CADASTRO                ='A',
+                APOLICE                      ='".addslashes( $this->APOLICE )."'
+           WHERE ID ='".addslashes( $this->ID )."'
+          ";
+        
+        mysql_query($sql) or die( '<pre>' . $sql . '</pre>' . mysql_error());
+    } 
     
     public function excluir() {
         $sql = mysql_query("

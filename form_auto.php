@@ -3,7 +3,9 @@
     <input type="hidden" name="acao" value="<?=$auto->acao?>" />
     <input type="hidden" name="idCliente" value="<?=$cliente->ID?>" />
     <input type="hidden" name="ID" value="<?=$auto->ID?>" />
-    <input type="hidden" name="TIPO_CADASTRO" value="P" />
+    <?if($auto->TIPO_CADASTRO != 'A'){?>
+        <input type="hidden" name="TIPO_CADASTRO" value="P" />
+    <?};?>
 
     <div>
         <label for="VIGENCIA_INICIO" class="label" >Vigencia:</label>
@@ -155,36 +157,22 @@
         
     </div><!-- garantias-auto-->
 
-    <div class="renovacao apolice" style="display:none">>
-
-        <div>
-            <label for="BONUS" class="label">Bonus</label>
-            <select name="BONUS" id="BONUS">
-                <option value="0" <?=$auto->BONUS == '0' ? 'selected="selected"' : ''?>>0</option>                
-                <option value="1" <?=$auto->BONUS == '1' ? 'selected="selected"' : ''?>>1</option>
-                <option value="2" <?=$auto->BONUS == '2' ? 'selected="selected"' : ''?>>2</option>
-                <option value="3" <?=$auto->BONUS == '3' ? 'selected="selected"' : ''?>>3</option>
-                <option value="4" <?=$auto->BONUS == '4' ? 'selected="selected"' : ''?>>4</option>
-                <option value="5" <?=$auto->BONUS == '5' ? 'selected="selected"' : ''?>>5</option>
-                <option value="6" <?=$auto->BONUS == '6' ? 'selected="selected"' : ''?>>6</option>
-                <option value="7" <?=$auto->BONUS == '7' ? 'selected="selected"' : ''?>>7</option>
-                <option value="8" <?=$auto->BONUS == '8' ? 'selected="selected"' : ''?>>8</option> 
-                <option value="9" <?=$auto->BONUS == '9' ? 'selected="selected"' : ''?>>9</option>
-                <option value="10" <?=$auto->BONUS == '10' ? 'selected="selected"' : ''?>>10</option>
-            </select>
-        </div>
-
-        <div>
-            <label for="APOLICE" class="label">Apolice</label>
-            <input type="text" id="APOLICE" name="APOLICE" value="<?=$auto->APOLICE?>" />
-        </div>
-
-        <div>
-            <label for="CI" class="label">CI</label>
-            <input type="text" id="CI" name="CI" value="<?=$auto->CI?>" />
-        </div>              
-    </div><!-- renovacao -->
-
+    <div>
+        <label for="BONUS" class="label">Bonus</label>
+        <select name="BONUS" id="BONUS">
+            <option value="0" <?=$auto->BONUS == '0' ? 'selected="selected"' : ''?>>0</option>                
+            <option value="1" <?=$auto->BONUS == '1' ? 'selected="selected"' : ''?>>1</option>
+            <option value="2" <?=$auto->BONUS == '2' ? 'selected="selected"' : ''?>>2</option>
+            <option value="3" <?=$auto->BONUS == '3' ? 'selected="selected"' : ''?>>3</option>
+            <option value="4" <?=$auto->BONUS == '4' ? 'selected="selected"' : ''?>>4</option>
+            <option value="5" <?=$auto->BONUS == '5' ? 'selected="selected"' : ''?>>5</option>
+            <option value="6" <?=$auto->BONUS == '6' ? 'selected="selected"' : ''?>>6</option>
+            <option value="7" <?=$auto->BONUS == '7' ? 'selected="selected"' : ''?>>7</option>
+            <option value="8" <?=$auto->BONUS == '8' ? 'selected="selected"' : ''?>>8</option> 
+            <option value="9" <?=$auto->BONUS == '9' ? 'selected="selected"' : ''?>>9</option>
+            <option value="10" <?=$auto->BONUS == '10' ? 'selected="selected"' : ''?>>10</option>
+        </select>
+    </div><!--bonus-->
     <div class="pagamento">
         <div>
             <label class="label" for="PREMIO">Premio</label>
@@ -233,6 +221,20 @@
         </div>
     </div><!-- pagamento -->
 
+    <?if($auto->TIPO_CADASTRO == 'A'){ ?>
+    <div>
+        <div>
+            <label for="APOLICE" class="label">Apolice</label>
+            <input type="text" id="APOLICE" name="APOLICE" value="<?=$auto->APOLICE?>" />
+        </div>
+
+        <div>
+            <label for="CI" class="label">CI</label>
+            <input type="text" id="CI" name="CI" value="<?=$auto->CI?>" />
+        </div>
+        <input type="hidden" name="TIPO_CADASTRO" value="A" />
+    </div><!-- renovacao auto apolice -->    
+    <?};?>
     <div class="campo-input">
         <br /><br /><br /><br /><br /><br />
         <input class="bt_voltar campo-input" type="button" onclick="javascript:window.location='documentos.php'" value="Voltar" style="float:left;margin-right:15px;clear:none"  />
@@ -241,63 +243,25 @@
 
 </form>
 
-<!--<script type="text/javascript">
-    /*esconder auto/re */
-//    $(function() {
-//        var
-//        tipo,
-//        $this,
-//        $auto   = $('.campo-documento-auto'),
-//        $re = $('.campo-documento-re');
-//
-//        $re.hide();
-//
-//        $('.bt-tipo-documento').click(function(e) {
-//            $this = $(this);
-//
-//            tipo = $this.attr('id').split('-');
-//
-
-//                Parte que limpa campo cpf ou cnpj
-//                if( tipo[2] == 'auto' ) {
-//                    $('#cnpj').val('');
-//                    $juridica.hide();
-//                    $fisica.fadeIn(250);
-//                } else {
-//                    $('#cpf').val('');
-//                    $juridica.fadeIn(250);
-//                    $fisica.hide();
-//                }
+<script type="text/javascript">
+    
+$(function() {
+        
+        $('#formaAuto').validate({
+            rules:{
+                'DESCRICAO': {required: true},
+                'DATA_VENCIMENTO' : {dataBR : true},
+                'VIGENCIA_INICIO' : {dataBR : true},
+                'VIGENCIA_FIM' : {dataBR : true}
+            }
         });
-        /*validando campos*/
-//            $('#clientes').validate({
-//                rules:{
-//                    'nome': {required: true},
-//                    'email': {email: true},
-//                    'DATA_NASC' : {dataBR : true},
-//                    'data_cnh' : {dataBR : true},
-//                    'cpf' : {cpf : 'both'},
-//                    'cnpj' : {cnpj : 'both'},
-//                    'dataExpedicao' : {dataBR : true}
-//                }
-//            });
-        /*setando mascaras*/
-//            $("#fone").setMask("(99)9999-9999");
-//            $("#fone2").setMask("(99)9999-9999");
-//            $("#cpf").setMask("999.999.999-99");
-//            $("#cnpj").setMask("99.999.999/9999-99");
-//            $("#cep").setMask("99999-999");
-//            $("#DATA_NASC").setMask("99/99/9999");
-//            $("#data_cnh").setMask("99/99/9999");
-//            $("#dataExpedicao").setMask("99/99/9999");
-//            $("#rg").setMask("9999999999");
-//            $("#cnh").setMask("99999999999")
-//
+        
+            /*setando mascaras*/
+            $("#FIPE").setMask("999");
+            $("#DATA_VENCIMENTO").setMask("99/99/9999");
+            $("#VIGENCIA_INICIO").setMask("99/99/9999");
+            $("#VIGENCIA_FIM").setMask("99/99/9999");
 
-
-        /* excluindo */
-
-    });
-
-
-</script>-->
+        });
+}
+</script>

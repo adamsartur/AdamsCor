@@ -236,9 +236,37 @@ if( $acao == 'editar' ) {
     }
 }
 
+/**
+ * Endossando um item
+ */
+if( $acao == 'endossar' ) {
+    $tipoEndossar = get('tipoEndossar');
+    
+    if( $tipoEndossar == 'auto' ) {
+        $auto->ID = get('id');
+        if( !$auto->informacoes() )
+            header('Location: documentos.php');
+        
+        $auto->form   = true;
+        $auto->listar = false;
+        $re->listar   = false;
+        $auto->acao   = 'inserirAuto';
+    } else {
+        $re->ID = get('id');
+        if( !$re->informacoes() )
+            header('Location: documentos.php');
+        
+        $re->form   = true;
+        $auto->listar = false;
+        $re->listar   = false;
+        $re->acao   = 'inserirRe';
+        $re->endossar = true;
+    }
+}
+
 
 /**
- * Excluindo um item
+ * Excluindo um re
  */
 if( $acao == "excluirRe" ){
     $re->ID = get('id');
@@ -253,8 +281,55 @@ if( $acao == "excluirAuto" ){
     $auto->ID = get('id');
     $auto->excluir();
 }
-?>
 
+
+/**
+ * Form pra apolcie auto
+ */
+if( $acao == 'novaApoliceAuto' ) {
+    $auto->ID = get('id');
+    $auto->informacoes();
+    $auto->form   = false;
+    $auto->listar = false;
+    $re->listar   = false;
+    $re->form     = false;
+    $auto->acao   = 'apoliceAuto';
+}
+
+
+/**
+ * Form pra apolcie re
+ */
+if( $acao == 'novaApoliceRe' ) {
+    $re->ID = get('id');
+    $re->informacoes();
+    $auto->form   = false;
+    $auto->listar = false;
+    $re->listar   = false;
+    $re->form     = false;
+    $re->acao     = 'apoliceRe';
+}
+
+/**
+ * Inserindo apolice re
+ */
+if( $acao == 'insereApoliceRe' ) {
+    $re->ID = post('ID');
+    $re->APOLICE = post('APOLICE');
+    $re->apolice();
+}
+
+/**
+ * Inserindo apolice auto
+ */
+if( $acao == 'insereApoliceAuto' ) {
+    $auto->ID = post('ID');
+    $auto->APOLICE = post('APOLICE');
+    $auto->CI = post('CI');
+    $auto->apolice();
+}
+
+?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"> 
@@ -303,9 +378,7 @@ if( $acao == "excluirAuto" ){
                                 <th>Veículo</th>
                                 <th>Placa</th>
                                 <th>CIA</th>
-<!--                            <th>ver</th>-->
-                                <th><!--editar--></th>
-                                <th><!--excluir--></th>
+                                <th><!--icones--></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -315,20 +388,23 @@ if( $acao == "excluirAuto" ){
                             while( $autoArray = mysql_fetch_array($autoSql) ) :
                                 ?>
                                 <tr class="item autoLinha">
-                                    <td><?php if ($autoArray['TIPO_CADASTRO'] == 'C'){echo '<img src="img/icons/case_icon&16.png" title="Calculo" />';};
-                                              if ($autoArray['TIPO_CADASTRO'] == 'P'){echo '<img src="img/icons/doc_lines_icon&16.png" title="Proposta" />';};
-                                              if ($autoArray['TIPO_CADASTRO'] == 'A'){echo '<img src="img/icons/calc_icon&16.png" title="Apolice" />';}; ?>
+                                    <td><?php if ($autoArray['TIPO_CADASTRO'] == 'A'){echo '<img src="img/icons/case_icon&16.png" title="Apolice" />';};
+                                              if ($autoArray['TIPO_CADASTRO'] == 'P'){echo '<a href="documentos.php?acao=novaApoliceAuto&id='.$autoArray['ID'].'" id="cliente-'.$autoArray['ID'].'"> <img src="img/icons/doc_lines_icon&16.png" title="Atualizar Proposta" /></a>';};                                              
+                                              if ($autoArray['TIPO_CADASTRO'] == 'C'){echo '<img src="img/icons/calc_icon&16.png" title="->Calculo" />';}; ?>
                                     </td>
                                     <td><?php echo formatarDataEN($autoArray['VIGENCIA_FIM']); ?></td>
                                     <td><?php echo $autoArray['DESCRICAO']; ?></td>
                                     <td><?php echo $autoArray['PLACA']; ?></td>
                                     <td><?php echo Cia::nomeCia( $autoArray['CIA_ID'] ) ?></td>
-                                    <td><img alt="Editar" class="center-img" onclick="javascript:window.location='documentos.php?acao=editar&tipoEditar=auto&id=<?=$autoArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" /></td>
-                                    <td>
+                                    <td style="text-align: right; padding-right: 10px">
+                                        <img src="img/icons/doc_plus_icon&16.png" title="Renovar" />
+                                        <img src="img/icons/doc_new_icon&16.png" title="Endosso" />                                    
+                                        <img alt="Editar" onclick="javascript:window.location='documentos.php?acao=editar&tipoEditar=auto&id=<?=$autoArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" />
                                         <a href="documentos.php?acao=excluirAuto&id=<?php echo $autoArray['ID']; ?>" id="cliente-<?php echo $autoArray['ID']; ?>" class="excluir">
                                             <img alt="Excluir" class="center-img" style="cursor: pointer;" src="img/icons/trash_icon&16.png" border="0" />
                                         </a>
-                                    </td>                                
+                                       &nbsp;&nbsp;&nbsp;&nbsp;
+                                    </td>
                                 </tr>
                                 <?php
                             endwhile;
@@ -354,9 +430,7 @@ if( $acao == "excluirAuto" ){
                                     <th>Endereço</th>
                                     <th>Ocupacao</th>
                                     <th>CIA</th>
-    <!--                            <th>ver</th> -->
-                                    <th><!--editar--></th>
-                                    <th><!--excluir--></th>
+                                    <th><!--icones--></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -365,19 +439,22 @@ if( $acao == "excluirAuto" ){
                                 while( $reArray = mysql_fetch_array($reSql) ) :
                                     ?>
                                     <tr class="item reLinha">
-                                        <td><?php if ($reArray['TIPO_CADASTRO'] == 'C'){echo '<img src="img/icons/case_icon&16.png" title="Calculo" />';};
-                                                  if ($reArray['TIPO_CADASTRO'] == 'P'){echo '<img src="img/icons/doc_lines_icon&16.png" title="Proposta" />';};
-                                                  if ($reArray['TIPO_CADASTRO'] == 'A'){echo '<img src="img/icons/calc_icon&16.png" title="Apolice" />';}; ?>
+                                        <td><?php if ($reArray['TIPO_CADASTRO'] == 'A'){echo '<img src="img/icons/case_icon&16.png" title="Apolice" />';};
+                                                  if ($reArray['TIPO_CADASTRO'] == 'P'){echo '<a href="documentos.php?acao=novaApoliceRe&id='.$reArray['ID'].'" id="cliente-'.$reArray['ID'].'"> <img src="img/icons/doc_lines_icon&16.png" title="Atualizar Proposta" /></a>';};  
+                                                  if ($reArray['TIPO_CADASTRO'] == 'C'){echo '<img src="img/icons/calc_icon&16.png" title="->Calculo" />';}; ?>
                                         </td>
                                         <td><?php echo formatarDataEN($reArray['VIGENCIA_FIM']); ?></td>
                                         <td><?php echo $reArray['ENDERECO']; echo ' '.$reArray['NUMERO']; echo " ".$reArray['COMPLEMENTO']; ?></td>
                                         <td><?php echo $reArray['OCUPACAO']; ?></td>
                                         <td><?php echo Cia::nomeCia( $reArray['CIA_ID'] ) ?></td>
-                                        <td><img alt="Editar" class="center-img" onclick="javascript:window.location='documentos.php?acao=editar&tipoEditar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" /></td>
-                                        <td>
+                                        <td style="text-align: right; padding-right: 10px">
+                                            <img onclick="javascript:window.location='documentos.php?acao=renovar&tipoRenovar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_plus_icon&16.png" title="Renovar" />
+                                            <img onclick="javascript:window.location='documentos.php?acao=endossar&tipoEndossar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_new_icon&16.png" title="Endosso" />
+                                            <img alt="Editar" onclick="javascript:window.location='documentos.php?acao=editar&tipoEditar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" />
                                             <a href="documentos.php?acao=excluirRe&id=<?php echo $reArray['ID']; ?>" id="cliente-<?php echo $reArray['ID']; ?>" class="excluir">
-                                                <img alt="Excluir" class="center-img" style="cursor: pointer;" src="img/icons/trash_icon&16.png" border="0" />
+                                                <img alt="Excluir"  style="cursor: pointer;" src="img/icons/trash_icon&16.png" border="0" />
                                             </a>
+                                            &nbsp;
                                         </td>                                    
                                     </tr>
                                     <?
@@ -395,7 +472,7 @@ if( $acao == "excluirAuto" ){
             /**
              * Formularios
              */
-            if( $auto->form ) : 
+            if( $auto->form || $re->form ) : 
                 ?>
                 <div class="tabs">
                     <div>
@@ -418,6 +495,10 @@ if( $acao == "excluirAuto" ){
             endif;
             ?>
                     
+            <div class="form-apolice">
+                <?include_once('apolice.php'); ?>
+            </div><!-- .form-apolice -->
+                    
         </div><!-- .linha -->
     </div><!-- .principal -->
  
@@ -427,7 +508,8 @@ if( $acao == "excluirAuto" ){
 <script type="text/javascript">
     
 $(function() {
-    var
+    var 
+        $this, 
         tipo,
         $re   = $('.form-re'),
         $auto = $('.form-auto');
@@ -461,10 +543,25 @@ $(function() {
         }
     });
     
+    
+    /* trocando ano da vigencia */
+    $('input[name="VIGENCIA_INICIO"]').blur(function(e) {
+        $this = $(this);
+        var data = $this.val().split('/');
+        
+        data[2] = parseInt( data[2] ) + 1;
+        
+        $('input[name="VIGENCIA_FIM"]').val(data[0] + '/' + data[1] + '/' + data[2]);
+    });
+    
     <?php
-        if( $re->acao == 'editarRe' ) {
-            echo "$('#tipo-documento-re').click();";
-        }
+    if( $re->acao == 'editarRe' ) {
+        echo "$('#tipo-documento-re').click();";
+    }
+    if( $re->endossar ) {
+        echo "$('#tipo-documento-re').click();";
+    }
+    
     ?>
 });
 

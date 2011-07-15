@@ -3,7 +3,9 @@
     <input type="hidden" name="acao" value="<?=$re->acao?>" />
     <input type="hidden" name="idCliente" value="<?=$cliente->ID?>" />
     <input type="hidden" name="ID" value="<?=$re->ID?>" />
-    <input type="hidden" name="TIPO_DOCUMENTO" value="P" />
+    <?if($re->TIPO_CADASTRO != 'A'){?>
+        <input type="hidden" name="TIPO_CADASTRO" value="P" />
+    <?};?>
    
 
     <div>
@@ -19,7 +21,7 @@
         </select>
     </div>
 
-        <div class="endereco-re">
+    <div class="endereco-re">
         <div>
             <label for="CEP" class="label" >Cep</label>
             <input type="text" id="CEP" name="CEP" value="<?=$re->CEP?>" />
@@ -49,8 +51,8 @@
         </div>            
      </div><!-- endereco-re-->
 
-     <div class="risco-re">
-         
+     
+     <div class="risco-re">         
          <div>
             <label for="OCUPACAO" class="label" >Ocupacao</label>
             <input type="text" id="OCUPACAO" name="OCUPACAO" value="<?=$re->OCUPACAO?>" />
@@ -64,11 +66,10 @@
                 <option value="inferior" <?=$re->CONSTRUCAO == 'inferior' ? 'selected="selected"' : ''?>>Inferior</option>
             </select>
         </div> 
-         
-     </div>     
+     </div><!-- .risco-re --> 
 
     
-        <div class="garantias-re">
+    <div class="garantias-re">
         <div>
             <label class="label" for="INCENDIO" class="label" >Incendio</label>
             <input type="text" id="INCENDIO" name="INCENDIO" value="<?=$re->INCENDIO?>" />
@@ -112,19 +113,10 @@
         <div>
             <label class="label" for="EQUIPAMENTOS_ELETRONICOS">Equipamentos Eletronicos</label>
             <input type="text" id="EQUIPAMENTOS_ELETRONICOS" name="EQUIPAMENTOS_ELETRONICOS" value="<?=$re->EQUIPAMENTOS_ELETRONICOS?>" />
-        </div>      
-
-    </div><!-- garantias-re-->    
-    
-     
-    <div class="renovacao apolice" style="display:none">
-        <div>
-            <label for="APOLICE" class="label">Apolice</label>
-            <input type="text" id="APOLICE" name="APOLICE" value="<?=$re->APOLICE?>" />
         </div>
-        <div class="clear"></div>
-    </div><!-- renovacao -->
+    </div><!-- garantias-re-->    
 
+    
     <div class="pagamento">
         <div>
             <label class="label" for="PREMIO">Premio</label>
@@ -173,6 +165,16 @@
         </div>
     </div><!-- pagamento -->
 
+    <?if($re->TIPO_CADASTRO == 'A'){ ?>
+        <div class="renovacao apolice re">
+            <div>
+                <label for="APOLICE" class="label">Apolice</label>
+                <input type="text" id="APOLICE" name="APOLICE" value="<?=$re->APOLICE?>" />
+            </div>
+            <input type="hidden" name="TIPO_CADASTRO" value="A" />
+        </div>
+    <?};?>
+    
     <div class="campo-input">
         <br /><br /><br /><br /><br /><br />
         <input class="bt_voltar campo-input" type="button" onclick="javascript:window.location='documentos.php'" value="Voltar" style="float:left;margin-right:15px;clear:none"  />
@@ -180,3 +182,18 @@
     </div><!-- .botaoadd -->
 
 </form>
+
+<script type="text/javascript">
+    
+$(function() {
+
+        $('#formRe').validate({
+            rules:{
+                'ENDERECO': {required: true},
+                'DATA_VENCIMENTO' : {dataBR : true},
+                'VIGENCIA_INICIO' : {dataBR : true},
+                'VIGENCIA_FIM' : {dataBR : true}
+            }
+        });
+    }
+</script>

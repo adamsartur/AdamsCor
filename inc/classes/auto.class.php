@@ -150,13 +150,13 @@ class Auto extends Base {
                     '" . addslashes($this->GARAGEM_FACULDADE) . "',
                     '" . addslashes($this->BONUS) . "',
                     '" . addslashes($this->APOLICE) . "',
-                    '" . $this->VIGENCIA_INICIO . "',
-                    '" . $this->VIGENCIA_FIM . "',
+                    '" . formatarDataBR($this->VIGENCIA_INICIO) . "',
+                    '" . formatarDataBR($this->VIGENCIA_FIM) . "',
                     '" . addslashes($this->CI) . "',
                     '" . addslashes($this->PREMIO) . "',
                     '" . addslashes($this->PARCELAMENTO) . "', 
                     '" . addslashes($this->FORMA_PAGAMENTO) . "',
-                    '" . $this->DATA_VENCIMENTO . "',
+                    '" . formatarDataBR($this->DATA_VENCIMENTO) . "',
                     '" . addslashes($this->DANOS_MORAIS) . "',
                     '" . addslashes($this->FIPE) . "',
                     '" . addslashes($this->FRANQUIA) . "',
@@ -199,13 +199,13 @@ class Auto extends Base {
                 GARAGEM_FACULDADE  = '" . addslashes($this->GARAGEM_FACULDADE) . "',
                 BONUS              = '" . addslashes($this->BONUS) . "',
                 APOLICE            = '" . addslashes($this->APOLICE) . "',
-                VIGENCIA_INICIO    = '" . $this->VIGENCIA_INICIO . "',
-                VIGENCIA_FIM       = '" . $this->VIGENCIA_FIM . "',
+                VIGENCIA_INICIO    = '" . formatarDataBR($this->VIGENCIA_INICIO) . "',
+                VIGENCIA_FIM       = '" . formatarDataBR($this->VIGENCIA_FIM) . "',
                 CI                 = '" . addslashes($this->CI) . "',
                 PREMIO             = '" . addslashes($this->PREMIO) . "',
                 PARCELAMENTO       = '" . addslashes($this->PARCELAMENTO) . "', 
                 FORMA_PAGAMENTO    = '" . addslashes($this->FORMA_PAGAMENTO) . "',
-                DATA_VENCIMENTO    = '" . $this->DATA_VENCIMENTO . "',
+                DATA_VENCIMENTO    = '" . formatarDataBR($this->DATA_VENCIMENTO) . "',
                 DANOS_MORAIS       = '" . addslashes($this->DANOS_MORAIS) . "',
                 FIPE               = '" . addslashes($this->FIPE) . "',
                 FRANQUIA           = '" . addslashes($this->FRANQUIA) . "',
@@ -222,6 +222,16 @@ class Auto extends Base {
         mysql_query($sql) or die(mysql_error());
     }
     
+    public function apolice() {
+        $sql = "
+            UPDATE auto SET
+                TIPO_CADASTRO      = 'A',
+                APOLICE            = '" . addslashes($this->APOLICE) . "',
+                CI                 = '" . addslashes($this->CI) . "'             
+             WHERE ID = '" . addslashes($this->ID) . "'
+          ";
+        mysql_query($sql) or die(mysql_error());
+    }
     
     public function excluir()
     {
