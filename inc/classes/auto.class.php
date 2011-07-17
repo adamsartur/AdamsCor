@@ -2,43 +2,52 @@
 
 class Auto extends Base {
 
-    public $ID = null;
-    public $TIPO_CADASTRO = null;
-    public $CLIENTE_ID = null;
-    public $CIA_ID = null;
-    public $MARCA_ID = null;
-    public $DESCRICAO = null;
-    public $ANO = null;
-    public $KM_ANUAL = null;
-    public $ZERO = null;
-    public $PLACA = null;
-    public $CHASSI = null;
-    public $RENAVAM = null;
-    public $FILHOS = null;
-    public $COMBUSTIVEL = null;
-    public $GARAGEM_CASA = null;
-    public $GARAGEM_TRABALHO = null;
-    public $GARAGEM_FACULDADE = null;
-    public $BONUS = null;
-    public $APOLICE = null;
-    public $VIGENCIA_INICIO = null;
-    public $VIGENCIA_FIM = null;
-    public $CI = null;
-    public $PREMIO = null;
-    public $PARCELAMENTO = null;
-    public $FORMA_PAGAMENTO = null;
-    public $DATA_VENCIMENTO = null;
-    public $DANOS_MORAIS = null;
-    public $FIPE = null;
-    public $FRANQUIA = null;
-    public $DM = null;
-    public $DC = null;
-    public $APP = null;
-    public $VIDROS = null;
-    public $ASSISTENCIA = null;
-    public $CARRO_RESERVA = null;
-    public $OBS = null;
+    public $ID;
+    public $TIPO_CADASTRO;
+    public $CLIENTE_ID;
+    public $CIA_ID;
+    public $MARCA_ID;
+    public $DESCRICAO;
+    public $ANO;
+    public $KM_ANUAL;
+    public $ZERO;
+    public $PLACA;
+    public $CHASSI;
+    public $RENAVAM;
+    public $FILHOS;
+    public $COMBUSTIVEL;
+    public $GARAGEM_CASA;
+    public $GARAGEM_TRABALHO;
+    public $GARAGEM_FACULDADE;
+    public $BONUS;
+    public $APOLICE;
+    public $VIGENCIA_INICIO;
+    public $VIGENCIA_FIM;
+    public $CI;
+    public $PREMIO;
+    public $PARCELAMENTO;
+    public $FORMA_PAGAMENTO;
+    public $DATA_VENCIMENTO;
+    public $DANOS_MORAIS;
+    public $FIPE;
+    public $FRANQUIA;
+    public $DM;
+    public $DC;
+    public $APP;
+    public $VIDROS;
+    public $ASSISTENCIA;
+    public $CARRO_RESERVA;
+    public $OBS;
+    public $ANEXO;
+        
+    public $endossar = false;
+    
+    /**
+     * Pasta de localização do anexo
+     */
+    public $pasta = 'files/anexos/auto/';
 
+    
     public function informacoes() {
         $consultaAuto = mysql_query("
             SELECT * FROM AUTO
@@ -84,6 +93,7 @@ class Auto extends Base {
             $this->ASSISTENCIA = $arrayAuto['ASSISTENCIA'];
             $this->CARRO_RESERVA = $arrayAuto['CARRO_RESERVA'];
             $this->OBS = $arrayAuto['OBS'];
+            $this->ANEXO = $arrayAuto['ANEXO'];
 
             return true;
         } else {
@@ -219,7 +229,11 @@ class Auto extends Base {
                     
              WHERE ID = '" . addslashes($this->ID) . "'
           ";
-        mysql_query($sql) or die(mysql_error());
+        if( mysql_query($sql) ) {
+            return true;
+        } else {
+            die( '<pre>' . $sql . '</pre>' . mysql_error());
+        }
     }
     
     public function apolice() {
@@ -241,4 +255,50 @@ class Auto extends Base {
         ") or die( mysql_error() );        
     }
 
+    public function endosso($id){
+        $sql = "
+            UPDATE auto SET
+                VIGENCIA_FIM                      ='".addslashes( formatarDataBR($this->VIGENCIA_INICIO) )."'
+           WHERE ID ='".addslashes( $id )."'
+          ";
+        
+        mysql_query($sql) or die( '<pre>' . $sql . '</pre>' . mysql_error());
+    }     
+   
+    
+        
+    /**
+     * Anexando o arquivo
+     */
+    public function anexar($idCliente = null)
+    {
+        $this->pegarPasta();
+        
+        /* criando a pasta */
+        if( !is_dir($this->pasta) ) {
+            mkdir($this->pasta, 0775);
+            chmod($this->pasta, 0775);
+        }
+        
+        /* carregando o arquivo */
+        if( is_array($this->ANEXO) && isset($this->ANEXO['size']) ) {
+            if( $this->ANEXO['size'] > 0 ) {
+                $nome = $idCliente . '-' . $this->ID . '.pdf';
+                
+                if( move_uploaded_file($this->ANEXO['tmp_name'], $this->pasta . $nome ) ) {
+                    $resArquivo = mysql_query("
+                        UPDATE auto SET 
+                            ANEXO = '".$nome."' 
+                        WHERE ID = '".addslashes($this->ID)."'
+                    ");
+                }
+            }
+        }
+    }
+    
+    
+    public function pegarPasta()
+    {
+        $this->pasta = $this->pasta . $this->ID . '/';
+    }
 }

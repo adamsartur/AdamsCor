@@ -1,15 +1,21 @@
 <!--Formulário de inserção / edição-->
-<form id="formAuto" action="documentos.php" method="post">
+<form id="formAuto" action="documentos.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="acao" value="<?=$auto->acao?>" />
     <input type="hidden" name="idCliente" value="<?=$cliente->ID?>" />
     <input type="hidden" name="ID" value="<?=$auto->ID?>" />
+    
     <?if($auto->TIPO_CADASTRO != 'A'){?>
         <input type="hidden" name="TIPO_CADASTRO" value="P" />
     <?};?>
 
+    <?php if( $auto->endossar ) : ?>
+    <input type="hidden" name="endosso" value="S" />
+    <input type="hidden" name="IDOLD" value="<?=$auto->ID?>" />
+    <?php endif; ?>
+        
     <div>
         <label for="VIGENCIA_INICIO" class="label" >Vigencia:</label>
-        <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=  formatarDataEN($auto->VIGENCIA_INICIO)?>" />
+        <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=!$auto->endossar ? formatarDataEN($auto->VIGENCIA_INICIO) : date('d/m/Y')?>" />
         <input type="text" id="VIGENCIA_FIM" name="VIGENCIA_FIM" value="<?=  formatarDataEN($auto->VIGENCIA_FIM)?>" />
     </div>
 
@@ -56,7 +62,6 @@
         <div>
             <label class="label" for="COMBUSTIVEL">Combustível</label>
             <select name="COMBUSTIVEL" id="COMBUSTIVEL">
-                <option value="gasolina" selected="selected">Gasolina</option>    
                 <option value="flex" <?=$auto->COMBUSTIVEL == 'flex' ? 'selected="selected"' : ''?>>Flex</option>    
                 <option value="gnv" <?=$auto->COMBUSTIVEL == 'gnv' ? 'selected="selected"' : ''?>>GNV</option>                            
                 <option value="diesel" <?=$auto->COMBUSTIVEL == 'diesel' ? 'selected="selected"' : ''?>>Diesel</option>
@@ -160,6 +165,7 @@
     <div>
         <label for="BONUS" class="label">Bonus</label>
         <select name="BONUS" id="BONUS">
+            <option value="">Selecione</option>
             <option value="0" <?=$auto->BONUS == '0' ? 'selected="selected"' : ''?>>0</option>                
             <option value="1" <?=$auto->BONUS == '1' ? 'selected="selected"' : ''?>>1</option>
             <option value="2" <?=$auto->BONUS == '2' ? 'selected="selected"' : ''?>>2</option>
@@ -181,6 +187,7 @@
         <div>
             <label class="label" for="FORMA_PAGAMENTO">Forma de Pagamento</label>
             <select name="FORMA_PAGAMENTO" id="FORMA_PAGAMENTO">
+                <option value="">Selecione</option>
                 <option value="1" <?=$auto->FORMA_PAGAMENTO == '1' ? 'selected="selected"' : ''?>>Debito</option>
                 <option value="2" <?=$auto->FORMA_PAGAMENTO == '2' ? 'selected="selected"' : ''?>>Cheque</option>
                 <option value="3" <?=$auto->FORMA_PAGAMENTO == '3' ? 'selected="selected"' : ''?>>Boleto</option>
@@ -189,6 +196,7 @@
         <div>
             <label class="label" for="PARCELAMENTO">Parcelamento</label>
             <select name="PARCELAMENTO" id="PARCELAMENTO">
+                <option value="">Selecione</option>
                 <option value="1" <?=$auto->PARCELAMENTO == '1' ? 'selected="selected"' : ''?>>1</option>
                 <option value="2" <?=$auto->PARCELAMENTO == '2' ? 'selected="selected"' : ''?>>2</option>
                 <option value="3" <?=$auto->PARCELAMENTO == '3' ? 'selected="selected"' : ''?>>3</option>
@@ -221,7 +229,7 @@
         </div>
     </div><!-- pagamento -->
 
-    <?if($auto->TIPO_CADASTRO == 'A'){ ?>
+    <?if($auto->TIPO_CADASTRO == 'A' && $acao != 'renovar') { ?>
     <div>
         <div>
             <label for="APOLICE" class="label">Apolice</label>
@@ -235,6 +243,20 @@
         <input type="hidden" name="TIPO_CADASTRO" value="A" />
     </div><!-- renovacao auto apolice -->    
     <?};?>
+    <div class="anexo">
+        <label class="label" for="ANEXO">Anexo</label>
+        <input type="file" name="ANEXO" id="ANEXO" />
+
+        <div style="clear:both"></div>
+
+        <?php
+        if( $auto->ANEXO != '' ) {
+            $auto->pegarPasta();
+
+            echo '<p>Arquivo atual: <a target="_blank" href="'.$auto->pasta . $auto->ANEXO.'">'.$auto->ANEXO.'</a></p>';
+        }
+        ?>
+    </div><!-- .anexo -->
     <div class="campo-input">
         <br /><br /><br /><br /><br /><br />
         <input class="bt_voltar campo-input" type="button" onclick="javascript:window.location='documentos.php'" value="Voltar" style="float:left;margin-right:15px;clear:none"  />
@@ -245,23 +267,22 @@
 
 <script type="text/javascript">
     
-$(function() {
+$(function() {        
+    $('#formaAuto').validate({
+        rules:{
+            'DESCRICAO': {required: true},
+            'DATA_VENCIMENTO' : {dataBR : true},
+            'VIGENCIA_INICIO' : {dataBR : true},
+            'VIGENCIA_FIM' : {dataBR : true}
+        }
+    });
         
-        $('#formaAuto').validate({
-            rules:{
-                'DESCRICAO': {required: true},
-                'DATA_VENCIMENTO' : {dataBR : true},
-                'VIGENCIA_INICIO' : {dataBR : true},
-                'VIGENCIA_FIM' : {dataBR : true}
-            }
-        });
-        
-            /*setando mascaras*/
-            $("#FIPE").setMask("999");
-            $("#DATA_VENCIMENTO").setMask("99/99/9999");
-            $("#VIGENCIA_INICIO").setMask("99/99/9999");
-            $("#VIGENCIA_FIM").setMask("99/99/9999");
+    /*setando mascaras*/
+    $("#FIPE").setMask("999");
+    $("#DATA_VENCIMENTO").setMask("99/99/9999");
+    $("#VIGENCIA_INICIO").setMask("99/99/9999");
+    $("#VIGENCIA_FIM").setMask("99/99/9999");
 
-        });
-}
+});
+
 </script>

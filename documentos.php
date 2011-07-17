@@ -70,7 +70,11 @@ if( $acao == 'inserirAuto' ) {
     $auto->CARRO_RESERVA = post('CARRO_RESERVA');
     $auto->OBS = post('OBS');
     
-    $auto->inserir();
+    if( $auto->inserir() ) {
+        if( post('endosso') == 'S' ) {
+            $auto->endosso( post('IDOLD') );
+        }
+    }
 }
 
 
@@ -109,7 +113,16 @@ if( $acao == 'inserirRe' ) {
     $re->PERIODO_INDENITARIO = post('PERIODO_INDENITARIO');
     $re->EQUIPAMENTOS_ELETRONICOS = post('EQUIPAMENTOS_ELETRONICOS');
     
-    $re->inserir();
+    if( $re->inserir() ) {
+        /* enviando anexo */
+        $re->ANEXO = isset($_FILES['ANEXO']) ? $_FILES['ANEXO'] : array();
+        $re->anexar($cliente->ID);
+        
+        /* verifica se é endosso */
+        if( post('endosso') == 'S' ) {
+            $re->endosso( post('IDOLD') );
+        }
+    }
 }
 
 
@@ -155,7 +168,11 @@ if( $acao == 'editarAuto' ) {
     $auto->CARRO_RESERVA = post('CARRO_RESERVA');
     $auto->OBS = post('OBS');
     
-    $auto->editar();
+    if( $auto->editar() ) {
+        /* enviando anexo */
+        $auto->ANEXO = isset($_FILES['ANEXO']) ? $_FILES['ANEXO'] : array();
+        $auto->anexar($cliente->ID);
+    }
 }
 
 
@@ -194,8 +211,13 @@ if( $acao == 'editarRe' ) {
     $re->PERIODO_INDENITARIO = post('PERIODO_INDENITARIO');
     $re->EQUIPAMENTOS_ELETRONICOS = post('EQUIPAMENTOS_ELETRONICOS');
     
-    $re->editar();
+    if( $re->editar() ) {
+        /* enviando anexo */
+        $re->ANEXO = isset($_FILES['ANEXO']) ? $_FILES['ANEXO'] : array();
+        $re->anexar($cliente->ID);
+    }
 }
+
 
 /**
  * Form pra inserir
@@ -251,6 +273,8 @@ if( $acao == 'endossar' ) {
         $auto->listar = false;
         $re->listar   = false;
         $auto->acao   = 'inserirAuto';
+        $auto->endossar = true;
+        
     } else {
         $re->ID = get('id');
         if( !$re->informacoes() )
@@ -261,6 +285,57 @@ if( $acao == 'endossar' ) {
         $re->listar   = false;
         $re->acao   = 'inserirRe';
         $re->endossar = true;
+    }
+}
+
+if( $acao == 'renovar' ) {
+    $tipoRenovar = get('tipoRenovar');
+    
+    if( $tipoRenovar == 'auto' ) {
+        $auto->ID = get('id');
+        if( !$auto->informacoes() )
+            header('Location: documentos.php');
+        
+        $auto->form   = true;
+        $auto->listar = false;
+        $re->listar   = false;
+        $auto->acao   = 'inserirAuto';
+        $auto->renovar = true;
+        $auto->FRANQUIA = null;
+        $auto->APOLICE = null;
+        $auto->CI = null;
+        $auto->PREMIO = null;
+        $auto->FORMA_PAGAMENTO = null;
+        $auto->PARCELAMENTO = null;
+        $auto->BONUS = null;
+        $auto->TIPO_CADASTRO = 'P';
+        
+        $auto->VIGENCIA_INICIO = $auto->VIGENCIA_FIM;        
+        $data = explode('-', $auto->VIGENCIA_FIM);
+        $data[0] = (int) $data[0];
+        $data[0]++;
+        $auto->VIGENCIA_FIM = $data[0] . '-' . $data[1] . '-' . $data[2];
+    } else {
+        $re->ID = get('id');
+        if( !$re->informacoes() )
+            header('Location: documentos.php');
+        
+        $re->form   = true;
+        $auto->listar = false;
+        $re->listar   = false;
+        $re->acao   = 'inserirRe';
+        $re->renovar = true;
+        $re->APOLICE = null;
+        $re->PREMIO = null;
+        $re->FORMA_PAGAMENTO = null;
+        $re->PARCELAMENTO = null;
+        $re->TIPO_CADASTRO = 'P';
+        
+        $re->VIGENCIA_INICIO = $re->VIGENCIA_FIM;        
+        $data = explode('-', $re->VIGENCIA_FIM);
+        $data[0] = (int) $data[0];
+        $data[0]++;
+        $re->VIGENCIA_FIM = $data[0] . '-' . $data[1] . '-' . $data[2];
     }
 }
 
@@ -373,7 +448,7 @@ if( $acao == 'insereApoliceAuto' ) {
                     <table class="tablesorter">
                         <thead>
                             <tr>
-                                <th><!--.icone com tipo de documento inserido.--></th>
+                                <th><img src="img/icons/dashboard_icon&16.png" /><!--.icone com tipo de documento inserido.--></th>
                                 <th>Vigencia</th>
                                 <th>Veículo</th>
                                 <th>Placa</th>
@@ -397,8 +472,16 @@ if( $acao == 'insereApoliceAuto' ) {
                                     <td><?php echo $autoArray['PLACA']; ?></td>
                                     <td><?php echo Cia::nomeCia( $autoArray['CIA_ID'] ) ?></td>
                                     <td style="text-align: right; padding-right: 10px">
-                                        <img src="img/icons/doc_plus_icon&16.png" title="Renovar" />
-                                        <img src="img/icons/doc_new_icon&16.png" title="Endosso" />                                    
+                                        <?if($autoArray['TIPO_CADASTRO'] == 'A'){?>
+                                            <?php if($autoArray['ANEXO'] != '' ) : ?>
+                                                <a href="files/anexos/auto/<?=$autoArray['ID']?>/<?=$autoArray['ANEXO']?>" target="_blank">
+                                                    <img alt="Anexo" src="img/icons/clip_icon&16.png"/>
+                                                </a>                                       
+                                            <?php endif; ?>
+                                                
+                                            <img onclick="javascript:window.location='documentos.php?acao=renovar&tipoRenovar=auto&id=<?=$autoArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_plus_icon&16.png" title="Renovar" />
+                                            <img onclick="javascript:window.location='documentos.php?acao=endossar&tipoEndossar=auto&id=<?=$autoArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_new_icon&16.png" title="Endosso" />
+                                        <?};?>
                                         <img alt="Editar" onclick="javascript:window.location='documentos.php?acao=editar&tipoEditar=auto&id=<?=$autoArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" />
                                         <a href="documentos.php?acao=excluirAuto&id=<?php echo $autoArray['ID']; ?>" id="cliente-<?php echo $autoArray['ID']; ?>" class="excluir">
                                             <img alt="Excluir" class="center-img" style="cursor: pointer;" src="img/icons/trash_icon&16.png" border="0" />
@@ -425,7 +508,7 @@ if( $acao == 'insereApoliceAuto' ) {
                         <table class="tablesorter">
                             <thead>
                                 <tr>
-                                    <th><!-- .tipo do documento. --></th>
+                                    <th><img src="img/icons/fire_icon&16.png" /></th>
                                     <th>Vigencia</th>
                                     <th>Endereço</th>
                                     <th>Ocupacao</th>
@@ -448,8 +531,10 @@ if( $acao == 'insereApoliceAuto' ) {
                                         <td><?php echo $reArray['OCUPACAO']; ?></td>
                                         <td><?php echo Cia::nomeCia( $reArray['CIA_ID'] ) ?></td>
                                         <td style="text-align: right; padding-right: 10px">
-                                            <img onclick="javascript:window.location='documentos.php?acao=renovar&tipoRenovar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_plus_icon&16.png" title="Renovar" />
-                                            <img onclick="javascript:window.location='documentos.php?acao=endossar&tipoEndossar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_new_icon&16.png" title="Endosso" />
+                                            <?if($reArray['TIPO_CADASTRO'] == 'A'){?>
+                                                <img onclick="javascript:window.location='documentos.php?acao=renovar&tipoRenovar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_plus_icon&16.png" title="Renovar" />
+                                                <img onclick="javascript:window.location='documentos.php?acao=endossar&tipoEndossar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_new_icon&16.png" title="Endosso" />
+                                            <?};?>
                                             <img alt="Editar" onclick="javascript:window.location='documentos.php?acao=editar&tipoEditar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" />
                                             <a href="documentos.php?acao=excluirRe&id=<?php echo $reArray['ID']; ?>" id="cliente-<?php echo $reArray['ID']; ?>" class="excluir">
                                                 <img alt="Excluir"  style="cursor: pointer;" src="img/icons/trash_icon&16.png" border="0" />
@@ -545,20 +630,25 @@ $(function() {
     
     
     /* trocando ano da vigencia */
-    $('input[name="VIGENCIA_INICIO"]').blur(function(e) {
-        $this = $(this);
-        var data = $this.val().split('/');
-        
-        data[2] = parseInt( data[2] ) + 1;
-        
-        $('input[name="VIGENCIA_FIM"]').val(data[0] + '/' + data[1] + '/' + data[2]);
-    });
+    <?if((!$re->endossar)&&(!$auto->endossar)){?>
+        $('input[name="VIGENCIA_INICIO"]').blur(function(e) {
+            $this = $(this);
+            var data = $this.val().split('/');
+
+            data[2] = parseInt( data[2] ) + 1;
+
+            $('input[name="VIGENCIA_FIM"]').val(data[0] + '/' + data[1] + '/' + data[2]);
+        });
+    <?};
     
-    <?php
     if( $re->acao == 'editarRe' ) {
         echo "$('#tipo-documento-re').click();";
     }
     if( $re->endossar ) {
+        echo "$('#tipo-documento-re').click();";
+    }
+
+    if( $re->renovar ) {
         echo "$('#tipo-documento-re').click();";
     }
     

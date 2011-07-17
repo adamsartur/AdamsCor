@@ -1,16 +1,24 @@
 <!--Formulário de inserção / edição-->
-<form id="formRe" action="documentos.php" method="post">
+<form id="formRe" action="documentos.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="acao" value="<?=$re->acao?>" />
     <input type="hidden" name="idCliente" value="<?=$cliente->ID?>" />
     <input type="hidden" name="ID" value="<?=$re->ID?>" />
-    <?if($re->TIPO_CADASTRO != 'A'){?>
+    
+    <?// setando tipo de cadastro para proposta caso não seja apolice
+    if($re->TIPO_CADASTRO != 'A'){?>
         <input type="hidden" name="TIPO_CADASTRO" value="P" />
     <?};?>
    
-
+    <?//passando valores para endossar 
+    if( $re->endossar ) : ?>
+    <input type="hidden" name="endosso" value="S" />
+    <input type="hidden" name="IDOLD" value="<?=$re->ID?>" />
+    <?php endif; ?>
+    
     <div>
         <label for="vigencia_inicio" class="label" >Vigencia:</label>
-        <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=  formatarDataEN($re->VIGENCIA_INICIO)?>" />
+
+        <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=!$re->endossar ? formatarDataEN($re->VIGENCIA_INICIO) : date('d/m/Y')?>" />
         <input type="text" id="VIGENCIA_FIM" name="VIGENCIA_FIM" value="<?=  formatarDataEN($re->VIGENCIA_FIM)?>" />
     </div>
 
@@ -159,13 +167,32 @@
                 <option value="0+12" <?=$re->PARCELAMENTO == '0+12' ? 'selected="selected"' : ''?>>0+12</option>                               
             </select>
         </div>
+        
         <div>
             <label class="label" for="DATA_VENCIMENTO">Data Vencimento</label>
-            <input type="text" id="DATA_VENCIMENTO" id="DATA_VENCIMENTO" value="<?=  formatarDataEN($re->DATA_VENCIMENTO)?>" />
+            <input type="text" name="DATA_VENCIMENTO" id="DATA_VENCIMENTO" value="<?=formatarDataEN($re->DATA_VENCIMENTO)?>" />
         </div>
+        
+        <div style="clear:both"></div>
+        
+        <div class="anexo">
+            <label class="label" for="ANEXO">Anexo</label>
+            <input type="file" name="ANEXO" id="ANEXO" />
+            
+            <div style="clear:both"></div>
+            
+            <?php
+            if( $re->ANEXO != '' ) {
+                $re->pegarPasta();
+                
+                echo '<p>Arquivo atual: <a target="_blank" href="'.$re->pasta . $re->ANEXO.'">'.$re->ANEXO.'</a></p>';
+            }
+            ?>
+        </div><!-- .anexo -->
+        
     </div><!-- pagamento -->
 
-    <?if($re->TIPO_CADASTRO == 'A'){ ?>
+    <?if($re->TIPO_CADASTRO == 'A' && $acao != 'renovar'){ ?>
         <div class="renovacao apolice re">
             <div>
                 <label for="APOLICE" class="label">Apolice</label>
