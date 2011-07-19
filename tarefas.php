@@ -124,7 +124,7 @@
                     </thead>
                     <tbody>
                     <?php
-                        $sql = mysql_query("SELECT * FROM TAREFAS");
+                        $sql = mysql_query("SELECT * FROM tarefas ORDER BY SITUACAO");
                         while ($tarefa = mysql_fetch_array($sql)) :
                             if ($tarefa['SITUACAO'] == true){
                                 $ativoStatus = 'img/icons/checkbox_checked_icon&16.png';

@@ -9,7 +9,7 @@ ConectarBanco();
     }
     //inserir usuario
     $ativo = 0; $admin = 0; $msgErro = null;
-    if (get("acao") && post('usuario') && (get("acao") == "inserir")) {
+    if (post('usuario') && (post("acao") == "inserir")) {
         if (post('Ativo') && post('Ativo')){
             $ativo = 1;
         }
@@ -25,10 +25,6 @@ ConectarBanco();
             $sql = "INSERT INTO users (USUARIO, SENHA, ADMIN, ATIVO) VALUES ('".addslashes(strtolower(post('usuario')))."', ".addslashes(post('senha')).", $admin, $ativo)";
             $query = mysql_query($sql) or die(mysql_error());
             $msgErro = 'Usuario inserido com sucesso!';
-            echo "<script>
-                alert('Usuario inserido com sucesso!')
-                window.location='usuarios.php';
-             </script>";
         }
     }
 
@@ -57,20 +53,12 @@ ConectarBanco();
                                          ATIVO = $ativo WHERE ID =".post('usuarioID');
                 $query = mysql_query($sql) or die(mysql_error());
                 $msgErro = 'Usuario alterado com sucesso!';
-                echo "<script>
-                    alert('Usuario alterado com sucesso!')
-                    window.location='usuarios.php';
-                 </script>";
             }
         } else {
             $sql = "UPDATE users SET ADMIN = $admin,
                                      ATIVO = $ativo WHERE ID =".post('usuarioID'); 
             $query = mysql_query($sql) or die(mysql_error());
             $msgErro = 'Usuario alterado com sucesso!';
-            echo "<script>
-                alert('Usuario alterado com sucesso!')
-                window.location='usuarios.php';
-             </script>"; 
         }
     }
 
@@ -117,7 +105,7 @@ ConectarBanco();
 
         <div class="principal">
           <div class="linha">
-              <?php if (!get('acao') && get('acao') != 'excluir'){ ?>
+              <?php if (!get('acao') || get('acao') == 'excluir'){ ?>
               <div class="botaoadd">
                 <p style="padding: 10px; float:left;">Usu&aacute;rios</p>
                 <input class="bt_adicionar" type="button" value="Adicionar" onclick="javascript:window.location='usuarios.php?acao=inserir'" title="Adicionar"/>
@@ -129,7 +117,7 @@ ConectarBanco();
               <div style="clear:both"></div>
               
               <?php if (get('acao') && get('acao') != 'excluir') { ?>
-              <form action="usuarios.php?acao=<?php echo get('acao'); if (editar(get('id'))){ echo '&id='.get('id');} ?>" method="post" id="usuarios">
+              <form action="usuarios.php" method="post" id="usuarios">
                 <fieldset>
                     <legend>Informa&ccedil;&otilde;es</legend>
                         
@@ -146,7 +134,11 @@ ConectarBanco();
 
                             <input type="hidden" name="usuarioID" value="<?php echo get('id'); ?>"/>
                             <input type="hidden" name="alteraUsuario" value="alteraUsuario"/>
-                            <?php } ?>
+                            <?php } else {
+                                    echo '<input type="hidden" name="acao" value="inserir"/>';
+                                  }
+                                ?>
+
                             <div class="clear"></div>
                         </div><!-- .item-form -->
 
@@ -173,7 +165,6 @@ ConectarBanco();
                             <input class="checkbox" type="checkbox" style="margin-bottom: 10px;"  <?php echo selectedBox(isset($usuario['ATIVO']) ? $usuario['ATIVO'] : null); ?> name= "Ativo"></input>
                             <div class="clear"></div>
                         </div><!-- .item-form -->
-
                         <input class="bt_salvar" id="botaoEnviar" type="submit" value="Salvar"/>
                         <input class="bt_voltar" type="button" onclick="javascript:window.location='usuarios.php'" value="Voltar"/>
                 </fieldset>

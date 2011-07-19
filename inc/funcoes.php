@@ -120,3 +120,14 @@ function selectCidades($idEstado, $idCidade = 7707){
 
     return $html;
 }
+
+function encurtaString($dados, $limit){
+    if (strlen($dados) > 40){
+        $limit = $limit - 3;
+        $encurtado = substr($dados, 0, $limit);
+        $encurtado .= '...';
+    } else {
+        return $dados;
+    }    
+    return $encurtado;
+}
