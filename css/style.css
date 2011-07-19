@@ -254,6 +254,7 @@ textarea.buscar{
     margin:2px 0px 10px 0px;
 }
 
+
 /* tables */
 table.tablesorter {
     font-family:arial;
@@ -289,6 +290,9 @@ table.tablesorter tbody td {
     padding: 4px;
     background-color: #FFF;
 }
+table.tablesorter tbody tr:hover td {    
+    background-color: #E1E1E1; }
+
 table.tablesorter tbody tr.odd td {
     background-color:#F0F0F6;
 }
@@ -331,3 +335,5 @@ span.error {
     color:red;
     margin:2px 0 4px 5px;
 }
+
+
