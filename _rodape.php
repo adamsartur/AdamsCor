@@ -85,9 +85,7 @@
                 window.setTimeout(function() {
                     $('.erro').slideUp(250);
                 }, 2000);
-                 
             <?php
-                unset($msgErro);
             endif;
             ?>
 

@@ -3,14 +3,14 @@
     //excluir tarefa
     if (isset($_GET['acao']) && $_GET['acao'] == 'excluir'){
         $sql = mysql_query('DELETE FROM '.get('tipo').' WHERE ID = '.get('id'));
-        $msgErro = post('alterar') == 'marcas' ? 'Marca' : 'Cia'.' deletada com sucesso';
+        $msgErro = get('tipo') == 'marcas' ? 'Marca deletada com sucesso!' : 'Cia deletada com sucesso';
     }
 
     //inserir tarefa
     if (post('tabela')) {
         $sql = "INSERT INTO ".post('tabela'). " (DESCRICAO) VALUES ('".addslashes(post('descricao'))."')";
         $query = mysql_query($sql) or die(mysql_error());
-        $msgErro = post('alterar') == 'marcas' ? 'Marca' : 'Cia'.' inserida com sucesso!';
+        $msgErro = post('tabela') == 'marcas' ? 'Marca inserida com sucesso!' : 'Cia inserida com sucesso!';
     }
 
     //verifica se o tarefa está selecionado ($_GET[ID]) e busca os dados no banco
@@ -23,7 +23,7 @@
             $sql = "UPDATE ".post('alterar')." SET DESCRICAO = '".addslashes(post('descricao'))."'
                                             WHERE ID = ".post('id');
             $query = mysql_query($sql) or die(mysql_error());
-            $msgErro = post('alterar') == 'marcas' ? 'Marca' : 'Cia'.' alterada com sucesso!';
+            $msgErro = post('alterar') == 'marcas' ? 'Marca alterada com sucesso!' : 'Cia alterada com sucesso!';
     }
 
 ?>
@@ -58,7 +58,7 @@
                       <?php if (!get('acao') || get('acao') == 'excluir'){ ?>
                       <div class="botaoadd">
                           <p style="padding: 10px; float:left;"> Marcas </p>
-                        <input class="bt_adicionar" type="button" value="Adicionar" onclick="javascript:window.location='cadastros.php?acao=inserir'" title="Adicionar"/>
+                        <input class="bt_adicionar" type="button" value="Adicionar" onclick="javascript:window.location='cadastros.php?acao=inserir&tipo=marcas'" title="Adicionar"/>
                       </div>
                       <?php } ?>
                       <div class="erro">
@@ -137,7 +137,7 @@
                                 <?php
                                     if (editar(get('id'))){
                                         echo '<input type="hidden" name="alterar" value="cia"/>';
-                                        echo '<input type="hidden" name="id" value="cia"/>';
+                                        echo '<input type="hidden" name="id" value="'.get('id').'"/>';
                                     } else {
                                         echo '<input type="hidden" name="tabela" value="cia"/>';
                                     }

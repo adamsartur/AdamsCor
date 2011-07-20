@@ -6,20 +6,20 @@ ConectarBanco();
 if (post('buscar')) {
     switch (post('filtro')) {
         case 'vigencia':
-            $sql = 'SELECT * FROM AUTO WHERE VIGENCIA_FIM = "'.formatarDataEN(post('filtro')).'" UNION ALL
-                    SELECT * FROM RE WHERE VIGENCIA_FIM = "'.formatarDataEN(post('filtro')).'"';
+            $sql = 'SELECT * FROM AUTO WHERE VIGENCIA_FIM BETWEEN  "'.formatarDataEN(post('buscar')).'" AND "'.formatarDataEN(post('buscar_fim')).'" UNION ALL
+                    SELECT * FROM RE WHERE VIGENCIA_FIM BETWEEN "'.formatarDataEN(post('buscar')).'" AND "'.formatarDataEN(post('buscar_fim')).'" ';
             break;
         case 'placa':
-            $sql = 'SELECT * FROM AUTO WHERE PLACA = "'.post('filtro').'"';
+            $sql = 'SELECT * FROM AUTO WHERE PLACA = "'.post('buscar').'"';
             break;
         case 'descricao':
-            $sql = 'SELECT * FROM AUTO WHERE DESCRICAO = "'.post('filtro').'"';
+            $sql = 'SELECT * FROM AUTO WHERE DESCRICAO = "'.post('buscar').'"';
             break;
         case 'endereco':
-            $sql = 'SELECT * FROM AUTO WHERE ENDERECO = "'.post('filtro').'"';
+            $sql = 'SELECT * FROM AUTO WHERE ENDERECO = "'.post('buscar').'"';
             break;
 
-        $
+        
     }
 } else {
 
@@ -54,12 +54,13 @@ if (post('buscar')) {
                     <fieldset>
                     <legend>Filtros de Pesquisa</legend>
                     <div class="pesquisa">
-                        <input class="buscar" type="text" name="buscar" value="<?php if (post('buscar')){ echo post('buscar');} ?>" />
-                        <select id="filtro" name="filtro" class="buscar">
-                          <option value="vigencia">Vigência</option>
-                          <option value="placa">Placa</option>
-                          <option value="descricao">Descrição</option>
-                          <option value="endereco">Endereço</option>
+                        <input class="buscar" style="width:120px !important;" type="text" name="buscar" value="<?php if (post('buscar')){ echo post('buscar');} ?>" />
+                        <input class="buscar" style="width:120px !important;" type="text" name="buscar_fim" id="busca_fim" value="<?php if (post('buscar_fim')){ echo post('buscar_fim');} ?>" />
+                        <select id="filtro" style="width:120px !important;" name="filtro" class="buscar">
+                          <option value="vigencia"  <?php echo selected(post('filtro'), 'vigencia'); ?> >Vigência</option>
+                          <option value="placa"     <?php echo selected(post('filtro'), 'placa'); ?> >Placa</option>
+                          <option value="descricao" <?php echo selected(post('filtro'), 'descricao'); ?> >Descrição</option>
+                          <option value="endereco"  <?php echo selected(post('filtro'), 'endereco'); ?>>Endereço</option>
                         </select>
                         <input class="bt_buscar" type="submit" value="Buscar" title="Buscar"/>
                     </div>
@@ -127,5 +128,15 @@ if (post('buscar')) {
             </div><!-- .principal -->
 
         <?php include('_rodape.php') ?>
+        <script type="text/javascript">
+            $("#filtro").change(function () {
+                if($(this).val() == 'vigencia'){
+                    $('#busca_fim').show(450);
+                } else {
+                    $('#busca_fim').hide(450);
+                }
+                })
+            .change();
+        </script>
     </body>
 </html>

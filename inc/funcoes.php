@@ -131,3 +131,7 @@ function encurtaString($dados, $limit){
     }    
     return $encurtado;
 }
+
+function selected($filtro, $campo){
+    return $filtro == $campo ? 'selected="selected"': '';
+}

@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tempo de Geração: Jul 06, 2011 as 11:14 PM
+-- Tempo de Geração: Jul 16, 2011 as 05:39 PM
 -- Versão do Servidor: 5.5.8
--- Versão do PHP: 5.2.11
+-- Versão do PHP: 5.3.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -33,47 +33,52 @@ CREATE TABLE IF NOT EXISTS `auto` (
   `MARCA_ID` int(5) NOT NULL,
   `DESCRICAO` varchar(200) NOT NULL COMMENT 'Tipo do Carro (GOOOLLL)',
   `ANO` varchar(9) DEFAULT NULL,
-  `KM_ANUAL` int(6) DEFAULT NULL,
+  `KM_ANUAL` varchar(6) DEFAULT NULL,
   `ZERO` tinyint(1) DEFAULT NULL,
   `PLACA` varchar(8) DEFAULT NULL,
   `CHASSI` varchar(30) DEFAULT NULL,
   `RENAVAM` varchar(20) DEFAULT NULL,
-  `FILHOS` tinyint(1) DEFAULT NULL,
+  `CEP` varchar(9) DEFAULT NULL,
+  `FILHOS` tinyint(1) DEFAULT NULL COMMENT '1 com 2 sem',
   `COMBUSTIVEL` varchar(200) DEFAULT NULL,
   `GARAGEM_CASA` tinyint(1) DEFAULT NULL,
-  `GARAGEM_TRABALHO` tinyint(1) DEFAULT NULL COMMENT '1 - Trabalho C Garagem, 2 - N Trabalha, 3 - Trabalha S Garagem',
-  `GARAGEM_FACULDADE` tinyint(1) DEFAULT NULL COMMENT '1 - Estuda C Garagem, 2 - N Estuda , 3 - Estuda S Garagem',
-  `BONUS` int(2) DEFAULT NULL,
-  `APOLICE` int(20) DEFAULT NULL,
+  `GARAGEM_TRABALHO` tinyint(1) DEFAULT NULL COMMENT '1-sim 2-naotem 3-naousa',
+  `GARAGEM_FACULDADE` tinyint(1) DEFAULT NULL COMMENT '1tem 2naotem 3naousa',
+  `BONUS` varchar(2) DEFAULT NULL,
+  `ANEXO` varchar(255) DEFAULT NULL,
+  `APOLICE` varchar(20) DEFAULT NULL,
   `VIGENCIA_INICIO` date NOT NULL,
-  `VIGENCIA_FINAL` date NOT NULL,
+  `VIGENCIA_FIM` date NOT NULL,
   `CI` varchar(20) DEFAULT NULL,
   `PREMIO` varchar(20) DEFAULT NULL,
   `PARCELAMENTO` varchar(30) DEFAULT NULL,
   `FORMA_PAGAMENTO` tinyint(1) DEFAULT NULL COMMENT '1 - Debito, 2 - Cheque, 3 - Boleto',
   `DATA_VENCIMENTO` date DEFAULT NULL,
-  `DANOS_MORAIS` varchar(11) NOT NULL,
-  `FIPE` int(3) DEFAULT NULL,
+  `DANOS_MORAIS` varchar(11) DEFAULT NULL,
+  `FIPE` varchar(3) DEFAULT NULL,
   `FRANQUIA` varchar(10) DEFAULT NULL,
   `DM` varchar(11) DEFAULT NULL,
   `DC` varchar(11) DEFAULT NULL,
   `APP` varchar(11) DEFAULT NULL,
   `VIDROS` tinyint(1) DEFAULT NULL,
   `ASSISTENCIA` tinyint(1) DEFAULT NULL,
-  `CARRO_RESERVA` int(2) DEFAULT NULL,
+  `CARRO_RESERVA` varchar(2) DEFAULT NULL,
   `OBS` text,
   PRIMARY KEY (`ID`),
   KEY `CLIENTEID_FK1` (`CLIENTE_ID`),
   KEY `MARCAID_FK1` (`MARCA_ID`),
   KEY `CIAID_FK1` (`CIA_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=34 ;
 
 --
 -- Extraindo dados da tabela `auto`
 --
 
-INSERT INTO `auto` (`ID`, `TIPO_CADASTRO`, `CLIENTE_ID`, `CIA_ID`, `MARCA_ID`, `DESCRICAO`, `ANO`, `KM_ANUAL`, `ZERO`, `PLACA`, `CHASSI`, `RENAVAM`, `FILHOS`, `COMBUSTIVEL`, `GARAGEM_CASA`, `GARAGEM_TRABALHO`, `GARAGEM_FACULDADE`, `BONUS`, `APOLICE`, `VIGENCIA_INICIO`, `VIGENCIA_FINAL`, `CI`, `PREMIO`, `PARCELAMENTO`, `FORMA_PAGAMENTO`, `DATA_VENCIMENTO`, `DANOS_MORAIS`, `FIPE`, `FRANQUIA`, `DM`, `DC`, `APP`, `VIDROS`, `ASSISTENCIA`, `CARRO_RESERVA`, `OBS`) VALUES
-(1, 'C', 2, NULL, 1, 'asdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2011-06-16', '2011-06-24', NULL, NULL, NULL, NULL, NULL, '123123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `auto` (`ID`, `TIPO_CADASTRO`, `CLIENTE_ID`, `CIA_ID`, `MARCA_ID`, `DESCRICAO`, `ANO`, `KM_ANUAL`, `ZERO`, `PLACA`, `CHASSI`, `RENAVAM`, `CEP`, `FILHOS`, `COMBUSTIVEL`, `GARAGEM_CASA`, `GARAGEM_TRABALHO`, `GARAGEM_FACULDADE`, `BONUS`, `ANEXO`, `APOLICE`, `VIGENCIA_INICIO`, `VIGENCIA_FIM`, `CI`, `PREMIO`, `PARCELAMENTO`, `FORMA_PAGAMENTO`, `DATA_VENCIMENTO`, `DANOS_MORAIS`, `FIPE`, `FRANQUIA`, `DM`, `DC`, `APP`, `VIDROS`, `ASSISTENCIA`, `CARRO_RESERVA`, `OBS`) VALUES
+(29, 'A', 13, 1, 1, 'Bugatti Veron', '2011/2012', '', 0, 'ART-1704', '', '', '', 0, 'flex', 0, 0, 0, '0', NULL, '123', '2011-05-11', '2012-05-11', '', '', '1', 1, '0000-00-00', '', '', '', '', '', '', 0, 0, '', ''),
+(30, 'P', 13, 1, 1, 'Ferrari California', '2011/2012', '', 0, 'TUI-0666', '', '', '', 0, 'gasolina', 0, 0, 0, '0', NULL, '', '2011-07-15', '2012-07-15', '', '', '1', 1, '0000-00-00', '', '', '', '', '', '', 0, 0, '', ''),
+(31, 'A', 13, 1, 1, 'GM  Camaro', '2011/2012', '', 0, 'YEA-2012', '', '', '', 0, 'flex', 0, 0, 0, '0', NULL, '11', '2011-07-15', '2011-07-16', '2', '', '1', 1, '0000-00-00', '', '', '', '', '', '', 0, 0, '', ''),
+(33, 'A', 13, 1, 1, 'Challenger', '2010/2010', '', 0, 'CHA-1134', '', '', '', 0, 'flex', 0, 0, 0, '0', '13-33.pdf', '12', '2011-02-10', '2012-02-10', '', '', '4', 1, '0000-00-00', '', '', '', '', '', '', 0, 0, '', '');
 
 -- --------------------------------------------------------
 
@@ -85,12 +90,14 @@ CREATE TABLE IF NOT EXISTS `cia` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `DESCRICAO` varchar(200) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Extraindo dados da tabela `cia`
 --
 
+INSERT INTO `cia` (`ID`, `DESCRICAO`) VALUES
+(1, 'HDI');
 
 -- --------------------------------------------------------
 
@@ -9869,17 +9876,14 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `ESTADO_ID` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `CIDADEID_FK1` (`CIDADE_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=14 ;
 
 --
 -- Extraindo dados da tabela `clientes`
 --
 
 INSERT INTO `clientes` (`ID`, `CIDADE_ID`, `TIPO_CLIENTE`, `CPF`, `CNPJ`, `NOME`, `DATA_NASC`, `RG`, `ORG_EXPEDIDOR`, `ORG_DATA_EXPEDICAO`, `ENDERECO`, `NUMERO`, `COMPLEMENTO`, `BAIRRO`, `CEP`, `CNH`, `CNH_DATA_EXPEDICAO`, `SEXO`, `ESTADO_CIVIL`, `FONE`, `FONE2`, `EMAIL`, `SITUACAO`, `OBS`, `ESTADO_ID`) VALUES
-(1, NULL, 'F', '123', NULL, 'Derpano', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(2, NULL, 'J', NULL, '213123123', 'Manolo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0),
-(6, 0, 'F', '', '', 'sss', NULL, '', '', NULL, '', '', '', '', '', '', NULL, 'M', 0, '', '', '', '', '', 0),
-(7, 0, 'F', '025.992.930-14', '', 'alan', NULL, '', '', NULL, '', '', '', '', '', '', NULL, 'M', 0, '', '', '', '', '', 0);
+(13, 7707, 'F', '028.277.130-12', '', 'Artur Gehlen Adams', '1991-04-17', '', 'ssp', NULL, 'Rua SÃ£o Luiz Gonzaga', '1159', '', 'Guarani', '93520-460', '', NULL, 'M', 0, '(51)3594-9094', '(51)8412-9498', 'adamsartur@gmail.com', '', '', 23);
 
 -- --------------------------------------------------------
 
@@ -9930,33 +9934,6 @@ INSERT INTO `estados` (`id`, `uf`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `garantias`
---
-
-CREATE TABLE IF NOT EXISTS `garantias` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `RE_ID` int(11) NOT NULL,
-  `INCENDIO` varchar(20) DEFAULT NULL,
-  `VENDAVAL` varchar(20) DEFAULT NULL,
-  `DANO_ELETRICO` varchar(20) DEFAULT NULL,
-  `ROUBO` varchar(20) DEFAULT NULL,
-  `RCF` varchar(20) DEFAULT NULL,
-  `VIDROS` varchar(20) DEFAULT NULL,
-  `PERDA_ALUGUEL` varchar(20) DEFAULT NULL,
-  `PERIODO_INDENITARIO` varchar(20) DEFAULT NULL,
-  `EQUIPAMENTOS_ELETRONICOS` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`ID`),
-  KEY `REID_FK1` (`RE_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Extraindo dados da tabela `garantias`
---
-
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `marcas`
 --
 
@@ -9971,7 +9948,7 @@ CREATE TABLE IF NOT EXISTS `marcas` (
 --
 
 INSERT INTO `marcas` (`ID`, `DESCRICAO`) VALUES
-(1, 'Teste');
+(1, 'Volkswagen');
 
 -- --------------------------------------------------------
 
@@ -9982,7 +9959,7 @@ INSERT INTO `marcas` (`ID`, `DESCRICAO`) VALUES
 CREATE TABLE IF NOT EXISTS `re` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `TIPO_RISCO` tinyint(1) NOT NULL COMMENT '1- RESIDENCIAL, 2-EMPRESARIAL',
-  `TIPO_CADASTRO` tinyint(1) NOT NULL COMMENT 'C - CALCULO, P - PROPOSTA, A - APOLICE',
+  `TIPO_CADASTRO` varchar(1) NOT NULL COMMENT 'C - CALCULO, P - PROPOSTA, A - APOLICE',
   `CLIENTE_ID` int(5) NOT NULL,
   `CEP` varchar(9) DEFAULT NULL,
   `ENDERECO` varchar(200) DEFAULT NULL,
@@ -9993,25 +9970,37 @@ CREATE TABLE IF NOT EXISTS `re` (
   `CONSTRUCAO` varchar(100) DEFAULT NULL,
   `BONUS` tinyint(1) DEFAULT NULL,
   `CIA_ID` varchar(10) DEFAULT NULL,
-  `APOLICE` int(20) DEFAULT NULL,
+  `APOLICE` varchar(20) DEFAULT NULL,
   `PREMIO` varchar(20) DEFAULT NULL,
   `PARCELAMENTO` varchar(30) DEFAULT NULL,
   `FORMA_PAGAMENTO` tinyint(1) DEFAULT NULL COMMENT '1 - Debito, 2 - Cheque, 3 - Boleto',
   `DATA_VENCIMENTO` date DEFAULT NULL,
   `DATA_CADASTRO` date DEFAULT NULL,
+  `ANEXO` varchar(255) DEFAULT NULL,
   `OBS` text,
   `VIGENCIA_INICIO` date NOT NULL,
   `VIGENCIA_FIM` date NOT NULL,
+  `INCENDIO` varchar(20) DEFAULT NULL,
+  `VENDAVAL` varchar(20) DEFAULT NULL,
+  `DANO_ELETRICO` varchar(20) DEFAULT NULL,
+  `ROUBO` varchar(20) DEFAULT NULL,
+  `RCF` varchar(20) DEFAULT NULL,
+  `VIDROS` varchar(20) DEFAULT NULL,
+  `PERDA_ALUGUEL` varchar(20) DEFAULT NULL,
+  `PERIODO_INDENITARIO` varchar(20) DEFAULT NULL,
+  `EQUIPAMENTOS_ELETRONICOS` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `CLIENTE_ID` (`CLIENTE_ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
 --
 -- Extraindo dados da tabela `re`
 --
 
-INSERT INTO `re` (`ID`, `TIPO_RISCO`, `TIPO_CADASTRO`, `CLIENTE_ID`, `CEP`, `ENDERECO`, `NUMERO`, `COMPLEMENTO`, `CIDADE_ID`, `OCUPACAO`, `CONSTRUCAO`, `BONUS`, `CIA_ID`, `APOLICE`, `PREMIO`, `PARCELAMENTO`, `FORMA_PAGAMENTO`, `DATA_VENCIMENTO`, `DATA_CADASTRO`, `OBS`, `VIGENCIA_INICIO`, `VIGENCIA_FIM`) VALUES
-(1, 1, 1, 1, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, '2011-06-16', '2011-06-17');
+INSERT INTO `re` (`ID`, `TIPO_RISCO`, `TIPO_CADASTRO`, `CLIENTE_ID`, `CEP`, `ENDERECO`, `NUMERO`, `COMPLEMENTO`, `CIDADE_ID`, `OCUPACAO`, `CONSTRUCAO`, `BONUS`, `CIA_ID`, `APOLICE`, `PREMIO`, `PARCELAMENTO`, `FORMA_PAGAMENTO`, `DATA_VENCIMENTO`, `DATA_CADASTRO`, `ANEXO`, `OBS`, `VIGENCIA_INICIO`, `VIGENCIA_FIM`, `INCENDIO`, `VENDAVAL`, `DANO_ELETRICO`, `ROUBO`, `RCF`, `VIDROS`, `PERDA_ALUGUEL`, `PERIODO_INDENITARIO`, `EQUIPAMENTOS_ELETRONICOS`) VALUES
+(16, 0, 'A', 13, '', 'Abbey Road', '1218', '', 0, 'Residencia - Veraneio', '', NULL, '1', '123', '', '1', 1, '0000-00-00', '0000-00-00', NULL, '', '2011-07-12', '2011-07-15', '', '', '', '', '', '', '', '', ''),
+(28, 0, 'P', 13, '', 'oi oi', '', '', 0, '', '', NULL, '1', '', '', '1', 1, '0000-00-00', '0000-00-00', '13-28.pdf', '', '0000-00-00', '0000-00-00', '', '', '', '', '', '', '', '', ''),
+(29, 0, 'P', 13, '', '', '', '', 0, '', '', NULL, '1', '', '', '1', 1, '0000-00-00', '0000-00-00', '13-29.pdf', '', '0000-00-00', '0000-00-00', '', '', '', '', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -10029,20 +10018,19 @@ CREATE TABLE IF NOT EXISTS `tarefas` (
   `DATA_CADASTRO` date DEFAULT NULL,
   `SITUACAO` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Extraindo dados da tabela `tarefas`
 --
 
 INSERT INTO `tarefas` (`ID`, `RE_ID`, `AUTO_ID`, `DESCRICAO`, `DATA_VENCIMENTO`, `DATA_FINALIZACAO`, `DATA_CADASTRO`, `SITUACAO`) VALUES
-(1, NULL, NULL, 'asdasdasdasd1', '2011-06-12', '2011-07-06', '2011-06-11', 1),
-(2, NULL, 1, 'aaaaaaaaaaaaaaaaa', '2011-06-18', NULL, '2011-06-15', 1),
-(3, 1, NULL, 'bbbbbbbbbbbb', '2011-06-18', NULL, '2011-06-15', 0),
-(4, NULL, NULL, 'sdasdasdas', '2011-07-06', '2011-07-05', '0000-00-00', 1),
-(5, NULL, NULL, 'teste2', '2011-07-30', '2011-07-06', '2011-07-04', 0),
-(6, NULL, NULL, 'deeeeee asdfhausfhua uadfhuashdfuha as dasdasdasdasdhasdjh jhasjhkasdjhkasdjhk ', '2011-07-02', NULL, '2011-07-04', NULL),
-(7, NULL, NULL, 'pppppppppppp', '2011-07-29', '2011-07-05', '2011-07-04', 1);
+(1, NULL, NULL, 'asdasdasdasd', '2011-06-12', '2011-07-16', '2011-06-11', 1),
+(2, NULL, 1, 'aaaaaaaaaaaaaaaaa', '2011-06-18', '2011-07-16', '2011-06-15', 1),
+(3, 1, NULL, 'bbbbbbbbbbbbb', '2011-06-18', '2011-07-16', '2011-06-15', 1),
+(4, NULL, NULL, 'ojio', '2011-07-15', '2011-07-16', '2011-07-10', 1),
+(5, NULL, NULL, 'oij', '2011-04-12', '2011-07-16', '2011-07-10', 1),
+(6, NULL, NULL, 'ligar cliente', '2011-07-15', '2011-07-16', '2011-07-16', 1);
 
 -- --------------------------------------------------------
 
@@ -10057,7 +10045,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `ADMIN` tinyint(1) DEFAULT NULL,
   `ATIVO` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;
 
 --
 -- Extraindo dados da tabela `users`
@@ -10066,11 +10054,12 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`ID`, `USUARIO`, `SENHA`, `ADMIN`, `ATIVO`) VALUES
 (1, 'alan', '123', 1, 1),
 (2, 'Marcelo', '123', 0, 1),
-(3, 'teste', '111111', 1, 0),
+(3, 'teste', '111111', 1, 1),
 (4, 'asd', '123', 0, 0),
 (7, 'luis', '123', 0, 0),
 (8, 'artur', '123', 1, 1),
-(9, 'testefull', '123123', 1, 0);
+(9, 'testefull', '123123', 1, 0),
+(10, 'eu', '123123', 0, 0);
 
 --
 -- Restrições para as tabelas dumpadas
@@ -10083,12 +10072,6 @@ ALTER TABLE `auto`
   ADD CONSTRAINT `auto_ibfk_1` FOREIGN KEY (`CLIENTE_ID`) REFERENCES `clientes` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `CIAID_FK1` FOREIGN KEY (`CIA_ID`) REFERENCES `cia` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `MARCAID_FK1` FOREIGN KEY (`MARCA_ID`) REFERENCES `marcas` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Restrições para a tabela `garantias`
---
-ALTER TABLE `garantias`
-  ADD CONSTRAINT `REID_FK1` FOREIGN KEY (`RE_ID`) REFERENCES `re` (`ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Restrições para a tabela `re`
