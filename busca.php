@@ -6,23 +6,22 @@ ConectarBanco();
 if (post('buscar')) {
     switch (post('filtro')) {
         case 'vigencia':
-            $sql = 'SELECT * FROM AUTO WHERE VIGENCIA_FIM BETWEEN  "'.formatarDataEN(post('buscar')).'" AND "'.formatarDataEN(post('buscar_fim')).'" UNION ALL
-                    SELECT * FROM RE WHERE VIGENCIA_FIM BETWEEN "'.formatarDataEN(post('buscar')).'" AND "'.formatarDataEN(post('buscar_fim')).'" ';
+            $sql = mysql_query('SELECT * FROM AUTO WHERE VIGENCIA_FIM BETWEEN  "'.formatarDataEN(post('buscar')).'" AND "'.formatarDataEN(post('buscar_fim')).'" UNION ALL
+                                SELECT * FROM RE WHERE VIGENCIA_FIM BETWEEN "'.formatarDataEN(post('buscar')).'" AND "'.formatarDataEN(post('buscar_fim')).'" ');
             break;
         case 'placa':
-            $sql = 'SELECT * FROM AUTO WHERE PLACA = "'.post('buscar').'"';
+            $sql = mysql_query('SELECT * FROM AUTO WHERE PLACA = "'.post('buscar').'"');
             break;
         case 'descricao':
-            $sql = 'SELECT * FROM AUTO WHERE DESCRICAO = "'.post('buscar').'"';
+            $sql = mysql_query('SELECT * FROM AUTO WHERE DESCRICAO = "'.post('buscar').'"');
             break;
         case 'endereco':
-            $sql = 'SELECT * FROM AUTO WHERE ENDERECO = "'.post('buscar').'"';
-            break;
-
-        
+            $sql = mysql_query('SELECT * FROM AUTO WHERE ENDERECO = "'.post('buscar').'"');
+            break;        
     }
 } else {
-
+     $sql = mysql_query('SELECT * FROM AUTO WHERE VIGENCIA_FIM BETWEEN  "'.date("Y-m-1").'" AND "'.date("Y-m-t").'" UNION ALL
+                         SELECT * FROM RE WHERE VIGENCIA_FIM BETWEEN "'.date("Y-m-1").'" AND "'.date("Y-m-t").'" ');
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -66,15 +65,11 @@ if (post('buscar')) {
                     </div>
                     </fieldset>
                 </form>
-            <?php
-            $autoSql = mysql_query("SELECT * FROM auto");
-            if (mysql_num_rows($autoSql) > 0) {
-            ?>
                 <div class="listagem_auto">
                     <table class="tablesorter">
                         <thead>
                             <tr>
-                                <th><img src="img/icons/dashboard_icon&16.png" /><!--.icone com tipo de documento inserido.--></th>
+                                <th><!--.icone com tipo de documento inserido.--></th>
                                 <th>Cliente</th>
                                 <th>Vigencia</th>
                                 <th>Veículo/Endereço</th>
@@ -87,7 +82,7 @@ if (post('buscar')) {
 
                             <!--           rotina para criar array com documentos auto                -->
                         <?php
-                        while ($autoArray = mysql_fetch_array($autoSql)) :
+                        while ($autoArray = mysql_fetch_array($sql)) :
                         ?>
                             <tr class="item autoLinha">
                                 <td><?php
@@ -110,7 +105,7 @@ if (post('buscar')) {
                             <td style="text-align: right; padding-right: 10px">
                                 <? if ($autoArray['TIPO_CADASTRO'] == 'A') {
                                 ?>
-                                    <img onclick="javascript:window.location='documentos.php?acao=renovar&tipoRenovar=auto&id=<?=$autoArray['ID'] ?>'" style="cursor: pointer;" src="img/icons/doc_plus_icon&16.png" title="Renovar" />
+                                <img onclick="javascript:window.location='documentos.php?acao=renovar&tipoRenovar=auto&id=<?=$autoArray['ID'] ?>'" style="cursor: pointer;" src="img/icons/doc_plus_icon&16.png" title="Renovar" />
                                 <img onclick="javascript:window.location='documentos.php?acao=endossar&tipoEndossar=auto&id=<?=$autoArray['ID'] ?>'" style="cursor: pointer;" src="img/icons/doc_new_icon&16.png" title="Endosso" />
                                 <? }; ?>
                                 <img alt="Editar" onclick="javascript:window.location='documentos.php?acao=editar&tipoEditar=auto&id=<?=$autoArray['ID'] ?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" />
@@ -122,8 +117,6 @@ if (post('buscar')) {
                             </tbody>
                         </table>
                     </div><!-- listagem auto -->
-
-                <?php } ?>
                 </div><!-- .linha -->
             </div><!-- .principal -->
 
@@ -135,7 +128,7 @@ if (post('buscar')) {
                 } else {
                     $('#busca_fim').hide(450);
                 }
-                })
+            })
             .change();
         </script>
     </body>

@@ -215,9 +215,9 @@ p.subtitulo_menu{
     margin: 0 10px 5px 5px;
     width: 130px;
 }
-.pesquisa{
+/*.pesquisa{
     float: left;
-}
+}*/
 .buscar{
     background: none repeat scroll 0 0 #F9F9F9;
     border: 1px solid #CCCCCC;
