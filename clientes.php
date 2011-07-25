@@ -307,6 +307,7 @@ switch (request('msg')) {
                     <table class="tablesorter">
                         <thead>
                             <tr>
+                                <th><!--calculo--></th>
                                 <th>Cliente</th>
                                 <th>Endereço</th>
                                 <th>Número</th>
@@ -325,6 +326,9 @@ switch (request('msg')) {
                             while( $clientes = mysql_fetch_array($sql) ) :
                                 ?>
                                 <tr nome="<?php echo strtolower($clientes['NOME']); ?>" class="clienteLinha">
+                                    <td><a href="documentos.php?acao=calculo&idCliente=<?php echo $clientes['ID']; ?>" id="cliente-<?php echo $clientes['ID']; ?>">
+                                            <img alt="Calculo" src="img/icons/calc_icon&16.png"/>
+                                    </a></td>
                                     <td><?php echo $clientes['NOME']; ?></td>
                                     <td><?php echo $clientes['ENDERECO']; ?></td>
                                     <td><?php echo $clientes['NUMERO']; ?></td>

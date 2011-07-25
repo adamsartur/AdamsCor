@@ -13,6 +13,7 @@ class Cliente extends Base {
     public $NOME = null;
     public $DATA_NASC = null;
     public $RG = null;
+    public $ORGAO = null;
     public $ORG_EXPEDIDOR = null;
     public $ORG_DATA_EXPEDICAO = null;
     public $ENDERECO = null;
@@ -29,6 +30,8 @@ class Cliente extends Base {
     public $EMAIL = null;
     public $SITUACAO = null;
     public $OBS = null;
+    public $ESTADO = null;
+    public $CIDADE = null;
     
     
     /**
@@ -124,6 +127,7 @@ class Cliente extends Base {
         if( mysql_query($sql) ) {
             return true;
         } else {
+            die(mysql_error());
             return false;
         }
     }

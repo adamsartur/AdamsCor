@@ -12,6 +12,11 @@ require_once 'inc/classes/cia.class.php';
 
 $acao = request('acao', 'listar');
 
+$calculo = false;
+if($acao == 'calculo'){
+    $calculo = true;
+}
+
 
 /**
  * Configurando o cliente
@@ -71,10 +76,11 @@ if( $acao == 'inserirAuto' ) {
     $auto->OBS = post('OBS');
     
     if( $auto->inserir() ) {
+
         if( post('endosso') == 'S' ) {
             $auto->endosso( post('IDOLD') );
         }
-    }
+    }  
 }
 
 
@@ -114,6 +120,7 @@ if( $acao == 'inserirRe' ) {
     $re->EQUIPAMENTOS_ELETRONICOS = post('EQUIPAMENTOS_ELETRONICOS');
     
     if( $re->inserir() ) {
+        if($re->TIPO_CADASTRO == 'C'){header('Location: calculo.php');};
         /* enviando anexo */
         $re->ANEXO = isset($_FILES['ANEXO']) ? $_FILES['ANEXO'] : array();
         $re->anexar($cliente->ID);
@@ -172,6 +179,7 @@ if( $acao == 'editarAuto' ) {
         /* enviando anexo */
         $auto->ANEXO = isset($_FILES['ANEXO']) ? $_FILES['ANEXO'] : array();
         $auto->anexar($cliente->ID);
+        if($auto->TIPO_CADASTRO == 'C'){header('Location: calculo.php');};
     }
 }
 
@@ -230,6 +238,33 @@ if( $acao == 'inserir' ) {
     $re->acao     = 'inserirRe';
 }
 
+/**
+ * Editando um calculo
+ */
+if( $acao == 'editarCalculo' ) {
+    $tipoEditar = get('tipoEditar');
+    $calculo = true;
+    
+    if( $tipoEditar == 'auto' ) {
+        $auto->ID = get('id');
+        if( !$auto->informacoes() )
+            header('Location: documentos.php');
+        
+        $auto->form   = true;
+        $auto->listar = false;
+        $re->listar   = false;
+        $auto->acao   = 'editarAuto';
+    } else {
+        $re->ID = get('id');
+        if( !$re->informacoes() )
+            header('Location: documentos.php');
+        
+        $auto->form   = true;
+        $auto->listar = false;
+        $re->listar   = false;
+        $re->acao   = 'editarRe';
+    }
+}
 
 /**
  * Editando um item
@@ -373,6 +408,33 @@ if( $acao == 'novaApoliceAuto' ) {
 
 
 /**
+ * Form pra calculo auto
+ */
+if( $acao == 'calculo' ) {
+    $auto->ID = get('id');
+    $auto->informacoes();
+    $auto->form   = false;
+    $auto->listar = false;
+    $re->listar   = false;
+    $re->form     = true;
+    $auto->acao   = 'calculoAuto';
+}
+
+/**
+ * Form pra calculo re
+ */
+if( $acao == 'calculo' ) {
+    $re->ID = get('id');
+    $re->informacoes();
+    $re->form   = false;
+    $re->listar = false;
+    $auto->listar   = false;
+    $auto->form     = true;
+    $re->acao   = 'calculoRe';
+
+}
+
+/**
  * Form pra apolcie re
  */
 if( $acao == 'novaApoliceRe' ) {
@@ -403,6 +465,72 @@ if( $acao == 'insereApoliceAuto' ) {
     $auto->CI = post('CI');
     $auto->apolice();
 }
+/**
+ * Inserindo o calculo auto
+ */
+if($acao == 'calculoAuto'){
+
+    $auto->ID = post('ID');
+    $auto->TIPO_CADASTRO = 'C';
+    $auto->CLIENTE_ID = $cliente->ID;
+    $auto->CIA_ID = post('CIA_ID');
+    $auto->MARCA_ID = post('MARCA_ID');
+    $auto->DESCRICAO = post('DESCRICAO');
+    $auto->ANO = post('ANO');
+    $auto->KM_ANUAL = post('KM_ANUAL');
+    $auto->CEP = post('CEP');
+    $auto->ZERO = post('ZERO');
+    $auto->PLACA = post('PLACA');
+    $auto->RENAVAM = post('RENAVAM');
+    $auto->FILHOS = post('FILHOS');
+    $auto->COMBUSTIVEL = post('COMBUSTIVEL');
+    $auto->GARAGEM_CASA = post('GARAGEM_CASA');
+    $auto->GARAGEM_TRABALHO = post('GARAGEM_TRABALHO');
+    $auto->GARAGEM_FACULDADE = post('GARAGEM_FACULDADE');
+    $auto->BONUS = post('BONUS');
+    $auto->DANOS_MORAIS = post('DANOS_MORAIS');
+    $auto->FIPE = post('FIPE');
+    $auto->DM = post('DM');
+    $auto->DC = post('DC');
+    $auto->APP = post('APP');
+    $auto->VIDROS = post('VIDROS');
+    $auto->ASSISTENCIA = post('ASSISTENCIA');
+    $auto->CARRO_RESERVA = post('CARRO_RESERVA');
+
+    $auto->inserir();
+    if($auto->TIPO_CADASTRO == 'C'){
+        header('Location: calculo.php');            
+    };
+}
+/**
+ * Inserindo o calculo re
+ */
+if($acao == 'calculoRe'){
+
+    
+    $re->ID = post('ID');
+    $re->CLIENTE_ID = $cliente->ID;
+    $re->TIPO_CADASTRO = 'C';
+    $re->CIA_ID = post('CIA_ID');
+    $re->OCUPACAO = post('OCUPACAO');
+    $re->CONSTRUCAO = post('CONSTRUCAO');
+    $re->OBS = post('OBS');
+    $re->INCENDIO = post('INCENDIO');
+    $re->VENDAVAL = post('VENDAVAL');
+    $re->DANO_ELETRICO = post('DANO_ELETRICO');
+    $re->ROUBO = post('ROUBO');
+    $re->RCF = post('RCF');
+    $re->VIDROS = post('VIDROS');
+    $re->PERDA_ALUGUEL = post('PERDA_ALUGUEL');
+    $re->PERIODO_INDENITARIO = post('PERIODO_INDENITARIO');
+    $re->EQUIPAMENTOS_ELETRONICOS = post('EQUIPAMENTOS_ELETRONICOS');
+
+    $re->inserir();
+    if($re->TIPO_CADASTRO == 'C'){
+        header('Location: calculo.php');            
+    };
+
+}
 
 ?>
 
@@ -421,7 +549,10 @@ if( $acao == 'insereApoliceAuto' ) {
 
     <div class="principal">
         <h1><!-- dar um echo do cliente que esta sendo visualizado --></h1>
-        
+
+        <div class="erro">
+            <p style="text-align: center; margin-top: 10px;"><?php if (isset($msgErro)){  echo $msgErro;  } ?></p>
+        </div><!-- .erro -->
         <?php
         if( !$auto->form ) : 
             ?>
@@ -431,17 +562,13 @@ if( $acao == 'insereApoliceAuto' ) {
             <?php
         endif;
         ?>
-
-        <div class="erro">
-            <p style="text-align: center; margin-top: 10px;"><?php if (isset($msgErro)){  echo $msgErro;  } ?></p>
-        </div><!-- .erro -->
-
         <div class="linha">
             <?php
             /**
              * Listando os documentos auto
              */
-            $autoSql = mysql_query("SELECT * FROM auto WHERE CLIENTE_ID = '".addslashes( $cliente->ID )."'");
+            $autoSql = mysql_query("SELECT * FROM auto WHERE TIPO_CADASTRO != 'C'
+                AND CLIENTE_ID = '".addslashes( $cliente->ID )."'");
             if( $auto->listar && mysql_num_rows($autoSql) > 0 ) : 
                 ?>
                 <div class="listagem_auto">
@@ -464,8 +591,7 @@ if( $acao == 'insereApoliceAuto' ) {
                                 ?>
                                 <tr class="item autoLinha">
                                     <td><?php if ($autoArray['TIPO_CADASTRO'] == 'A'){echo '<img src="img/icons/case_icon&16.png" title="Apolice" />';};
-                                              if ($autoArray['TIPO_CADASTRO'] == 'P'){echo '<a href="documentos.php?acao=novaApoliceAuto&id='.$autoArray['ID'].'" id="cliente-'.$autoArray['ID'].'"> <img src="img/icons/doc_lines_icon&16.png" title="Atualizar Proposta" /></a>';};                                              
-                                              if ($autoArray['TIPO_CADASTRO'] == 'C'){echo '<img src="img/icons/calc_icon&16.png" title="->Calculo" />';}; ?>
+                                              if ($autoArray['TIPO_CADASTRO'] == 'P'){echo '<a href="documentos.php?acao=novaApoliceAuto&id='.$autoArray['ID'].'" id="cliente-'.$autoArray['ID'].'"> <img src="img/icons/doc_lines_icon&16.png" title="Atualizar Proposta" /></a>';};?>
                                     </td>
                                     <td><?php echo formatarDataEN($autoArray['VIGENCIA_FIM']); ?></td>
                                     <td><?php echo $autoArray['DESCRICAO']; ?></td>
@@ -501,7 +627,8 @@ if( $acao == 'insereApoliceAuto' ) {
                 <?php
                 endif;
                 
-                $reSql = mysql_query("SELECT * FROM re WHERE CLIENTE_ID = '".addslashes( $cliente->ID )."'");
+                $reSql = mysql_query("SELECT * FROM re WHERE TIPO_CADASTRO != 'C'
+                AND CLIENTE_ID = '".addslashes( $cliente->ID )."'");
                 if( $re->listar && mysql_num_rows($reSql) > 0 ) :
                     ?>
                     <div class="listagem_interno">
@@ -523,8 +650,7 @@ if( $acao == 'insereApoliceAuto' ) {
                                     ?>
                                     <tr class="item reLinha">
                                         <td><?php if ($reArray['TIPO_CADASTRO'] == 'A'){echo '<img src="img/icons/case_icon&16.png" title="Apolice" />';};
-                                                  if ($reArray['TIPO_CADASTRO'] == 'P'){echo '<a href="documentos.php?acao=novaApoliceRe&id='.$reArray['ID'].'" id="cliente-'.$reArray['ID'].'"> <img src="img/icons/doc_lines_icon&16.png" title="Atualizar Proposta" /></a>';};  
-                                                  if ($reArray['TIPO_CADASTRO'] == 'C'){echo '<img src="img/icons/calc_icon&16.png" title="->Calculo" />';}; ?>
+                                                  if ($reArray['TIPO_CADASTRO'] == 'P'){echo '<a href="documentos.php?acao=novaApoliceRe&id='.$reArray['ID'].'" id="cliente-'.$reArray['ID'].'"> <img src="img/icons/doc_lines_icon&16.png" title="Atualizar Proposta" /></a>';};?>
                                         </td>
                                         <td><?php echo formatarDataEN($reArray['VIGENCIA_FIM']); ?></td>
                                         <td><?php echo $reArray['ENDERECO']; echo ' '.$reArray['NUMERO']; echo " ".$reArray['COMPLEMENTO']; ?></td>
@@ -532,6 +658,11 @@ if( $acao == 'insereApoliceAuto' ) {
                                         <td><?php echo Cia::nomeCia( $reArray['CIA_ID'] ) ?></td>
                                         <td style="text-align: right; padding-right: 10px">
                                             <?if($reArray['TIPO_CADASTRO'] == 'A'){?>
+                                                <?php if($reArray['ANEXO'] != '' ) : ?>
+                                                    <a href="files/anexos/re/<?=$reArray['ID']?>/<?=$reArray['ANEXO']?>" target="_blank">
+                                                        <img alt="Anexo" src="img/icons/clip_icon&16.png"/>
+                                                    </a>                                       
+                                                <?php endif; ?>
                                                 <img onclick="javascript:window.location='documentos.php?acao=renovar&tipoRenovar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_plus_icon&16.png" title="Renovar" />
                                                 <img onclick="javascript:window.location='documentos.php?acao=endossar&tipoEndossar=re&id=<?=$reArray['ID']?>'" style="cursor: pointer;" src="img/icons/doc_new_icon&16.png" title="Endosso" />
                                             <?};?>

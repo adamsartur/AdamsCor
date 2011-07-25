@@ -7,6 +7,7 @@ class Auto extends Base {
     public $CLIENTE_ID;
     public $CIA_ID;
     public $MARCA_ID;
+    public $CEP;
     public $DESCRICAO;
     public $ANO;
     public $KM_ANUAL;
@@ -184,6 +185,7 @@ class Auto extends Base {
             return true;
         } else {
             return false;
+
         }
     }
 

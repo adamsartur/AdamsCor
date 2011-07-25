@@ -3,21 +3,24 @@
     <input type="hidden" name="acao" value="<?=$auto->acao?>" />
     <input type="hidden" name="idCliente" value="<?=$cliente->ID?>" />
     <input type="hidden" name="ID" value="<?=$auto->ID?>" />
-    
-    <?if($auto->TIPO_CADASTRO != 'A'){?>
-        <input type="hidden" name="TIPO_CADASTRO" value="P" />
-    <?};?>
-
-    <?php if( $auto->endossar ) : ?>
+    <?php if(!$calculo){ 
+        if($auto->TIPO_CADASTRO != 'A'){?>
+            <input type="hidden" name="TIPO_CADASTRO" value="P" />
+        <?};
+    };
+        if($calculo){            
+        echo '<input type="hidden" name="TIPO_CADASTRO" value="C" />';};
+     if( $auto->endossar ) : ?>
     <input type="hidden" name="endosso" value="S" />
     <input type="hidden" name="IDOLD" value="<?=$auto->ID?>" />
-    <?php endif; ?>
-        
-    <div>
-        <label for="VIGENCIA_INICIO" class="label" >Vigencia:</label>
-        <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=!$auto->endossar ? formatarDataEN($auto->VIGENCIA_INICIO) : date('d/m/Y')?>" />
-        <input type="text" id="VIGENCIA_FIM" name="VIGENCIA_FIM" value="<?=  formatarDataEN($auto->VIGENCIA_FIM)?>" />
-    </div>
+    <?php endif; 
+    if(!$calculo){ ?>        
+        <div>
+            <label for="VIGENCIA_INICIO" class="label" >Vigencia:</label>
+            <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=!$auto->endossar ? formatarDataEN($auto->VIGENCIA_INICIO) : date('d/m/Y')?>" />
+            <input type="text" id="VIGENCIA_FIM" name="VIGENCIA_FIM" value="<?=  formatarDataEN($auto->VIGENCIA_FIM)?>" />
+        </div>
+    <?};?>
 
     <div>
         <label for="CIA_ID" class="label" >Cia</label>
@@ -78,6 +81,11 @@
 
     <div class="perfil">
 
+        <div>
+            <label class="label" for="CEP">CEP</label>
+            <input type="text" id="CEP" name="CEP" value="<?=$auto->CEP?>" />
+        </div>
+        
         <div>
             <label for="GARAGEM_CASA" class="label">Garagem Residencia</label>
             <select name="GARAGEM_CASA" id="GARAGEM_CASA">
@@ -179,84 +187,87 @@
             <option value="10" <?=$auto->BONUS == '10' ? 'selected="selected"' : ''?>>10</option>
         </select>
     </div><!--bonus-->
-    <div class="pagamento">
-        <div>
-            <label class="label" for="PREMIO">Premio</label>
-            <input type="text" id="PREMIO" name="PREMIO" value="<?=$auto->PREMIO?>" />
-        </div>
-        <div>
-            <label class="label" for="FORMA_PAGAMENTO">Forma de Pagamento</label>
-            <select name="FORMA_PAGAMENTO" id="FORMA_PAGAMENTO">
-                <option value="">Selecione</option>
-                <option value="1" <?=$auto->FORMA_PAGAMENTO == '1' ? 'selected="selected"' : ''?>>Debito</option>
-                <option value="2" <?=$auto->FORMA_PAGAMENTO == '2' ? 'selected="selected"' : ''?>>Cheque</option>
-                <option value="3" <?=$auto->FORMA_PAGAMENTO == '3' ? 'selected="selected"' : ''?>>Boleto</option>
-            </select>
-        </div>
-        <div>
-            <label class="label" for="PARCELAMENTO">Parcelamento</label>
-            <select name="PARCELAMENTO" id="PARCELAMENTO">
-                <option value="">Selecione</option>
-                <option value="1" <?=$auto->PARCELAMENTO == '1' ? 'selected="selected"' : ''?>>1</option>
-                <option value="2" <?=$auto->PARCELAMENTO == '2' ? 'selected="selected"' : ''?>>2</option>
-                <option value="3" <?=$auto->PARCELAMENTO == '3' ? 'selected="selected"' : ''?>>3</option>
-                <option value="4" <?=$auto->PARCELAMENTO == '4' ? 'selected="selected"' : ''?>>4</option>
-                <option value="5" <?=$auto->PARCELAMENTO == '5' ? 'selected="selected"' : ''?>>5</option>
-                <option value="6" <?=$auto->PARCELAMENTO == '6' ? 'selected="selected"' : ''?>>6</option>
-                <option value="7" <?=$auto->PARCELAMENTO == '7' ? 'selected="selected"' : ''?>>7</option>
-                <option value="8" <?=$auto->PARCELAMENTO == '8' ? 'selected="selected"' : ''?>>8</option> 
-                <option value="9" <?=$auto->PARCELAMENTO == '9' ? 'selected="selected"' : ''?>>9</option>
-                <option value="10" <?=$auto->PARCELAMENTO == '10' ? 'selected="selected"' : ''?>>10</option>
-                <option value="11" <?=$auto->PARCELAMENTO == '11' ? 'selected="selected"' : ''?>>11</option>
-                <option value="12" <?=$auto->PARCELAMENTO == '12' ? 'selected="selected"' : ''?>>12</option>
-                <option value="0+1" <?=$auto->PARCELAMENTO == '0+1' ? 'selected="selected"' : ''?>>0+1</option>
-                <option value="0+2" <?=$auto->PARCELAMENTO == '0+2' ? 'selected="selected"' : ''?>>0+2</option>
-                <option value="0+3" <?=$auto->PARCELAMENTO == '0+3' ? 'selected="selected"' : ''?>>0+3</option>
-                <option value="0+4" <?=$auto->PARCELAMENTO == '0+4' ? 'selected="selected"' : ''?>>0+4</option>
-                <option value="0+5" <?=$auto->PARCELAMENTO == '0+5' ? 'selected="selected"' : ''?>>0+5</option>
-                <option value="0+6" <?=$auto->PARCELAMENTO == '0+6' ? 'selected="selected"' : ''?>>0+6</option>
-                <option value="0+7" <?=$auto->PARCELAMENTO == '0+7' ? 'selected="selected"' : ''?>>0+7</option>
-                <option value="0+8" <?=$auto->PARCELAMENTO == '0+8' ? 'selected="selected"' : ''?>>0+8</option> 
-                <option value="0+9" <?=$auto->PARCELAMENTO == '0+9' ? 'selected="selected"' : ''?>>0+9</option>
-                <option value="0+10" <?=$auto->PARCELAMENTO == '0+10' ? 'selected="selected"' : ''?>>0+10</option>
-                <option value="0+11" <?=$auto->PARCELAMENTO == '0+11' ? 'selected="selected"' : ''?>>0+11</option>
-                <option value="0+12" <?=$auto->PARCELAMENTO == '0+12' ? 'selected="selected"' : ''?>>0+12</option>                               
-            </select>
-        </div>
-        <div>
-            <label class="label" for="DATA_VENCIMENTO">Data Vencimento</label>
-            <input type="text" name="DATA_VENCIMENTO" id="DATA_VENCIMENTO" value="<?=  formatarDataEN($auto->DATA_VENCIMENTO)?>" />
-        </div>
-    </div><!-- pagamento -->
+    <?php if(!$calculo){ ?>
+        <div class="pagamento">
+            <div>
+                <label class="label" for="PREMIO">Premio</label>
+                <input type="text" id="PREMIO" name="PREMIO" value="<?=$auto->PREMIO?>" />
+            </div>
+            <div>
+                <label class="label" for="FORMA_PAGAMENTO">Forma de Pagamento</label>
+                <select name="FORMA_PAGAMENTO" id="FORMA_PAGAMENTO">
+                    <option value="">Selecione</option>
+                    <option value="1" <?=$auto->FORMA_PAGAMENTO == '1' ? 'selected="selected"' : ''?>>Debito</option>
+                    <option value="2" <?=$auto->FORMA_PAGAMENTO == '2' ? 'selected="selected"' : ''?>>Cheque</option>
+                    <option value="3" <?=$auto->FORMA_PAGAMENTO == '3' ? 'selected="selected"' : ''?>>Boleto</option>
+                </select>
+            </div>
+            <div>
+                <label class="label" for="PARCELAMENTO">Parcelamento</label>
+                <select name="PARCELAMENTO" id="PARCELAMENTO">
+                    <option value="">Selecione</option>
+                    <option value="1" <?=$auto->PARCELAMENTO == '1' ? 'selected="selected"' : ''?>>1</option>
+                    <option value="2" <?=$auto->PARCELAMENTO == '2' ? 'selected="selected"' : ''?>>2</option>
+                    <option value="3" <?=$auto->PARCELAMENTO == '3' ? 'selected="selected"' : ''?>>3</option>
+                    <option value="4" <?=$auto->PARCELAMENTO == '4' ? 'selected="selected"' : ''?>>4</option>
+                    <option value="5" <?=$auto->PARCELAMENTO == '5' ? 'selected="selected"' : ''?>>5</option>
+                    <option value="6" <?=$auto->PARCELAMENTO == '6' ? 'selected="selected"' : ''?>>6</option>
+                    <option value="7" <?=$auto->PARCELAMENTO == '7' ? 'selected="selected"' : ''?>>7</option>
+                    <option value="8" <?=$auto->PARCELAMENTO == '8' ? 'selected="selected"' : ''?>>8</option> 
+                    <option value="9" <?=$auto->PARCELAMENTO == '9' ? 'selected="selected"' : ''?>>9</option>
+                    <option value="10" <?=$auto->PARCELAMENTO == '10' ? 'selected="selected"' : ''?>>10</option>
+                    <option value="11" <?=$auto->PARCELAMENTO == '11' ? 'selected="selected"' : ''?>>11</option>
+                    <option value="12" <?=$auto->PARCELAMENTO == '12' ? 'selected="selected"' : ''?>>12</option>
+                    <option value="0+1" <?=$auto->PARCELAMENTO == '0+1' ? 'selected="selected"' : ''?>>0+1</option>
+                    <option value="0+2" <?=$auto->PARCELAMENTO == '0+2' ? 'selected="selected"' : ''?>>0+2</option>
+                    <option value="0+3" <?=$auto->PARCELAMENTO == '0+3' ? 'selected="selected"' : ''?>>0+3</option>
+                    <option value="0+4" <?=$auto->PARCELAMENTO == '0+4' ? 'selected="selected"' : ''?>>0+4</option>
+                    <option value="0+5" <?=$auto->PARCELAMENTO == '0+5' ? 'selected="selected"' : ''?>>0+5</option>
+                    <option value="0+6" <?=$auto->PARCELAMENTO == '0+6' ? 'selected="selected"' : ''?>>0+6</option>
+                    <option value="0+7" <?=$auto->PARCELAMENTO == '0+7' ? 'selected="selected"' : ''?>>0+7</option>
+                    <option value="0+8" <?=$auto->PARCELAMENTO == '0+8' ? 'selected="selected"' : ''?>>0+8</option> 
+                    <option value="0+9" <?=$auto->PARCELAMENTO == '0+9' ? 'selected="selected"' : ''?>>0+9</option>
+                    <option value="0+10" <?=$auto->PARCELAMENTO == '0+10' ? 'selected="selected"' : ''?>>0+10</option>
+                    <option value="0+11" <?=$auto->PARCELAMENTO == '0+11' ? 'selected="selected"' : ''?>>0+11</option>
+                    <option value="0+12" <?=$auto->PARCELAMENTO == '0+12' ? 'selected="selected"' : ''?>>0+12</option>                               
+                </select>
+            </div>
+            <div>
+                <label class="label" for="DATA_VENCIMENTO">Data Vencimento</label>
+                <input type="text" name="DATA_VENCIMENTO" id="DATA_VENCIMENTO" value="<?=  formatarDataEN($auto->DATA_VENCIMENTO)?>" />
+            </div>
+        </div><!-- pagamento -->
 
-    <?if($auto->TIPO_CADASTRO == 'A' && $acao != 'renovar') { ?>
-    <div>
+        <?if($auto->TIPO_CADASTRO == 'A' && $acao != 'renovar') { ?>
         <div>
-            <label for="APOLICE" class="label">Apolice</label>
-            <input type="text" id="APOLICE" name="APOLICE" value="<?=$auto->APOLICE?>" />
-        </div>
+            <div>
+                <label for="APOLICE" class="label">Apolice</label>
+                <input type="text" id="APOLICE" name="APOLICE" value="<?=$auto->APOLICE?>" />
+            </div>
 
-        <div>
-            <label for="CI" class="label">CI</label>
-            <input type="text" id="CI" name="CI" value="<?=$auto->CI?>" />
-        </div>
-        <input type="hidden" name="TIPO_CADASTRO" value="A" />
-    </div><!-- renovacao auto apolice -->    
+            <div>
+                <label for="CI" class="label">CI</label>
+                <input type="text" id="CI" name="CI" value="<?=$auto->CI?>" />
+            </div>
+            <input type="hidden" name="TIPO_CADASTRO" value="A" />
+        </div><!-- renovacao auto apolice -->    
+        <?};?>
+        <div class="anexo">
+            <label class="label" for="ANEXO">Anexo</label>
+            <input type="file" name="ANEXO" id="ANEXO" />
+
+            <div style="clear:both"></div>
+
+            <?php
+            if( $auto->ANEXO != '' ) {
+                $auto->pegarPasta();
+
+                echo '<p>Arquivo atual: <a target="_blank" href="'.$auto->pasta . $auto->ANEXO.'">'.$auto->ANEXO.'</a></p>';
+            }
+            ?>
+
+        </div><!-- .anexo -->
     <?};?>
-    <div class="anexo">
-        <label class="label" for="ANEXO">Anexo</label>
-        <input type="file" name="ANEXO" id="ANEXO" />
-
-        <div style="clear:both"></div>
-
-        <?php
-        if( $auto->ANEXO != '' ) {
-            $auto->pegarPasta();
-
-            echo '<p>Arquivo atual: <a target="_blank" href="'.$auto->pasta . $auto->ANEXO.'">'.$auto->ANEXO.'</a></p>';
-        }
-        ?>
-    </div><!-- .anexo -->
     <div class="campo-input">
         <br /><br /><br /><br /><br /><br />
         <input class="bt_voltar campo-input" type="button" onclick="javascript:window.location='documentos.php'" value="Voltar" style="float:left;margin-right:15px;clear:none"  />
