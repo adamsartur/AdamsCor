@@ -106,7 +106,7 @@ if ($sql) {
                     <table class="tablesorter">
                         <thead>
                             <tr>
-                                <th>!<!--.icone com tipo de documento inserido.--></th>
+                                <th><!--.icone com tipo de documento inserido.--></th>
                                 <th>Cliente</th>
                                 <th>Vigencia</th>
                                 <th>Veículo/Endereço</th>
@@ -123,13 +123,15 @@ if ($sql) {
                                 <td><?php
                                 switch ($listagem[1]) {
                                     case 'A':
+                                        echo '<img id="apo-'.$listagem[0].'" class="lista" src="img/icons/zoom_icon&16.png" title="Visualizar" />';
                                         echo '<img src="img/icons/case_icon&16.png" title="Apolice" />';
                                         break;
                                     case 'P':
-                                        echo '<a href="documentos.php?acao=novaApoliceAuto&id=' . $listagem[0] . '" id="cliente-' . $listagem[0] . '">
-                                              <img src="img/icons/doc_lines_icon&16.png" title="Atualizar Proposta" /></a>';
+                                        echo '<img id="pro-'.$listagem[0].'" class="lista" src="img/icons/zoom_icon&16.png" title="Visualizar" />';
+                                        echo '<img src="img/icons/doc_lines_icon&16.png" title="Proposta" /></a>';
                                         break;
                                     case 'C':
+                                        echo '<img id="cal-'.$listagem[0].'" class="lista" src="img/icons/zoom_icon&16.png" title="Visualizar" />';
                                         echo '<img src="img/icons/calc_icon&16.png" title="->Calculo" />';
                                         break;
                                 }
@@ -145,10 +147,10 @@ if ($sql) {
                             <td style="text-align: right; padding-right: 10px">
                                 <? if ($listagem[1] == 'A') {
                                 ?>
-                                <img onclick="javascript:window.location='documentos.php?acao=renovar&tipoRenovar=auto&id=<?=$listagem[0] ?>'" style="cursor: pointer;" src="img/icons/doc_plus_icon&16.png" title="Renovar" />
-                                <img onclick="javascript:window.location='documentos.php?acao=endossar&tipoEndossar=auto&id=<?=$listagem[0] ?>'" style="cursor: pointer;" src="img/icons/doc_new_icon&16.png" title="Endosso" />
+                                <img onclick="javascript:window.location='documentos.php?acao=renovar&tipoRenovar=auto&id=<?php echo$listagem[0]; ?>'" style="cursor: pointer;" src="img/icons/doc_plus_icon&16.png" title="Renovar" />
+                                <img onclick="javascript:window.location='documentos.php?acao=endossar&tipoEndossar=auto&id=<?php echo $listagem[0]; ?>'" style="cursor: pointer;" src="img/icons/doc_new_icon&16.png" title="Endosso" />
                                 <? }; ?>
-                                <img alt="Editar" onclick="javascript:window.location='documentos.php?acao=editar&tipoEditar=auto&id=<?=$listagem[0] ?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" />
+                                <img alt="Editar" onclick="javascript:window.location='documentos.php?acao=editar&tipoEditar=auto&id=<?php echo $listagem[0]; ?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" />
                             </td>
                         </tr>
                         <?php
@@ -159,7 +161,7 @@ if ($sql) {
                     </div><!-- listagem auto -->
                 </div><!-- .linha -->
             </div><!-- .principal -->
-
+            
         <?php include('_rodape.php') ?>
         <script type="text/javascript">
             $("#filtro").change(function () {
@@ -174,6 +176,23 @@ if ($sql) {
                 }
             })
             .change();
+            $(".lista").click(function () {
+                var tipo = $(this).attr('id').split('-')[0];
+                var id   = $(this).attr('id').split('-')[1];
+                $.post('lista.php', { tipo : tipo, id : id },
+                function(data){
+                    $('<div></div>')
+                    .attr('id', 'dialog')
+                    .attr('tittle', 'Listagem de dados' )
+                    .html('<p>' + data + '</p>')
+                    .dialog({
+                      height  : 400,
+                      width   : 350,
+                      modal   : true,
+                      buttons : {"OK" : function() { $(this).dialog("close"); } }
+                    })
+                });
+            });
         </script>
     </body>
 </html>

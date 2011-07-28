@@ -5,7 +5,6 @@ function ConectarBanco() {
     //$CB_baseDeDados = @mysql_select_db(BASE_DB,$CB_conexaoBanco) or exit(mysql_error());
 }
 
-
 // Executa o comando SQL
 function ExecutarSQL($sql) {
     $colecao = mysql_query($sql) or exit($sql."<br>".mysql_error());
