@@ -103,6 +103,8 @@ class Auto extends Base {
     }
 
     public function inserir() {
+        $this->PLACA = strtoupper( $this->PLACA );
+        
         $sql = "
             INSERT INTO auto (
                 TIPO_CADASTRO,
@@ -189,7 +191,10 @@ class Auto extends Base {
         }
     }
 
-    public function editar() {
+    public function editar()
+    {
+        $this->PLACA = strtoupper( $this->PLACA );
+        
         $sql = "
             UPDATE auto SET
                 TIPO_CADASTRO      = '" . addslashes($this->TIPO_CADASTRO) . "',

@@ -3,37 +3,50 @@
     <input type="hidden" name="acao" value="<?=$auto->acao?>" />
     <input type="hidden" name="idCliente" value="<?=$cliente->ID?>" />
     <input type="hidden" name="ID" value="<?=$auto->ID?>" />
-    <?php if(!$calculo){ 
-        if($auto->TIPO_CADASTRO != 'A'){?>
+    
+    <?php
+    /* não calculo */
+    if(!$calculo) { 
+        if($auto->TIPO_CADASTRO != 'A'){
+            ?>
             <input type="hidden" name="TIPO_CADASTRO" value="P" />
-        <?};
+            <?php
+        };
     };
-        if($calculo){            
-        echo '<input type="hidden" name="TIPO_CADASTRO" value="C" />';};
-     if( $auto->endossar ) : ?>
-    <input type="hidden" name="endosso" value="S" />
-    <input type="hidden" name="IDOLD" value="<?=$auto->ID?>" />
-    <?php endif; 
-    if(!$calculo){ ?>        
+    
+    /* calculo */
+    if($calculo){            
+        echo '<input type="hidden" name="TIPO_CADASTRO" value="C" />';        
+    };
+    
+    /* endosso */
+    if( $auto->endossar ) :
+        ?>
+        <input type="hidden" name="endosso" value="S" />
+        <input type="hidden" name="IDOLD" value="<?=$auto->ID?>" />
+        <?php
+    endif; 
+    
+    
+    if( !$calculo ) {
+        ?>        
         <div>
-            <label for="VIGENCIA_INICIO" class="label" >Vigencia:</label>
-            <input type="text" id="VIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=!$auto->endossar ? formatarDataEN($auto->VIGENCIA_INICIO) : date('d/m/Y')?>" />
-            <input type="text" id="VIGENCIA_FIM" name="VIGENCIA_FIM" value="<?=  formatarDataEN($auto->VIGENCIA_FIM)?>" />
+            <label for="aVIGENCIA_INICIO" class="label" >Vigencia:</label>
+            <input type="text" size="8" id="aVIGENCIA_INICIO" name="VIGENCIA_INICIO" value="<?=!$auto->endossar ? formatarDataEN($auto->VIGENCIA_INICIO) : date('d/m/Y')?>" />
+            <input type="text" size="8" id="aVIGENCIA_FIM" name="VIGENCIA_FIM" value="<?=formatarDataEN($auto->VIGENCIA_FIM)?>" />
         </div>
-    <?};?>
+        <?php
+    };
+    ?>
 
     <div>
         <label for="CIA_ID" class="label" >Cia</label>
-        <select id="CIA_ID" name="CIA_ID">
-            <option value="1" select="selected">HDI</option>
-        </select>
+        <?php echo Cia::listar( $auto->CIA_ID ); ?>
     </div>
 
     <div>
         <label for="MARCA_ID" class="label" >Marca</label>
-        <select id="MARCA_ID" name="MARCA_ID">
-            <option value="1" select="selected">Volkswagen</option>
-        </select>
+        <?php echo Marca::listar( $auto->MARCA_ID ); ?>
     </div>
 
     <div class="carro">
@@ -44,21 +57,21 @@
 
         <div>
             <label class="label" for="ANO">Ano/Modelo</label>
-            <input type="text" id="ANO" name="ANO" value="<?=$auto->ANO?>" />
+            <input type="text" size="8" id="ANO" name="ANO" value="<?=$auto->ANO?>" />
         </div>
 
         <div>
-            <label class="label" for="placa">Placa</label>
-            <input type="text" id="PLACA" name="PLACA" value="<?=$auto->PLACA?>" />
+            <label class="label" for="PLACA">Placa</label>
+            <input type="text" size="8" id="PLACA" name="PLACA" value="<?=$auto->PLACA?>" />
         </div>
 
         <div>
             <label for="RENAVAM" class="label">Renavam</label>
-            <input type="text" id="RENAVAM" name="RENAVAM" value="<?= $auto->RENAVAM ?>" />
+            <input type="text" size="8" id="RENAVAM" name="RENAVAM" value="<?= $auto->RENAVAM ?>" />
         </div>
 
         <div>
-            <label class="label" for="chassi">Chassi</label>
+            <label class="label" for="CHASSI">Chassi</label>
             <input type="text" id="CHASSI" name="CHASSI" value="<?=$auto->CHASSI?>" />
         </div>
 
@@ -83,7 +96,7 @@
 
         <div>
             <label class="label" for="CEP">CEP</label>
-            <input type="text" id="CEP" name="CEP" value="<?=$auto->CEP?>" />
+            <input type="text" size="8" id="aCEP" name="CEP" value="<?=$auto->CEP?>" />
         </div>
         
         <div>
@@ -125,32 +138,32 @@
     <div class="garantias-auto">
         <div>
             <label for="FIPE" class="label" >Fipe</label>
-            <input type="text" id="FIPE" name="FIPE" value="<?=$auto->FIPE?>" />
+            <input type="text" size="2" id="FIPE" name="FIPE" value="<?=$auto->FIPE?>" />
         </div>
 
         <div>
             <label for="FRANQUIA" class="label" >Franquia</label>
-            <input type="text" id="FRANQUIA" name="FRANQUIA" value="<?=$auto->FRANQUIA?>" />
+            <input type="text" size="5" id="FRANQUIA" name="FRANQUIA" value="<?=$auto->FRANQUIA?>" />
         </div>
 
         <div>
             <label for="DM" class="label" >Danos Materiais</label>
-            <input type="text" id="DM" name="DM" value="<?=$auto->DM?>" />
+            <input type="text" size="8" id="DM" name="DM" value="<?=$auto->DM?>" />
         </div>
 
         <div>
             <label for="DC" class="label" >Danos Corporais</label>
-            <input type="text" id="DC" name="dc" value="<?=$auto->DC?>" />
+            <input type="text" size="8" id="DC" name="dc" value="<?=$auto->DC?>" />
         </div>
 
         <div>
             <label for="APP" class="label" >App</label>
-            <input type="text" id="APP" name="APP" value="<?=$auto->APP?>" />
+            <input type="text" size="8" id="APP" name="APP" value="<?=$auto->APP?>" />
         </div>
 
         <div>
             <label for="DANOS_MORAIS" class="label" >Danos Morais</label>
-            <input type="text" id="DANOS_MORAIS" name="DANOS_MORAIS" value="<?=$auto->DANOS_MORAIS?>" />
+            <input type="text" size="8" id="DANOS_MORAIS" name="DANOS_MORAIS" value="<?=$auto->DANOS_MORAIS?>" />
         </div>
 
         <div>
@@ -191,7 +204,7 @@
         <div class="pagamento">
             <div>
                 <label class="label" for="PREMIO">Premio</label>
-                <input type="text" id="PREMIO" name="PREMIO" value="<?=$auto->PREMIO?>" />
+                <input type="text" size="6" id="PREMIO" name="PREMIO" value="<?=$auto->PREMIO?>" />
             </div>
             <div>
                 <label class="label" for="FORMA_PAGAMENTO">Forma de Pagamento</label>
@@ -234,7 +247,7 @@
             </div>
             <div>
                 <label class="label" for="DATA_VENCIMENTO">Data Vencimento</label>
-                <input type="text" name="DATA_VENCIMENTO" id="DATA_VENCIMENTO" value="<?=  formatarDataEN($auto->DATA_VENCIMENTO)?>" />
+                <input type="text" size="8" name="DATA_VENCIMENTO" id="aDATA_VENCIMENTO" value="<?=  formatarDataEN($auto->DATA_VENCIMENTO)?>" />
             </div>
         </div><!-- pagamento -->
 
@@ -274,25 +287,36 @@
         <input class="bt_salvar campo-input" type="button" value="Salvar" onclick="$('#formAuto').submit()" title="Salvar" style="float:left;clear:none" />
     </div><!-- .botaoadd -->
 
-</form>
+</form><!-- #formAuto -->
 
 <script type="text/javascript">
     
 $(function() {        
-    $('#formaAuto').validate({
+    $('#formAuto').validate({
         rules:{
-            'DESCRICAO': {required: true},
-            'DATA_VENCIMENTO' : {dataBR : true},
-            'VIGENCIA_INICIO' : {dataBR : true},
-            'VIGENCIA_FIM' : {dataBR : true}
+            'DESCRICAO'        : { required: true },
+            'DATA_VENCIMENTO' : { dataBR : true },
+            'VIGENCIA_INICIO' : { required: true, dataBR : true },
+            'VIGENCIA_FIM'    : { required: true, dataBR : true }
         }
     });
         
     /*setando mascaras*/
     $("#FIPE").setMask("999");
-    $("#DATA_VENCIMENTO").setMask("99/99/9999");
-    $("#VIGENCIA_INICIO").setMask("99/99/9999");
-    $("#VIGENCIA_FIM").setMask("99/99/9999");
+    $("#aDATA_VENCIMENTO").setMask("99/99/9999");
+    $("#aVIGENCIA_INICIO").setMask("99/99/9999");
+    $("#aVIGENCIA_FIM").setMask("99/99/9999");
+    $("#ANO").setMask("9999/9999");
+    $("#PLACA").setMask("aaa-9999");
+    $("#RENAVAM").setMask("999999999");
+    $("#aCEP").setMask("99999-999");
+    $("#CHASSI").setMask("****************");
+    $("#FRANQUIA").setMask("decimal");
+    $("#PREMIO").setMask("decimal");
+    $("#DM").setMask("decimal");
+    $("#DC").setMask("decimal");
+    $("#APP").setMask("decimal");
+    $("#DANOS_MORAIS").setMask("decimal");
 
 });
 

@@ -25,9 +25,7 @@
 
         <div>
             <label for="CIA_ID" class="label" >Cia</label>
-            <select id="CIA_ID" name="CIA_ID">
-                <option value="1" select="selected">HDI</option>
-            </select>
+            <?php echo Cia::listar( $re->CIA_ID ); ?>
         </div>
     <?};?>
         <div class="endereco-re">
@@ -216,14 +214,13 @@
 <script type="text/javascript">
     
 $(function() {
-
-        $('#formRe').validate({
-            rules:{
-                'ENDERECO': {required: true},
-                'DATA_VENCIMENTO' : {dataBR : true},
-                'VIGENCIA_INICIO' : {dataBR : true},
-                'VIGENCIA_FIM' : {dataBR : true}
-            }
-        });
-    }
+    $('#formRe').validate({
+        rules:{
+            'ENDERECO': {required: true},
+            'DATA_VENCIMENTO' : {dataBR : true},
+            'VIGENCIA_INICIO' : {dataBR : true},
+            'VIGENCIA_FIM' : {dataBR : true}
+        }
+    });
+});
 </script>
