@@ -765,13 +765,13 @@ $(function() {
     <?if((!$re->endossar)&&(!$auto->endossar)){?>
         $('input[name="VIGENCIA_INICIO"]').blur(function(e) {
             $this = $(this);
-            if( $this.val().lenght == 10 ) {
+            //if( $this.val().lenght == 10 ) {
                 var data = $this.val().split('/');
 
                 data[2] = parseInt( data[2] ) + 1;
 
                 $('input[name="VIGENCIA_FIM"]').val(data[0] + '/' + data[1] + '/' + data[2]);
-            }
+            //}
         });
     <?};
     

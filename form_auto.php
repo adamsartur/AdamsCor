@@ -245,10 +245,7 @@
                     <option value="0+12" <?=$auto->PARCELAMENTO == '0+12' ? 'selected="selected"' : ''?>>0+12</option>                               
                 </select>
             </div>
-            <div>
-                <label class="label" for="DATA_VENCIMENTO">Data Vencimento</label>
-                <input type="text" size="8" name="DATA_VENCIMENTO" id="aDATA_VENCIMENTO" value="<?=  formatarDataEN($auto->DATA_VENCIMENTO)?>" />
-            </div>
+
         </div><!-- pagamento -->
 
         <?if($auto->TIPO_CADASTRO == 'A' && $acao != 'renovar') { ?>

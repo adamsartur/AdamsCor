@@ -94,6 +94,11 @@ class Re extends Base {
     }
     
     
+    /**
+     * Inserindo 
+     * 
+     * @return boolean 
+     */
     public function inserir()
     {
         $sql = " INSERT INTO re (
@@ -158,6 +163,8 @@ class Re extends Base {
         ";
         if( mysql_query($sql) ) {
             $this->ID = mysql_insert_id();
+            $this->verificaBoleto();
+            
             return true;
         } else {
             echo mysql_error().$sql;
@@ -272,4 +279,31 @@ class Re extends Base {
     {
         $this->pasta = $this->pasta . $this->ID . '/';
     }
+    
+    
+    
+    public function verificaBoleto()
+    {
+        
+        if( $this->FORMA_PAGAMENTO != 1 && $this->PARCELAMENTO >= 1 && $this->PARCELAMENTO <= 12 ) {
+            /* pegando informações do cliente */
+            include_once('cliente.class.php');
+            $cliente = new Cliente();
+            $cliente->ID = $this->CLIENTE_ID;
+            $cliente->informacoes();
+            
+            /* inserindo as tarefas */
+            include_once('tarefa.class.php');
+            $tarefa = new Tarefa();
+            $tarefa->RE_ID   = $this->ID;
+            $tarefa->DESCRICAO = ( $this->FORMA_PAGAMENTO == 2 ? 'Cheque' : 'Boleto' ) . ' - ' . $cliente->NOME;
+            
+            $vigenciaInicio          = explode('/', $this->VIGENCIA_FIM);
+            $dataVencimento          = mktime(0, 0, 0, $vigenciaInicio[1], $vigenciaInicio[0] + 7, $vigenciaInicio[2]);
+            $tarefa->DATA_VENCIMENTO = date('Y-m-d', $dataVencimento);
+                    
+            $tarefa->inserir();
+        }
+    }
+    
 }
