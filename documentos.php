@@ -549,20 +549,22 @@ if($acao == 'calculoRe'){
     <?php include('_menu.php') ?>
 
     <div class="principal">
-        <h1><!-- dar um echo do cliente que esta sendo visualizado --></h1>
+        <h1><?=$cliente->NOME?></h1>
 
         <div class="erro">
             <p style="text-align: center; margin-top: 10px;"><?php if (isset($msgErro)){  echo $msgErro;  } ?></p>
         </div><!-- .erro -->
+        
         <?php
         if( !$auto->form ) : 
             ?>
             <div class="botaoadd" style="float: right; width: auto">
-              <input class="bt_adicionar" type="button" value="Adicionar" onclick="javascript:window.location='documentos.php?acao=inserir'" title="Adicionar"/>
+                <input class="bt_adicionar" type="button" value="Adicionar" onclick="javascript:window.location='documentos.php?acao=inserir'" title="Adicionar"/>
             </div><!-- .botaoadd -->
             <?php
         endif;
         ?>
+            
         <div class="linha">
             <?php
             /**
@@ -707,7 +709,7 @@ if($acao == 'calculoRe'){
                     <div class="form-re">
                         <?include_once('form_re.php'); ?>
                     </div><!-- .form-re -->
-                </div>
+                </div><!-- .tabs -->
                 <?php
             endif;
             ?>
@@ -765,13 +767,14 @@ $(function() {
     <?if((!$re->endossar)&&(!$auto->endossar)){?>
         $('input[name="VIGENCIA_INICIO"]').blur(function(e) {
             $this = $(this);
-            //if( $this.val().lenght == 10 ) {
+            
+            if( $this.val().length == 10 ) {
                 var data = $this.val().split('/');
 
                 data[2] = parseInt( data[2] ) + 1;
 
                 $('input[name="VIGENCIA_FIM"]').val(data[0] + '/' + data[1] + '/' + data[2]);
-            //}
+            }
         });
     <?};
     

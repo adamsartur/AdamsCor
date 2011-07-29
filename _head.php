@@ -9,7 +9,7 @@
 <script type="text/javascript" src="js/cpf.validate.js" language="javascript"></script>
 
 <link href="css/style.css" type="text/css" rel="stylesheet" />
-<link href="css/jquery-ui-1.8.14.custom.css" type="text/css" rel="stylesheet" />
+<link href="css/smoothness/jquery-ui-1.8.14.custom.css" type="text/css" rel="stylesheet" />
 
 <?php
 protegePagina();
