@@ -102,7 +102,15 @@ class Auto extends Base {
         }
     }
 
-    public function inserir() {
+    /**
+     * Inserindo
+     * 
+     * @return boolean
+     */
+    public function inserir()
+    {
+        $this->PLACA = strtoupper( $this->PLACA );
+        
         $sql = "
             INSERT INTO auto (
                 TIPO_CADASTRO,
@@ -142,46 +150,49 @@ class Auto extends Base {
                 CARRO_RESERVA,
                 OBS
             ) VALUES (
-                    '" . addslashes($this->TIPO_CADASTRO) . "',
-                    '" . addslashes($this->CLIENTE_ID) . "',
-                    '" . addslashes($this->CIA_ID) . "',
-                    '" . addslashes($this->MARCA_ID) . "',
-                    '" . addslashes($this->DESCRICAO) . "',
-                    '" . addslashes($this->ANO) . "',
-                    '" . addslashes($this->KM_ANUAL) . "',
-                    '" . addslashes($this->ZERO) . "',
-                    '" . addslashes($this->PLACA) . "',
-                    '" . addslashes($this->CHASSI) . "',
-                    '" . addslashes($this->RENAVAM) . "',
-                    '" . addslashes($this->CEP) . "',
-                    '" . addslashes($this->FILHOS) . "',
-                    '" . addslashes($this->COMBUSTIVEL) . "',
-                    '" . addslashes($this->GARAGEM_CASA) . "',
-                    '" . addslashes($this->GARAGEM_TRABALHO) . "',
-                    '" . addslashes($this->GARAGEM_FACULDADE) . "',
-                    '" . addslashes($this->BONUS) . "',
-                    '" . addslashes($this->APOLICE) . "',
-                    '" . formatarDataBR($this->VIGENCIA_INICIO) . "',
-                    '" . formatarDataBR($this->VIGENCIA_FIM) . "',
-                    '" . addslashes($this->CI) . "',
-                    '" . addslashes($this->PREMIO) . "',
-                    '" . addslashes($this->PARCELAMENTO) . "', 
-                    '" . addslashes($this->FORMA_PAGAMENTO) . "',
-                    '" . formatarDataBR($this->DATA_VENCIMENTO) . "',
-                    '" . addslashes($this->DANOS_MORAIS) . "',
-                    '" . addslashes($this->FIPE) . "',
-                    '" . addslashes($this->FRANQUIA) . "',
-                    '" . addslashes($this->DM) . "',
-                    '" . addslashes($this->DC) . "',
-                    '" . addslashes($this->APP) . "',
-                    '" . addslashes($this->VIDROS) . "',
-                    '" . addslashes($this->ASSISTENCIA) . "',
-                    '" . addslashes($this->CARRO_RESERVA) . "',
-                    '" . addslashes($this->OBS) . "'                        
+                '" . addslashes($this->TIPO_CADASTRO) . "',
+                '" . addslashes($this->CLIENTE_ID) . "',
+                '" . addslashes($this->CIA_ID) . "',
+                '" . addslashes($this->MARCA_ID) . "',
+                '" . addslashes($this->DESCRICAO) . "',
+                '" . addslashes($this->ANO) . "',
+                '" . addslashes($this->KM_ANUAL) . "',
+                '" . addslashes($this->ZERO) . "',
+                '" . addslashes($this->PLACA) . "',
+                '" . addslashes($this->CHASSI) . "',
+                '" . addslashes($this->RENAVAM) . "',
+                '" . addslashes($this->CEP) . "',
+                '" . addslashes($this->FILHOS) . "',
+                '" . addslashes($this->COMBUSTIVEL) . "',
+                '" . addslashes($this->GARAGEM_CASA) . "',
+                '" . addslashes($this->GARAGEM_TRABALHO) . "',
+                '" . addslashes($this->GARAGEM_FACULDADE) . "',
+                '" . addslashes($this->BONUS) . "',
+                '" . addslashes($this->APOLICE) . "',
+                '" . formatarDataBR($this->VIGENCIA_INICIO) . "',
+                '" . formatarDataBR($this->VIGENCIA_FIM) . "',
+                '" . addslashes($this->CI) . "',
+                '" . addslashes($this->PREMIO) . "',
+                '" . addslashes($this->PARCELAMENTO) . "', 
+                '" . addslashes($this->FORMA_PAGAMENTO) . "',
+                '" . formatarDataBR($this->DATA_VENCIMENTO) . "',
+                '" . addslashes($this->DANOS_MORAIS) . "',
+                '" . addslashes($this->FIPE) . "',
+                '" . addslashes($this->FRANQUIA) . "',
+                '" . addslashes($this->DM) . "',
+                '" . addslashes($this->DC) . "',
+                '" . addslashes($this->APP) . "',
+                '" . addslashes($this->VIDROS) . "',
+                '" . addslashes($this->ASSISTENCIA) . "',
+                '" . addslashes($this->CARRO_RESERVA) . "',
+                '" . addslashes($this->OBS) . "'                        
             );
         ";
 
-        if (mysql_query($sql)) {
+        if( mysql_query($sql) ) {
+            $this->ID = mysql_insert_id();
+            $this->verificaBoleto();
+            
             return true;
         } else {
             return false;
@@ -189,7 +200,10 @@ class Auto extends Base {
         }
     }
 
-    public function editar() {
+    public function editar()
+    {
+        $this->PLACA = strtoupper( $this->PLACA );
+        
         $sql = "
             UPDATE auto SET
                 TIPO_CADASTRO      = '" . addslashes($this->TIPO_CADASTRO) . "',
@@ -303,4 +317,37 @@ class Auto extends Base {
     {
         $this->pasta = $this->pasta . $this->ID . '/';
     }
+    
+    
+    
+    /**
+     * Verificando precisa criar tarefa pra boleto
+     * 
+     * @access public
+     * @return void
+     */
+    public function verificaBoleto()
+    {
+        
+        if( $this->FORMA_PAGAMENTO != 1 && $this->PARCELAMENTO >= 1 && $this->PARCELAMENTO <= 12 ) {
+            /* pegando informações do cliente */
+            include_once('cliente.class.php');
+            $cliente = new Cliente();
+            $cliente->ID = $this->CLIENTE_ID;
+            $cliente->informacoes();
+            
+            /* inserindo as tarefas */
+            include_once('tarefa.class.php');
+            $tarefa = new Tarefa();
+            $tarefa->AUTO_ID   = $this->ID;
+            $tarefa->DESCRICAO = ( $this->FORMA_PAGAMENTO == 2 ? 'Cheque' : 'Boleto' ) . ' - ' . $cliente->NOME;
+            
+            $vigenciaInicio          = explode('/', $this->VIGENCIA_FIM);
+            $dataVencimento          = mktime(0, 0, 0, $vigenciaInicio[1], $vigenciaInicio[0] + 7, $vigenciaInicio[2]);
+            $tarefa->DATA_VENCIMENTO = date('Y-m-d', $dataVencimento);
+                    
+            $tarefa->inserir();
+        }
+    }
+    
 }

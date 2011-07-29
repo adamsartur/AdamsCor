@@ -139,3 +139,6 @@ function buscaDados($tabela, $id){
     $sql = mysql_fetch_array(mysql_query('SELECT * FROM '.$tabela.' WHERE ID  = '.$id));
     return $sql;
 }
+function testaValor($val, $ret='Não'){
+    return $val ? 'Sim' : $ret;
+}

@@ -311,8 +311,7 @@ table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSo
 }
 .float-left {
     float: left;
-    margin: 0 25px 0 0;
-}
+    margin: 0 25px 0 0; }
 .float-right {
     float: right;
     margin: 0 15px 0 0;
@@ -344,3 +343,5 @@ span.error {
     width:50%;
 }
 
+.item-input {    
+    margin:0 0 4px 0; }

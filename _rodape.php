@@ -127,7 +127,7 @@
                 .attr('title', 'Listagem de dados - '+ tipo.toUpperCase() )
                 .html(data)
                 .dialog({
-                  height  : 350,
+                  height  : 400,
                   width   : 500,
                   modal   : true,
                   buttons : {

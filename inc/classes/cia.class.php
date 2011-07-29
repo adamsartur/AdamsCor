@@ -14,4 +14,26 @@
             return $linha['DESCRICAO'];
         }
     }
+    
+    public static function listar( $idAtual = null )
+    {
+        $resCias = mysql_query("
+            SELECT * FROM cia 
+            ORDER BY DESCRICAO
+        ");
+        
+        $html  = '<select name="CIA_ID" id="CIA_ID">';
+        $html .= '<option value="">Selecione</option>';
+        
+        while( $linha = mysql_fetch_array( $resCias ) ) {
+            $id    = $linha['ID'];
+            $atual = $id == $idAtual ? 'selected="selected"' : '';
+            
+            $html .= '<option value="'.$id.'" '.$atual.'>'.$linha['DESCRICAO'].'</option>';
+        }
+        
+        $html .= '</select>';        
+        return $html;
+    }
+    
 }
