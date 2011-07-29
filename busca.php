@@ -34,7 +34,8 @@ if ($sql) {
                                       "3" => formatarDataEN(@$linha['VIGENCIA_FIM']),
                                       "4" => @$linha['DESCRICAO'],
                                       "5" => @$linha['PLACA'],
-                                      "6" => @$linha['CIA_ID']));
+                                      "6" => @$linha['CIA_ID'],
+                                      "7" => 'auto'));
     endwhile;
 } else {
     //echo 'SELECT ID FROM AUTO WHERE VIGENCIA_FIM BETWEEN  "'.date("Y-m-1").'" AND "'.date("Y-m-t").'"'.'SELECT ID FROM RE WHERE VIGENCIA_FIM BETWEEN "'.date("Y-m-1").'" AND "'.date("Y-m-t").'"';
@@ -47,7 +48,8 @@ if ($sql) {
                                      "3" => formatarDataEN(@$linhaAuto['VIGENCIA_FIM']),
                                      "4" => @$linhaAuto['DESCRICAO'],
                                      "5" => @$linhaAuto['PLACA'],
-                                     "6" => @$linhaAuto['CIA_ID'] ));
+                                     "6" => @$linhaAuto['CIA_ID'],
+                                     "7" => 'auto'));
     endwhile;
     while ($linhaRE = mysql_fetch_array($sqlRe)):
         array_push($dadosRE, array("0" => @$linhaRE['ID'],
@@ -56,7 +58,8 @@ if ($sql) {
                                    "3" => formatarDataEN(@$linhaRE['VIGENCIA_FIM']),
                                    "4" => @$linhaRE['ENDERECO'],
                                    "5" => @$linhaRE['OCUPACAO'],
-                                   "6" => @$linhaRE['CIA_ID'] ));
+                                   "6" => @$linhaRE['CIA_ID'],
+                                   "7" => 're'));
     endwhile;
     $dadosLista = array_merge($dadosAuto, $dadosRE);
 }
@@ -75,7 +78,7 @@ if ($sql) {
         <?php include('_menu.php') ?>
 
         <div class="principal">
-            <h1><!-- dar um echo do cliente que esta sendo visualizado --></h1>
+                <h1>Clientes</h1>
 
             <div class="erro">
                 <p style="text-align: center; margin-top: 10px;"><?php
@@ -86,6 +89,7 @@ if ($sql) {
         </div><!-- .erro -->
 
         <div class="linha" style="float:none !important">
+            <div class="pesquisa" style="width: 100%">
                <form action="busca.php" method="POST" name="buscar">
                     <fieldset>
                     <legend>Filtros de Pesquisa</legend>
@@ -102,7 +106,8 @@ if ($sql) {
                     </div>
                     </fieldset>
                 </form>
-                <div class="listagem_auto">
+            </div>
+                <div class="listagem_interno">
                     <table class="tablesorter">
                         <thead>
                             <tr>
@@ -119,19 +124,19 @@ if ($sql) {
                         <?php
                         foreach($dadosLista as $listagem) :
                         ?>
-                            <tr class="item autoLinha">
+                            <tr class="item">
                                 <td><?php
                                 switch ($listagem[1]) {
                                     case 'A':
-                                        echo '<img id="apo-'.$listagem[0].'" class="lista" src="img/icons/zoom_icon&16.png" title="Visualizar" />';
+                                        echo '<img id="'.$listagem[7].'-'.$listagem[0].'" class="lista" src="img/icons/zoom_icon&16.png" title="Visualizar" />';
                                         echo '<img src="img/icons/case_icon&16.png" title="Apolice" />';
                                         break;
                                     case 'P':
-                                        echo '<img id="pro-'.$listagem[0].'" class="lista" src="img/icons/zoom_icon&16.png" title="Visualizar" />';
+                                        echo '<img id="'.$listagem[7].'-'.$listagem[0].'" class="lista" src="img/icons/zoom_icon&16.png" title="Visualizar" />';
                                         echo '<img src="img/icons/doc_lines_icon&16.png" title="Proposta" /></a>';
                                         break;
                                     case 'C':
-                                        echo '<img id="cal-'.$listagem[0].'" class="lista" src="img/icons/zoom_icon&16.png" title="Visualizar" />';
+                                        echo '<img id="'.$listagem[7].'-'.$listagem[0].'" class="lista" src="img/icons/zoom_icon&16.png" title="Visualizar" />';
                                         echo '<img src="img/icons/calc_icon&16.png" title="->Calculo" />';
                                         break;
                                 }
@@ -168,31 +173,14 @@ if ($sql) {
                 if($(this).val() == 'vigencia'){
                     $('#busca_fim').val("");
                     $('#busca').val("");
-                    $('#busca_fim').show(450);
+                    $('#busca_fim').show();
                 } else {
                     $('#busca_fim').val("");
                     $('#busca').val("");
-                    $('#busca_fim').hide(450);
+                    $('#busca_fim').hide();
                 }
             })
             .change();
-            $(".lista").click(function () {
-                var tipo = $(this).attr('id').split('-')[0];
-                var id   = $(this).attr('id').split('-')[1];
-                $.post('lista.php', { tipo : tipo, id : id },
-                function(data){
-                    $('<div></div>')
-                    .attr('id', 'dialog')
-                    .attr('tittle', 'Listagem de dados' )
-                    .html('<p>' + data + '</p>')
-                    .dialog({
-                      height  : 400,
-                      width   : 350,
-                      modal   : true,
-                      buttons : {"OK" : function() { $(this).dialog("close"); } }
-                    })
-                });
-            });
         </script>
     </body>
 </html>

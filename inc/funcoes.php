@@ -134,3 +134,8 @@ function encurtaString($dados, $limit){
 function selected($filtro, $campo){
     return $filtro == $campo ? 'selected="selected"': '';
 }
+
+function buscaDados($tabela, $id){
+    $sql = mysql_fetch_array(mysql_query('SELECT * FROM '.$tabela.' WHERE ID  = '.$id));
+    return $sql;
+}

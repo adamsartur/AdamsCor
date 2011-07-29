@@ -117,6 +117,28 @@
             }, 50);
         });
 
+        $(".lista").click(function () {
+            var tipo = $(this).attr('id').split('-')[0];
+            var id   = $(this).attr('id').split('-')[1];
+            $.post('lista.php', { tipo : tipo, id : id },
+            function(data){
+                $('<div></div>')
+                .attr('id', 'dialog')
+                .attr('title', 'Listagem de dados - '+ tipo.toUpperCase() )
+                .html(data)
+                .dialog({
+                  height  : 350,
+                  width   : 500,
+                  modal   : true,
+                  buttons : {
+                      "OK" : function() { $(this).dialog("close"); },
+                      "PDF" : function() {
+                        window.location = "inc/dompdf/gerapdf.php?tipo=" + tipo +"&id="+id;
+                      }
+                  }
+                })
+            });
+        });
 
         /* hover do menu */
         $('.menu > a, .transparencia').hover(

@@ -339,5 +339,8 @@ span.error {
     color:red;
     margin:2px 0 4px 5px;
 }
-
+.modal_left{
+    float:left;
+    width:50%;
+}
 
