@@ -128,7 +128,7 @@
                 .html(data)
                 .dialog({
                   height  : 400,
-                  width   : 500,
+                  width   : 570,
                   modal   : true,
                   buttons : {
                       "OK" : function() { $(this).dialog("close"); },

@@ -5,7 +5,6 @@ define("SENHA_DB","");
 define("HOST_DB","localhost");
 define("BASE_DB","adamscor");
 
-
 //("USUARIO_DB","luisdalmolin2");
 //define("SENHA_DB","abc123");
 //define("HOST_DB","186.202.13.12");

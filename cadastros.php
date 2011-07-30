@@ -47,7 +47,7 @@
         <!-- menu -->
         <?php include('_menu.php') ?>
 
-        <div class="principal">
+        <div class="principal" style="padding-left: 3px">
             <div class="linha">
                 <div id="tabs">
                     <ul>

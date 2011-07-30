@@ -79,7 +79,7 @@ switch (@$_POST['tipo']){
         }
         $body = '<div class="modal_left"> Vigência: '.formatarDataEN(@$apolice['VIGENCIA_INICIO']).' - '.formatarDataEN(@$apolice['VIGENCIA_FIM']).'</div><div>Tipo de cadastro: '.$tipo_cadastro.'</div>
                  <div class="modal_left"> Apólice: '.@$apolice['APOLICE'].'</div><div>Cia: '.$cia['DESCRICAO'].'</div>
-                 <div class="modal_left"> Prêmio: R$'.@$apolice['PREMIO'].'</div><div>Bônus: '.@$apolice['BONUS'].'</div>
+                 <div class="modal_left"> CI: '.@$apolice['CI'].'</div><div>Bônus: '.@$apolice['BONUS'].'</div>
                  <hr/>
                  <div class="modal_left"> Descrição: '.@$apolice['DESCRICAO'].'</div><div>Ano: '.@$apolice['ANO'].'</div>
                  <div class="modal_left"> KM Anual: '.@$apolice['KM_ANUAL'].'</div><div>Carro Zero: '.testaValor(@$apolice['ZERO']).'</div>
@@ -88,14 +88,59 @@ switch (@$_POST['tipo']){
                  <hr/>
                  <div class="modal_left"> Filhos: '.testaValor(@$apolice['FILHOS']).'</div><div>Garagem em casa: '.testaValor(@$apolice['GARAGEM_CASA']).'</div>
                  <div class="modal_left"> Garagem no trabalho: '.testaValor(@$apolice['GARAGEM_TRABALHO']).'</div><div>Garagem na faculdade: '.testaValor(@$apolice['GARAGEM_FACULDADE']).'</div>
-                 <div class="modal_left"> CI: '.@$apolice['CI'].'</div><div>Pagamento: '.@$pagamento.'</div>
+                 <div class="modal_left"> Prêmio: R$'.@$apolice['PREMIO'].'</div><div>Pagamento: '.@$pagamento.'</div>
                  <div class="modal_left"> Parcelamento:  '.@$apolice['PARCELAMENTO'].'x </div><div>Dados morais: R$'.@$apolice['DANOS_MORAIS'].'</div>
                  <div class="modal_left"> DM: R$ '.@$apolice['DM'].'</div></div><div>DC: R$ '.@$apolice['DC'].'</div>
                  <div class="modal_left"> Vidros: R$ '.testaValor(@$apolice['VIDRO']).'</div></div><div>Carro Reserva: '.testaValor(@$apolice['CARRO_RESERVA']).'</div>
-                 <div class="modal_left"> Assistência: '.testaValor(@$apolice['ASSISTENCIA']).'</div></div><div>APP: '.@$apolice['CARRO_RESERVA'].'</div>
-                 <div class="modal_left"> FIPE: R$ '.@$apolice['FIPE'].'</div></div><div>Franquia: R$ '.@$apolice['FRANQUIA'].'</div>';
+                 <div class="modal_left"> Assistência: '.testaValor(@$apolice['ASSISTENCIA']).'</div></div><div>APP: R$ '.@$apolice['CARRO_RESERVA'].'</div>
+                 <div class="modal_left"> FIPE: '.@$apolice['FIPE'].' %</div></div><div>Franquia: R$ '.@$apolice['FRANQUIA'].'</div>
+                 <div> Obs: '.@$apolice['OBS'].'</div>';
         break;
-    case 'cli':
+    case 'cliente':
+        $apolice = mysql_fetch_array(mysql_query('SELECT * FROM CLIENTES WHERE ID = ' .$id));
+        $clienteID = @$apolice['ID'];
+        $cidade = buscaDados('CIDADES', @$apolice['CIDADE_ID']);
+        $estado = buscaDados('ESTADOS', @$cidade['estado']);
+        switch ($apolice['TIPO_CLIENTE']){
+            case 'F':
+                $tipo_cadastro = 'Física';
+                break;
+            case 'J':
+                $tipo_cadastro = 'Jurídica';
+                break;
+        }
+        switch ($apolice['SEXO']){
+            case 'M':
+                $sexo = 'Masculino';
+                break;
+            case 'F':
+                $sexo = 'Feminino';
+        }
+        switch ($apolice['ESTADO_CIVIL']){
+            case 'S':
+                $civil = 'Solteiro';
+                break;
+            case 'C':
+                $civil = 'Casado';
+                break;
+            case 'D':
+                $civil = 'Divorciado';
+                break;
+            case 'V':
+                $civil = 'Viúvo';
+                break;
+        }
+        $body = '<div class="modal_left"> Tipo de cliente: '.$tipo_cadastro.'</div><div>Data de nascimento: '.formatarDataEN(@$apolice['DATA_NASC']).'</div>
+                 <div class="modal_left"> RG: '.@$apolice['RG'].'</div><div>Orgão Expeditor: '.@$apolice['ORG_EXPEDIDOR'].'</div>
+                 <div class="modal_left"> Data de expedição: '.formatarDataEN(@$apolice['ORG_DATA_EXPEDICAO']).'</div><div>Sexo: '.@$sexo.'</div>
+                 <div class="modal_left"> Estado Civil: '.@$civil.'</div></div>CNH: '.@$apolice['CNH'].'</div>
+                 <div class="modal_left"> CNH Data expedição: '.formatarDataEN(@$apolice['CNH_DATA_EXPEDICAO']).'</div><div>&nbsp</div>
+                 <hr/>
+                 <div class="modal_left"> Endereço: '.@$apolice['ENDERECO'].'</div><div>Bairro: '.@$apolice['BAIRRO'].'</div>
+                 <div class="modal_left"> Número: '.@$apolice['NUMERO'].'</div><div>CEP: '.@$apolice['CEP'].'</div>
+                 <div class="modal_left"> Complemento: '.@$apolice['COMPLEMENTO'].'</div><div>Estado: '.@$estado['nome'].'</div>
+                 <div class="modal_left"> Cidade: '.@$cidade['nome'].'</div><div>&nbsp</div>
+                 <div> Observação: '.@$apolice['OBS'].'</div>';
         break;
         
 }

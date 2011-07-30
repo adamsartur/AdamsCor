@@ -133,7 +133,6 @@ if ( $acao == "editarCliente" ) {
     if( $valida ){
         $sql = "
         UPDATE clientes SET
-              CIDADE_ID          =  NULL,
               ESTADO_ID          = '".addslashes(post('estado'))."',
               CIDADE_ID          = '".addslashes(post('cidade'))."',
               TIPO_CLIENTE       = '".addslashes(post('tipoCliente'))."',
@@ -228,11 +227,11 @@ if ($acao == "inserirCliente") {
         if($parametro == "erro-cpf"){
             $cliente->CPF = '';
             $msgErro = 'O cpf já está cadastrado para outro cliente, favor inserir outro cpf!';
-        }else
-            $cliente->CPF = '';
+        }else{
+            $cliente->CNPJ = '';
             $msgErro = 'O cnpj já está cadastrado para outro cliente, favor inserir outro cpnj!';
         }
-    
+    }
 
 }
 
@@ -326,9 +325,13 @@ switch (request('msg')) {
                             while( $clientes = mysql_fetch_array($sql) ) :
                                 ?>
                                 <tr nome="<?php echo strtolower($clientes['NOME']); ?>" class="clienteLinha">
-                                    <td><a href="documentos.php?acao=calculo&idCliente=<?php echo $clientes['ID']; ?>" id="cliente-<?php echo $clientes['ID']; ?>">
-                                            <img alt="Calculo" src="img/icons/calc_icon&16.png"/>
-                                    </a></td>
+                                    <td>
+                                    <img id="cliente-<?php echo $clientes['ID']; ?>" class="lista" src="img/icons/zoom_icon&16.png" title="Visualizar" />
+                                    <a href="documentos.php?acao=calculo&idCliente=<?php echo $clientes['ID']; ?>" id="cliente-<?php echo $clientes['ID']; ?>">
+                                        <img alt="Calculo" src="img/icons/calc_icon&16.png"/>
+                                    </a>
+                                    
+                                    </td>
                                     <td><?php echo $clientes['NOME']; ?></td>
                                     <td><?php echo $clientes['ENDERECO']; ?></td>
                                     <td><?php echo $clientes['NUMERO']; ?></td>
@@ -458,14 +461,15 @@ switch (request('msg')) {
                         <div class="campo-input campo-pessoa-fisica">
                             <label for="estadoCivil" class="label">Estado Civil</label>
                             <select id="estadoCivil" name="estadoCivil" tabindex="10">
-                                <option value="casado" <?=$cliente->ESTADO_CIVIL == 'casado' ? 'selected="selected"' : null;?>>Casado</option>
-                                <option value="solteiro" <?=$cliente->ESTADO_CIVIL == 'solteiro' ? 'selected="selected"' : null;?>>Solteiro</option>
-                                <option value="outro" <?=$cliente->ESTADO_CIVIL == 'outro' ? 'selected="selected"' : null;?>>Outro</option>
+                                <option value="C" <?=$cliente->ESTADO_CIVIL == 'C' ? 'selected="selected"' : null;?>>Casado</option>
+                                <option value="S" <?=$cliente->ESTADO_CIVIL == 'S' ? 'selected="selected"' : null;?>>Solteiro</option>
+                                <option value="D" <?=$cliente->ESTADO_CIVIL == 'D' ? 'selected="selected"' : null;?>>Divorciado</option>
+                                <option value="V" <?=$cliente->ESTADO_CIVIL == 'V' ? 'selected="selected"' : null;?>>Viuvo</option>
                             </select>
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div class="campo-input campo-select">
-                            <label for="numero" class="label">Cidade</label>
+                            <label for="box-cidades" class="label">Cidade</label>
                             <span id="box-cidades"><?echo selectCidades($cliente->ESTADO_ID, $cliente->CIDADE_ID);?></span>
                         </div>
 

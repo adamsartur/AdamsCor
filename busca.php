@@ -78,7 +78,7 @@ if ($sql) {
         <?php include('_menu.php') ?>
 
         <div class="principal">
-                <h1>Clientes</h1>
+                <h1>Busca</h1>
 
             <div class="erro">
                 <p style="text-align: center; margin-top: 10px;"><?php
