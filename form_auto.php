@@ -98,7 +98,7 @@
 
             <div class="item-input">
                 <label class="label" for="ZERO">Zero km</label>
-                <input type="checkbox" id="ZERO" name="ZERO" value="<?=$auto->ZERO?>" />
+                <input type="checkbox" id="ZERO" name="ZERO" value="1" <?if($auto->ZERO == '1') echo 'checked=checked';?> />
                 <div class="clear"></div>
             </div>
         </div><!--carro-->  
@@ -144,7 +144,7 @@
 
             <div class="item-input">
                 <label class="label" for="FILHOS">Filhos de 18 a 26</label>
-                <input type="checkbox" id="FILHOS" name="FILHOS" value="<?=$auto->FILHOS?>" />
+                <input type="checkbox" id="FILHOS" name="FILHOS" value="1" <?if($auto->FILHOS == '1') echo 'checked=checked';?> />
                 <div class="clear"></div>
             </div>
         </div><!-- perfil -->
@@ -172,7 +172,7 @@
 
             <div class="item-input">
                 <label for="DC" class="label" >Danos Corporais</label>
-                <input type="text" size="8" id="DC" name="dc" value="<?=$auto->DC?>" />
+                <input type="text" size="8" id="DC" name="DC" value="<?=$auto->DC?>" />
                 <div class="clear"></div>
             </div>
 
@@ -190,19 +190,19 @@
 
             <div class="item-input">
                 <label class="label" for="aVIDROS">Vidros</label>
-                <input type="checkbox" id="aVIDROS" name="VIDROS" value="<?=$auto->VIDROS?>" />
+                <input type="checkbox" id="aVIDROS" name="VIDROS" value="1" <?if($auto->VIDROS == '1') echo 'checked=checked';?> />
                 <div class="clear"></div>
             </div>
 
             <div class="item-input">
                 <label class="label" for="ASSISTENCIA">Assistencia</label>
-                <input type="checkbox" id="ASSISTENCIA" name="ASSISTENCIA" value="<?=$auto->ASSISTENCIA?>" />
+                <input type="checkbox" id="ASSISTENCIA" name="ASSISTENCIA" value="1" <?if($auto->ASSISTENCIA == '1') echo 'checked=checked';?> />
                 <div class="clear"></div>
             </div>
 
             <div class="item-input">
                 <label class="label" for="CARRO_RESERVA">Carro Reserva</label>
-                <input type="checkbox" id="CARRO_RESERVA" name="CARRO_RESERVA" value="<?=$auto->CARRO_RESERVA?>" />
+                <input type="checkbox" id="CARRO_RESERVA" name="CARRO_RESERVA" value="1" <?if($auto->CARRO_RESERVA == '1') echo 'checked=checked';?> />
                 <div class="clear"></div>
             </div>
         </div><!-- garantias-auto-->

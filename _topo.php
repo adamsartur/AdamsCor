@@ -1,6 +1,6 @@
 <div class="topo">
     <div class="topo-linha"></div>
-    <div class="logo"></div>
+    <div class="logo" style="padding-left: 25px;"><img src="img/logo.png" height="50px" /></div>
 
     <div class="informacoes-box">
         <div class="informacoes-info">
