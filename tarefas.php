@@ -1,10 +1,10 @@
-<?php require_once '_config.php';
+<?php
+require_once '_config.php';
 
-    //excluir tarefa
-    if (isset($_GET['acao']) && $_GET['acao'] == 'excluir'){
-        $sql = mysql_query('DELETE FROM tarefas WHERE ID = '.$_GET['idTarefa']);
-        $msgErro = 'Tarefa deletada com sucesso';
-    }
+
+
+
+
 
     //faz o update do status
     if (get("update")){
@@ -38,6 +38,16 @@
             $query = mysql_query($sql) or die(mysql_error());
             $msgErro = 'Tarefa alterada com sucesso!';
     }
+    
+    
+    /* excluindo uma tarefa */
+    if( get('acao') == 'excluir' ) {
+        mysql_query("
+            DELETE FROM tarefas 
+            WHERE ID = '".get('id')."'
+        ");
+        $msgErro = 'Tarefa exluida com sucesso';
+    }
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -61,12 +71,10 @@
 
         <div class="principal">
           <div class="linha">
-              <?php if (!get('acao') && get('acao') != 'excluir'){ ?>
               <div class="botaoadd">
                 <p style="padding: 10px; float:left;">Tarefas</p>
                 <input class="bt_adicionar" type="button" value="Adicionar" onclick="javascript:window.location='tarefas.php?acao=inserir'" title="Adicionar"/>
               </div>
-              <?php } ?>
               <div class="erro">
                 <p style="text-align: center; margin-top: 10px;"><?php if (isset($msgErro)){  echo $msgErro;  } ?></p>
               </div>
@@ -120,6 +128,7 @@
                         <th style="width: 95px;">Data Vencimento</th>
                         <th style="text-align: center;">Editar</th>
                         <th style="text-align: center;">Status</th>
+                        <th style="text-align: center;">Excluir</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -156,6 +165,7 @@
                         <td><?php echo formatarDataEN($tarefa['DATA_VENCIMENTO']); ?></td>
                         <td width="70px" align="center"><img alt="Editar" class="center-img" onclick="javascript:window.location='tarefas.php?acao=editar&id=<?php echo $tarefa['ID']; ?>'" style="cursor: pointer;" src="img/icons/doc_edit_icon&16.png" /></td>
                         <td width="100px" align="center"><img alt="Status" class="center-img" onclick="javascript:window.location='tarefas.php?update=status&id=<?php echo $tarefa['ID']; ?>'" style="cursor: pointer;" src="<?php echo $ativoStatus; ?>" /></td>
+                        <td width="100px" align="center"><img alt="Excluir" class="center-img" onclick="javascript:window.location='tarefas.php?acao=excluir&id=<?php echo $tarefa['ID']; ?>'" style="cursor: pointer;" src="img/icons/trash_icon&16.png" /></td>
                     </tr>
                     <?php endwhile; ?>
                     </tbody>
@@ -171,6 +181,19 @@
                     dateFormat: 'dd/mm/yy',
                     dayNamesMin: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom']
                 });
+                
+            /* excluindo */
+            var $this, id, url;
+            $('.excluir').click(function(e) {
+                e.preventDefault();
+                if( confirm("Deseja excluir o documento?") ) {
+                    $this = $(this);
+                    url   = $this.attr('href');
+
+                    window.location = url;
+                }
+            });
+    
             });
         </script>
         <?php include('_rodape.php') ?>

@@ -42,7 +42,7 @@ fieldset {
 .logo {
     background: #FFFFFF;
     height:55px;
-    width: 200px;
+    width: 150px;
     margin: 0 0 0 70px;
     float:left;
     position: absolute;
@@ -94,7 +94,7 @@ fieldset {
     -webkit-border-radius: 10px;
 }
 .menu-img{
-    margin: 50% 5px 0 5px;
+    margin: 50% 5px 5px 6px;
 }
 .rodape {
     width:100%;

@@ -93,7 +93,6 @@ if ( $acao == "editarCliente" ) {
     $dataExpedicao = dataNull('dataExpedicao');
     $dataCnh = dataNull('data_cnh');
 
-
     $cliente->ID = $idCliente;
     $cliente->ESTADO_ID = post('estado');
     $cliente->CIDADE_ID = post('cidade');
@@ -101,17 +100,17 @@ if ( $acao == "editarCliente" ) {
     $cliente->CPF = post('cpf');
     $cliente->CNPJ = post('cnpj');
     $cliente->NOME = post('nome');
-    $cliente->DATA_NASC = dataNull(post('DATA_NASC'));
+    $cliente->DATA_NASC = dataNullSql(post('DATA_NASC'));
     $cliente->RG = post('rg');
     $cliente->ORG_EXPEDIDOR = post('orgao');
-    $cliente->ORG_DATA_EXPEDICAO = dataNull(post('dataExpedicao'));
+    $cliente->ORG_DATA_EXPEDICAO = dataNullSql(post('dataExpedicao'));
     $cliente->ENDERECO = post('endereco');
     $cliente->NUMERO = post('numero');
     $cliente->COMPLEMENTO = post('complemento');
     $cliente->BAIRRO = post('bairro');
     $cliente->CEP = post('cep');
     $cliente->CNH = post('cnh');
-    $cliente->CNH_DATA_EXPEDICAO = dataNull(post('dataExpedicao'));
+    $cliente->CNH_DATA_EXPEDICAO = dataNullSql(post('dataExpedicao'));
     $cliente->SEXO = post('sexo');
     $cliente->ESTADO_CIVIL = post('estadoCivil');
     $cliente->FONE = post('fone');
@@ -171,7 +170,7 @@ if ( $acao == "editarCliente" ) {
 /**
  * Inserindo cliente
  */
-if ($acao == "inserirCliente") {
+if( $acao == "inserirCliente" ) {
     if( post('tipoCliente') == 'F' ) {
         $valida = bancoCpf(post('cpf'), post('id'));
         $msgErro = "O CPF já está cadastrado para outro cliente, insira outro cpf";
@@ -191,17 +190,17 @@ if ($acao == "inserirCliente") {
     $cliente->CPF = post('cpf');
     $cliente->CNPJ = post('cnpj');
     $cliente->NOME = post('nome');
-    $cliente->DATA_NASC = dataNull(post('DATA_NASC'));
+    $cliente->DATA_NASC = dataNullSql( post('DATA_NASC') );
     $cliente->RG = post('rg');
     $cliente->ORG_EXPEDIDOR = post('orgao');
-    $cliente->ORG_DATA_EXPEDICAO = dataNull(post('dataExpedicao'));
+    $cliente->ORG_DATA_EXPEDICAO = dataNullSql( post('dataExpedicao') );
     $cliente->ENDERECO = post('endereco');
     $cliente->NUMERO = post('numero');
     $cliente->COMPLEMENTO = post('complemento');
     $cliente->BAIRRO = post('bairro');
     $cliente->CEP = post('cep');
     $cliente->CNH = post('cnh');
-    $cliente->CNH_DATA_EXPEDICAO = dataNull(post('dataExpedicao'));
+    $cliente->CNH_DATA_EXPEDICAO = dataNullSql( post('dataExpedicao') );
     $cliente->SEXO = post('sexo');
     $cliente->ESTADO_CIVIL = post('estadoCivil');
     $cliente->FONE = post('fone');
@@ -469,7 +468,11 @@ switch (request('msg')) {
                         </div><!-- .campo-pessoa-fisica -->
 
                         <div class="campo-input campo-select">
+<<<<<<< HEAD
                             <label for="box-cidades" class="label">Cidade</label>
+=======
+                            <label for="box" class="label">Cidade</label>
+>>>>>>> f1a59bc5f20f657f65c1c071af943356acd3a464
                             <span id="box-cidades"><?echo selectCidades($cliente->ESTADO_ID, $cliente->CIDADE_ID);?></span>
                         </div>
 

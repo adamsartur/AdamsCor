@@ -119,8 +119,8 @@ class Cliente extends Base {
                     '".addslashes( $this->EMAIL )."',
                     '".addslashes( $this->SITUACAO)."',
                     '".addslashes( $this->OBS )."',
-                    '".addslashes( $this->CIDADE )."',
-                    '".addslashes( $this->ESTADO )."'
+                    '".addslashes( $this->CIDADE_ID )."',
+                    '".addslashes( $this->ESTADO_ID )."'
             );
         ";
         

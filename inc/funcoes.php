@@ -62,6 +62,13 @@ function dataNull($campo) {
     return $null;
 }
 
+
+function dataNullSql($campo) {
+    $null = $campo != '' ? "'".formatarDataBR( addslashes( $campo ) )."'" : 'NULL';
+    return $null;
+}
+
+
 function bancoCpf($cpf, $id = null) {
     if (!is_null($id)) {
         $id = " AND ID <> '$id'";
